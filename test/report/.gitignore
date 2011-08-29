@@ -1,0 +1,7 @@
+coverage
+coverage.xml
+logfile.json
+logfile.tap
+logfile.xml
+testdox.html
+testdox.txt
