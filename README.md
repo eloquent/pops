@@ -6,3 +6,9 @@
     \_|    \___/\_|    \____/ 
 
 ### PHP Object Proxy System
+
+#### Latest revision test suite results
+http://ci.ezzatron.com/pops
+
+#### Latest revision test suite coverage
+http://ci.ezzatron.com/report/pops/coverage/
