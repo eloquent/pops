@@ -47,7 +47,6 @@ spl_autoload_register(function($name)
 
 // include Phake for improved mocking support
 require_once 'Phake.php';
-Phake::never();
 
 // clean reports
 foreach(glob(POPS_TEST_REPORT_DIR.DIRECTORY_SEPARATOR.'*') as $report)
