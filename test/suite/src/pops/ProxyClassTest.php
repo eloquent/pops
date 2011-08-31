@@ -51,6 +51,32 @@ class ProxyClassTest extends TestCase
     $this->assertPopsProxyCall($this->_proxy, 'staticPublicMethod', array('foo', 'bar'));
     $this->assertPopsProxyCall($this->_proxy, 'foo', array('bar', 'baz'), true);
   }
+  
+  /**
+   * @covers Pops\ProxyClass::__set
+   * @covers Pops\ProxyClass::__get
+   * @covers Pops\ProxyClass::__isset
+   * @covers Pops\ProxyClass::__unset
+   */
+  public function testSetGet()
+  {
+    $this->assertTrue(isset($this->_proxy->staticPublicProperty));
+    $this->assertEquals('staticPublicProperty', $this->_proxy->staticPublicProperty);
+    
+    $this->_proxy->staticPublicProperty = 'foo';
+    
+    $this->assertTrue(isset($this->_proxy->staticPublicProperty));
+    $this->assertEquals('foo', $this->_proxy->staticPublicProperty);
+    
+    unset($this->_proxy->staticPublicProperty);
+    
+    $this->assertFalse(isset($this->_proxy->staticPublicProperty));
+    
+    $this->_proxy->staticPublicProperty = 'staticPublicProperty';
+    
+    $this->assertTrue(isset($this->_proxy->staticPublicProperty));
+    $this->assertEquals('staticPublicProperty', $this->_proxy->staticPublicProperty);
+  }
 
   /**
    * @var ProxyClass

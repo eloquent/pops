@@ -58,6 +58,50 @@ class ProxyClass
   }
 
   /**
+   * @param string $property
+   * @param mixed $value
+   */
+  public function __set($property, $value)
+  {
+    $class = $this->_popsClass;
+    $class::$$property = $value;
+  }
+
+  /**
+   * @param string $property
+   * 
+   * @return mixed
+   */
+  public function __get($property)
+  {
+    $class = $this->_popsClass;
+    
+    return $class::$$property;
+  }
+
+  /**
+   * @param string $property
+   * 
+   * @return boolean
+   */
+  public function __isset($property)
+  {
+    $class = $this->_popsClass;
+    
+    return isset($class::$$property);
+  }
+
+  /**
+   * @param string $property
+   */
+  public function __unset($property)
+  {
+    $class = $this->_popsClass;
+    
+    $class::$$property = null;
+  }
+
+  /**
    * @var string
    */
   protected $_popsClass;
