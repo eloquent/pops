@@ -13,7 +13,7 @@ namespace Pops;
 
 use InvalidArgumentException;
 
-class ProxyClass
+class ProxyClass implements Proxy
 {
   /**
    * @param string $class

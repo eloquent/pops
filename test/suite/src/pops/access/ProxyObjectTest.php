@@ -15,21 +15,21 @@ use Pops\Test\Fixture\Object;
 use Pops\Test\Fixture\Overload;
 use Pops\Test\TestCase;
 
-class ProxyTest extends TestCase
+class ProxyObjectTest extends TestCase
 {
   protected function setUp()
   {
     $this->_object = new Object;
-    $this->_proxy = Proxy::proxy($this->_object);
+    $this->_proxy = ProxyObject::proxy($this->_object);
   }
 
   /**
-   * @covers Pops\Access\Proxy::__construct
-   * @covers Pops\Access\Proxy::__call
+   * @covers Pops\Access\ProxyObject::__construct
+   * @covers Pops\Access\ProxyObject::__call
    */
   public function testCall()
   {
-    $this->assertInstanceOf(__NAMESPACE__.'\Proxy', $this->_proxy);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_proxy);
     
     $this->assertPopsProxyCall($this->_proxy, 'publicMethod', array('foo', 'bar'));
     $this->assertPopsProxyCall($this->_proxy, 'protectedMethod', array('foo', 'bar'));
@@ -38,11 +38,11 @@ class ProxyTest extends TestCase
   }
   
   /**
-   * @covers Pops\Access\Proxy::__set
-   * @covers Pops\Access\Proxy::__get
-   * @covers Pops\Access\Proxy::__isset
-   * @covers Pops\Access\Proxy::__unset
-   * @covers Pops\Access\Proxy::_popsPropertyReflector
+   * @covers Pops\Access\ProxyObject::__set
+   * @covers Pops\Access\ProxyObject::__get
+   * @covers Pops\Access\ProxyObject::__isset
+   * @covers Pops\Access\ProxyObject::__unset
+   * @covers Pops\Access\ProxyObject::_popsPropertyReflector
    */
   public function testSetGet()
   {
@@ -83,7 +83,7 @@ class ProxyTest extends TestCase
     $object->values = array(
       'foo' => 'bar',
     );
-    $proxy = Proxy::proxy($object);
+    $proxy = ProxyObject::proxy($object);
     
     $this->assertTrue(isset($proxy->foo));
     $this->assertEquals('bar', $proxy->foo);

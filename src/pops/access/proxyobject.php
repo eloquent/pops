@@ -11,10 +11,10 @@
 
 namespace Pops\Access;
 
-use Pops\Proxy as PopsProxy;
+use Pops\ProxyObject as PopsProxyObject;
 use ReflectionObject;
 
-class Proxy extends PopsProxy
+class ProxyObject extends PopsProxyObject
 {
   /**
    * @param object $object

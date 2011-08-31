@@ -21,36 +21,36 @@ use Pops\Test\Fixture\Stringable;
 use Pops\Test\Fixture\Traversable;
 use Pops\Test\TestCase;
 
-class ProxyTest extends TestCase
+class ProxyObjectTest extends TestCase
 {
   protected function setUp()
   {
     $this->_object = new Object;
-    $this->_proxy = Proxy::proxy($this->_object);
+    $this->_proxy = ProxyObject::proxy($this->_object);
   }
   
   /**
-   * @covers Pops\Proxy::proxy
-   * @covers Pops\Proxy::__construct
-   * @covers Pops\Proxy::_popsObject
+   * @covers Pops\ProxyObject::proxy
+   * @covers Pops\ProxyObject::__construct
+   * @covers Pops\ProxyObject::_popsObject
    */
   public function testProxy()
   {
-    $this->assertInstanceOf(__NAMESPACE__.'\Proxy', $this->_proxy);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_proxy);
     $this->assertSame($this->_object, $this->_proxy->_popsObject());
   }
   
   /**
-   * @covers Pops\Proxy::__construct
+   * @covers Pops\ProxyObject::__construct
    */
   public function testConstructFailure()
   {
     $this->setExpectedException('InvalidArgumentException', 'Provided value is not an object');
-    new Proxy('foo');
+    new ProxyObject('foo');
   }
   
   /**
-   * @covers Pops\Proxy::__call
+   * @covers Pops\ProxyObject::__call
    */
   public function testCall()
   {
@@ -59,10 +59,10 @@ class ProxyTest extends TestCase
   }
   
   /**
-   * @covers Pops\Proxy::__set
-   * @covers Pops\Proxy::__get
-   * @covers Pops\Proxy::__isset
-   * @covers Pops\Proxy::__unset
+   * @covers Pops\ProxyObject::__set
+   * @covers Pops\ProxyObject::__get
+   * @covers Pops\ProxyObject::__isset
+   * @covers Pops\ProxyObject::__unset
    */
   public function testSetGet()
   {
@@ -107,7 +107,7 @@ class ProxyTest extends TestCase
       'foo' => 'bar',
       'baz' => 'qux',
     );
-    $proxy = Proxy::proxy($object);
+    $proxy = ProxyObject::proxy($object);
     
     $this->assertTrue(isset($proxy->foo));
     $this->assertTrue(isset($proxy->baz));
@@ -127,15 +127,15 @@ class ProxyTest extends TestCase
   }
   
   /**
-   * @covers Pops\Proxy::offsetSet
-   * @covers Pops\Proxy::offsetGet
-   * @covers Pops\Proxy::offsetExists
-   * @covers Pops\Proxy::offsetUnset
+   * @covers Pops\ProxyObject::offsetSet
+   * @covers Pops\ProxyObject::offsetGet
+   * @covers Pops\ProxyObject::offsetExists
+   * @covers Pops\ProxyObject::offsetUnset
    */
   public function testOffsetSetGet()
   {
     $arrayaccess = new ArrayAccess;
-    $proxy = Proxy::proxy($arrayaccess);
+    $proxy = ProxyObject::proxy($arrayaccess);
     
     $this->assertFalse(isset($arrayaccess['foo']));
     $this->assertFalse(isset($proxy['foo']));
@@ -173,19 +173,19 @@ class ProxyTest extends TestCase
   }
   
   /**
-   * @covers Pops\Proxy::count
+   * @covers Pops\ProxyObject::count
    */
   public function testCount()
   {
     $countable = new Countable;
     $countable->count = 666;
-    $proxy = Proxy::proxy($countable);
+    $proxy = ProxyObject::proxy($countable);
 
     $this->assertEquals(666, count($proxy));
   }
   
   /**
-   * @covers Pops\Proxy::getIterator
+   * @covers Pops\ProxyObject::getIterator
    */
   public function testGetIterator()
   {
@@ -194,37 +194,37 @@ class ProxyTest extends TestCase
       'foo' => 'bar',
       'baz' => 'qux',
     );
-    $proxy = Proxy::proxy($traversable);
+    $proxy = ProxyObject::proxy($traversable);
 
     $this->assertEquals($traversable->values, iterator_to_array($proxy));
   }
   
   /**
-   * @covers Pops\Proxy::__toString
+   * @covers Pops\ProxyObject::__toString
    */
   public function testToString()
   {
     $stringable = new Stringable;
     $stringable->string = 'foo';
-    $proxy = Proxy::proxy($stringable);
+    $proxy = ProxyObject::proxy($stringable);
     
     $this->assertEquals('foo', (string)$proxy);
   }
 
   /**
-   * @covers Pops\Proxy::__invoke
+   * @covers Pops\ProxyObject::__invoke
    */
   public function testInvoke()
   {
     $callable = new Callable;
-    $proxy = Proxy::proxy($callable);
+    $proxy = ProxyObject::proxy($callable);
     $expected = array('__invoke', array('foo', 'bar'));
     
     $this->assertEquals($expected, $proxy('foo', 'bar'));
   }
   
   /**
-   * @covers Pops\Proxy::__invoke
+   * @covers Pops\ProxyObject::__invoke
    */
   public function testInvokeFailure()
   {
@@ -235,7 +235,7 @@ class ProxyTest extends TestCase
   }
   
   /**
-   * @var Proxy
+   * @var ProxyObject
    */
   protected $_proxy;
 
