@@ -39,7 +39,7 @@ class ProxyClassTest extends TestCase
    */
   public function testConstructFailure()
   {
-    $this->setExpectedException('InvalidArgumentException');
+    $this->setExpectedException('InvalidArgumentException', 'Provided value is not a string');
     new ProxyClass(1);
   }
   

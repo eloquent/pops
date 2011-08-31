@@ -37,7 +37,7 @@ class Proxy implements ArrayAccess, Countable, IteratorAggregate
   {
     if (!is_object($object))
     {
-      throw new InvalidArgumentException('Provided value is not an object.');
+      throw new InvalidArgumentException('Provided value is not an object');
     }
 
     $this->_popsObject = $object;

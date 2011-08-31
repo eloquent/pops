@@ -45,7 +45,7 @@ class ProxyTest extends TestCase
    */
   public function testConstructFailure()
   {
-    $this->setExpectedException('InvalidArgumentException');
+    $this->setExpectedException('InvalidArgumentException', 'Provided value is not an object');
     new Proxy('foo');
   }
   
@@ -230,7 +230,7 @@ class ProxyTest extends TestCase
   {
     $proxy = $this->_proxy;
     
-    $this->setExpectedException('BadMethodCallException');
+    $this->setExpectedException('BadMethodCallException', 'Call to undefined method Pops\Test\Fixture\Object::__invoke()');
     $proxy('foo', 'bar');
   }
   
