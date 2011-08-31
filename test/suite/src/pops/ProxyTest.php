@@ -12,15 +12,20 @@
 namespace Pops;
 
 use InvalidArgumentException;
-use Phake;
-use PHPUnit_Framework_TestCase;
-use Pops\Test\Object;
+use Pops\Test\Fixture\ArrayAccess;
+use Pops\Test\Fixture\Callable;
+use Pops\Test\Fixture\Countable;
+use Pops\Test\Fixture\Object;
+use Pops\Test\Fixture\Overload;
+use Pops\Test\Fixture\Stringable;
+use Pops\Test\Fixture\Traversable;
+use Pops\Test\TestCase;
 
-class ProxyTest extends PHPUnit_Framework_TestCase
+class ProxyTest extends TestCase
 {
   protected function setUp()
   {
-    $this->_object = Phake::partialMock(__NAMESPACE__.'\Test\Object');
+    $this->_object = new Object;
     $this->_proxy = Proxy::proxy($this->_object);
   }
   
@@ -49,9 +54,8 @@ class ProxyTest extends PHPUnit_Framework_TestCase
    */
   public function testCall()
   {
-    $this->assertEquals('publicMethod', $this->_proxy->publicMethod('foo', 'bar'));
-    
-    Phake::verify($this->_object)->publicMethod('foo', 'bar');
+    $this->assertPopsProxyCall($this->_proxy, 'publicMethod', array('foo', 'bar'));
+    $this->assertPopsProxyCall($this->_proxy, 'foo', array('bar', 'baz'), true);
   }
   
   /**
@@ -62,6 +66,8 @@ class ProxyTest extends PHPUnit_Framework_TestCase
    */
   public function testSetGet()
   {
+    $this->assertEquals('publicProperty', $this->_proxy->publicProperty);
+      
     $this->assertFalse(isset($this->_object->foo));
     $this->assertFalse(isset($this->_proxy->foo));
     
@@ -95,6 +101,29 @@ class ProxyTest extends PHPUnit_Framework_TestCase
     
     $this->assertFalse(isset($this->_object->foo));
     $this->assertFalse(isset($this->_proxy->foo));
+    
+    $object = new Overload;
+    $object->values = array(
+      'foo' => 'bar',
+      'baz' => 'qux',
+    );
+    $proxy = Proxy::proxy($object);
+    
+    $this->assertTrue(isset($proxy->foo));
+    $this->assertTrue(isset($proxy->baz));
+    $this->assertEquals('bar', $proxy->foo);
+    $this->assertEquals('qux', $proxy->baz);
+    
+    unset($proxy->foo);
+    unset($proxy->baz);
+    
+    $this->assertFalse(isset($proxy->foo));
+    $this->assertFalse(isset($proxy->baz));
+    
+    $proxy->foo = 'doom';
+    
+    $this->assertTrue(isset($proxy->foo));
+    $this->assertEquals('doom', $proxy->foo);
   }
   
   /**
@@ -105,7 +134,7 @@ class ProxyTest extends PHPUnit_Framework_TestCase
    */
   public function testOffsetSetGet()
   {
-    $arrayaccess = Phake::partialMock(__NAMESPACE__.'\Test\ArrayAccess');
+    $arrayaccess = new ArrayAccess;
     $proxy = Proxy::proxy($arrayaccess);
     
     $this->assertFalse(isset($arrayaccess['foo']));
@@ -148,7 +177,8 @@ class ProxyTest extends PHPUnit_Framework_TestCase
    */
   public function testCount()
   {
-    $countable = Phake::partialMock(__NAMESPACE__.'\Test\Countable');
+    $countable = new Countable;
+    $countable->count = 666;
     $proxy = Proxy::proxy($countable);
 
     $this->assertEquals(666, count($proxy));
@@ -159,14 +189,14 @@ class ProxyTest extends PHPUnit_Framework_TestCase
    */
   public function testGetIterator()
   {
-    $traversable = Phake::partialMock(__NAMESPACE__.'\Test\Traversable');
-    $proxy = Proxy::proxy($traversable);
-    $expected = array(
+    $traversable = new Traversable;
+    $traversable->values = array(
       'foo' => 'bar',
       'baz' => 'qux',
     );
+    $proxy = Proxy::proxy($traversable);
 
-    $this->assertEquals($expected, iterator_to_array($proxy));
+    $this->assertEquals($traversable->values, iterator_to_array($proxy));
   }
   
   /**
@@ -174,14 +204,11 @@ class ProxyTest extends PHPUnit_Framework_TestCase
    */
   public function testToString()
   {
-    $stringable = Phake::partialMock(__NAMESPACE__.'\Test\Stringable');
-    Phake::when($stringable)->__toString()->thenCallParent();
+    $stringable = new Stringable;
+    $stringable->string = 'foo';
     $proxy = Proxy::proxy($stringable);
     
-    $this->assertEquals('__toString', (string)$proxy);
-    
-    Phake::verify($stringable)->__toString();
-    $this->assertTrue(true);
+    $this->assertEquals('foo', (string)$proxy);
   }
 
   /**
@@ -189,13 +216,11 @@ class ProxyTest extends PHPUnit_Framework_TestCase
    */
   public function testInvoke()
   {
-    $callable = Phake::partialMock(__NAMESPACE__.'\Test\Callable');
+    $callable = new Callable;
     $proxy = Proxy::proxy($callable);
+    $expected = array('__invoke', array('foo', 'bar'));
     
-    $this->assertEquals('__invoke', $proxy('foo', 'bar'));
-    
-    Phake::verify($callable)->__invoke('foo', 'bar');
-    $this->assertTrue(true);
+    $this->assertEquals($expected, $proxy('foo', 'bar'));
   }
   
   /**

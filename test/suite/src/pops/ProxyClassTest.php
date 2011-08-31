@@ -12,15 +12,14 @@
 namespace Pops;
 
 use InvalidArgumentException;
-use Phake;
-use PHPUnit_Framework_TestCase;
-use Pops\Test\Object;
+use Pops\Test\Fixture\Object;
+use Pops\Test\TestCase;
 
-class ProxyClassTest extends PHPUnit_Framework_TestCase
+class ProxyClassTest extends TestCase
 {
   protected function setUp()
   {
-    $this->_class = __NAMESPACE__.'\Test\Object';
+    $this->_class = __NAMESPACE__.'\Test\Fixture\Object';
     $this->_proxy = ProxyClass::proxy($this->_class);
   }
   
@@ -49,7 +48,8 @@ class ProxyClassTest extends PHPUnit_Framework_TestCase
    */
   public function testCall()
   {
-    $this->assertEquals('staticPublicMethod', $this->_proxy->staticPublicMethod());
+    $this->assertPopsProxyCall($this->_proxy, 'staticPublicMethod', array('foo', 'bar'));
+    $this->assertPopsProxyCall($this->_proxy, 'foo', array('bar', 'baz'), true);
   }
 
   /**
