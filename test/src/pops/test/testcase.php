@@ -18,12 +18,12 @@ use Pops\ProxyClass;
 class TestCase extends PHPUnit_Framework_TestCase
 {
   /**
-   * @param Proxy|ProxyClass $proxy
+   * @param Proxy $proxy
    * @param string $method
    * @param array $arguments
    * @param boolean $magic
    */
-  protected function assertPopsProxyCall($proxy, $method, array $arguments = null, $magic = null)
+  protected function assertPopsProxyCall(Proxy $proxy, $method, array $arguments = null, $magic = null)
   {
     $actual = call_user_func_array(array($proxy, $method), $arguments);
     
