@@ -32,7 +32,7 @@ if (!defined('POPS_INCLUDE_PATH_SET'))
 // spl_autoload default implementation SHOULD do this itself, but it does not work for me
 spl_autoload_register(function($name)
 {
-  $file = str_replace('\\', DIRECTORY_SEPARATOR, strtolower($name)).'.php';
+  $file = str_replace('\\', DIRECTORY_SEPARATOR, $name).'.php';
 
   foreach (explode(PATH_SEPARATOR, get_include_path()) as $path)
   {
