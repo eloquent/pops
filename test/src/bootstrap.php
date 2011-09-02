@@ -18,32 +18,11 @@ if (!defined('POPS_TEST_SRC_DIR')) define('POPS_TEST_SRC_DIR', POPS_TEST_DIR.DIR
 if (!defined('POPS_TEST_SUITE_DIR')) define('POPS_TEST_SUITE_DIR', POPS_TEST_DIR.DIRECTORY_SEPARATOR.'suite');
 if (!defined('POPS_TEST_REPORT_DIR')) define('POPS_TEST_REPORT_DIR', POPS_TEST_DIR.DIRECTORY_SEPARATOR.'report');
 
-if (!defined('POPS_INCLUDE_PATH_SET'))
-{
-  define('POPS_INCLUDE_PATH_SET', true);
+// include Pops
+require POPS_SRC_DIR.DIRECTORY_SEPARATOR.'include.php';
 
-  set_include_path(
-    get_include_path()
-    .PATH_SEPARATOR.POPS_SRC_DIR
-    .PATH_SEPARATOR.POPS_TEST_SRC_DIR
-  );
-}
-
-// spl_autoload default implementation SHOULD do this itself, but it does not work for me
-spl_autoload_register(function($name)
-{
-  $file = str_replace('\\', DIRECTORY_SEPARATOR, $name).'.php';
-
-  foreach (explode(PATH_SEPARATOR, get_include_path()) as $path)
-  {
-    if (file_exists($path.DIRECTORY_SEPARATOR.$file))
-    {
-      include $path.DIRECTORY_SEPARATOR.$file;
-
-      break;
-    }
-  }
-});
+// include test fixtures
+require POPS_TEST_SRC_DIR.DIRECTORY_SEPARATOR.'include.php';
 
 // clean reports
 foreach(glob(POPS_TEST_REPORT_DIR.DIRECTORY_SEPARATOR.'*') as $report)
