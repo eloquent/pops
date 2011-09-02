@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Test;
+namespace Ezzatron\Pops\Test;
 
 use PHPUnit_Framework_TestCase;
-use Pops\Proxy;
-use Pops\ProxyClass;
+use Ezzatron\Pops\Proxy;
+use Ezzatron\Pops\ProxyClass;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {

@@ -9,14 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Test\Fixture;
+namespace Ezzatron\Pops\Test\Fixture;
 
-class Stringable extends Object
+class Callable extends Object
 {
-  public function __toString()
+  public function __invoke()
   {
-    return $this->string;
+    return array(__FUNCTION__, func_get_args());
   }
-
-  public $string = '';
 }

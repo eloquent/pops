@@ -9,16 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Test\Fixture;
+namespace Ezzatron\Pops\Test\Fixture;
 
-use Countable as CountableInterface;
-
-class Countable extends Object implements CountableInterface
+class Stringable extends Object
 {
-  public function count()
+  public function __toString()
   {
-    return $this->count;
+    return $this->string;
   }
-  
-  public $count = 0;
+
+  public $string = '';
 }

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Test\Fixture;
+namespace Ezzatron\Pops\Test\Fixture;
 
 use ArrayIterator;
 use IteratorAggregate;

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Access;
+namespace Ezzatron\Pops\Access;
 
-use Pops\ProxyObject as PopsProxyObject;
+use Ezzatron\Pops\ProxyObject as PopsProxyObject;
 use ReflectionObject;
 
 class ProxyObject extends PopsProxyObject

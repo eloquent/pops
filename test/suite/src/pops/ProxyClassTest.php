@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops;
+namespace Ezzatron\Pops;
 
 use InvalidArgumentException;
-use Pops\Test\Fixture\Object;
-use Pops\Test\TestCase;
+use Ezzatron\Pops\Test\Fixture\Object;
+use Ezzatron\Pops\Test\TestCase;
 
 class ProxyClassTest extends TestCase
 {
@@ -24,9 +24,9 @@ class ProxyClassTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyClass::proxy
-   * @covers Pops\ProxyClass::__construct
-   * @covers Pops\ProxyClass::_popsClass
+   * @covers Ezzatron\Pops\ProxyClass::proxy
+   * @covers Ezzatron\Pops\ProxyClass::__construct
+   * @covers Ezzatron\Pops\ProxyClass::_popsClass
    */
   public function testProxy()
   {
@@ -35,7 +35,7 @@ class ProxyClassTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyClass::__construct
+   * @covers Ezzatron\Pops\ProxyClass::__construct
    */
   public function testConstructFailure()
   {
@@ -44,7 +44,7 @@ class ProxyClassTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyClass::__call
+   * @covers Ezzatron\Pops\ProxyClass::__call
    */
   public function testCall()
   {
@@ -53,10 +53,10 @@ class ProxyClassTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyClass::__set
-   * @covers Pops\ProxyClass::__get
-   * @covers Pops\ProxyClass::__isset
-   * @covers Pops\ProxyClass::__unset
+   * @covers Ezzatron\Pops\ProxyClass::__set
+   * @covers Ezzatron\Pops\ProxyClass::__get
+   * @covers Ezzatron\Pops\ProxyClass::__isset
+   * @covers Ezzatron\Pops\ProxyClass::__unset
    */
   public function testSetGet()
   {

@@ -9,28 +9,26 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Test\Fixture;
+namespace Ezzatron\Pops\Test\Fixture;
 
-use ArrayAccess as ArrayAccessInterface;
-
-class ArrayAccess extends Object implements ArrayAccessInterface
+class Overload extends Object
 {
-  public function offsetSet($property, $value)
+  public function __set($property, $value)
   {
     $this->values[$property] = $value;
   }
 
-  public function offsetGet($property)
+  public function __get($property)
   {
     return $this->values[$property];
   }
 
-  public function offsetExists($property)
+  public function __isset($property)
   {
     return array_key_exists($property, $this->values);
   }
 
-  public function offsetUnset($property)
+  public function __unset($property)
   {
     unset($this->values[$property]);
   }

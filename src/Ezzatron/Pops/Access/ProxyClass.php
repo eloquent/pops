@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Access;
+namespace Ezzatron\Pops\Access;
 
 use LogicException;
-use Pops\ProxyClass as PopsProxyClass;
+use Ezzatron\Pops\ProxyClass as PopsProxyClass;
 use ReflectionClass;
 
 class ProxyClass extends PopsProxyClass

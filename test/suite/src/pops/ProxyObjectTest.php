@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops;
+namespace Ezzatron\Pops;
 
 use InvalidArgumentException;
-use Pops\Test\Fixture\ArrayAccess;
-use Pops\Test\Fixture\Callable;
-use Pops\Test\Fixture\Countable;
-use Pops\Test\Fixture\Object;
-use Pops\Test\Fixture\Overload;
-use Pops\Test\Fixture\Stringable;
-use Pops\Test\Fixture\Traversable;
-use Pops\Test\TestCase;
+use Ezzatron\Pops\Test\Fixture\ArrayAccess;
+use Ezzatron\Pops\Test\Fixture\Callable;
+use Ezzatron\Pops\Test\Fixture\Countable;
+use Ezzatron\Pops\Test\Fixture\Object;
+use Ezzatron\Pops\Test\Fixture\Overload;
+use Ezzatron\Pops\Test\Fixture\Stringable;
+use Ezzatron\Pops\Test\Fixture\Traversable;
+use Ezzatron\Pops\Test\TestCase;
 
 class ProxyObjectTest extends TestCase
 {
@@ -30,9 +30,9 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::proxy
-   * @covers Pops\ProxyObject::__construct
-   * @covers Pops\ProxyObject::_popsObject
+   * @covers Ezzatron\Pops\ProxyObject::proxy
+   * @covers Ezzatron\Pops\ProxyObject::__construct
+   * @covers Ezzatron\Pops\ProxyObject::_popsObject
    */
   public function testProxy()
   {
@@ -41,7 +41,7 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::__construct
+   * @covers Ezzatron\Pops\ProxyObject::__construct
    */
   public function testConstructFailure()
   {
@@ -50,7 +50,7 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::__call
+   * @covers Ezzatron\Pops\ProxyObject::__call
    */
   public function testCall()
   {
@@ -59,10 +59,10 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::__set
-   * @covers Pops\ProxyObject::__get
-   * @covers Pops\ProxyObject::__isset
-   * @covers Pops\ProxyObject::__unset
+   * @covers Ezzatron\Pops\ProxyObject::__set
+   * @covers Ezzatron\Pops\ProxyObject::__get
+   * @covers Ezzatron\Pops\ProxyObject::__isset
+   * @covers Ezzatron\Pops\ProxyObject::__unset
    */
   public function testSetGet()
   {
@@ -127,10 +127,10 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::offsetSet
-   * @covers Pops\ProxyObject::offsetGet
-   * @covers Pops\ProxyObject::offsetExists
-   * @covers Pops\ProxyObject::offsetUnset
+   * @covers Ezzatron\Pops\ProxyObject::offsetSet
+   * @covers Ezzatron\Pops\ProxyObject::offsetGet
+   * @covers Ezzatron\Pops\ProxyObject::offsetExists
+   * @covers Ezzatron\Pops\ProxyObject::offsetUnset
    */
   public function testOffsetSetGet()
   {
@@ -173,7 +173,7 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::count
+   * @covers Ezzatron\Pops\ProxyObject::count
    */
   public function testCount()
   {
@@ -185,7 +185,7 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::getIterator
+   * @covers Ezzatron\Pops\ProxyObject::getIterator
    */
   public function testGetIterator()
   {
@@ -200,7 +200,7 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::__toString
+   * @covers Ezzatron\Pops\ProxyObject::__toString
    */
   public function testToString()
   {
@@ -212,7 +212,7 @@ class ProxyObjectTest extends TestCase
   }
 
   /**
-   * @covers Pops\ProxyObject::__invoke
+   * @covers Ezzatron\Pops\ProxyObject::__invoke
    */
   public function testInvoke()
   {
@@ -224,13 +224,13 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\ProxyObject::__invoke
+   * @covers Ezzatron\Pops\ProxyObject::__invoke
    */
   public function testInvokeFailure()
   {
     $proxy = $this->_proxy;
     
-    $this->setExpectedException('BadMethodCallException', 'Call to undefined method Pops\Test\Fixture\Object::__invoke()');
+    $this->setExpectedException('BadMethodCallException', 'Call to undefined method Ezzatron\Pops\Test\Fixture\Object::__invoke()');
     $proxy('foo', 'bar');
   }
   

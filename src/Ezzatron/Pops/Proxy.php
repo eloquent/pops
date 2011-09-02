@@ -9,12 +9,6 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Test\Fixture;
+namespace Ezzatron\Pops;
 
-class Callable extends Object
-{
-  public function __invoke()
-  {
-    return array(__FUNCTION__, func_get_args());
-  }
-}
+interface Proxy {}

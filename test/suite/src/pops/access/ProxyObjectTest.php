@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Access;
+namespace Ezzatron\Pops\Access;
 
-use Pops\Test\Fixture\Object;
-use Pops\Test\Fixture\Overload;
-use Pops\Test\TestCase;
+use Ezzatron\Pops\Test\Fixture\Object;
+use Ezzatron\Pops\Test\Fixture\Overload;
+use Ezzatron\Pops\Test\TestCase;
 
 class ProxyObjectTest extends TestCase
 {
@@ -24,8 +24,8 @@ class ProxyObjectTest extends TestCase
   }
 
   /**
-   * @covers Pops\Access\ProxyObject::__construct
-   * @covers Pops\Access\ProxyObject::__call
+   * @covers Ezzatron\Pops\Access\ProxyObject::__construct
+   * @covers Ezzatron\Pops\Access\ProxyObject::__call
    */
   public function testCall()
   {
@@ -38,11 +38,11 @@ class ProxyObjectTest extends TestCase
   }
   
   /**
-   * @covers Pops\Access\ProxyObject::__set
-   * @covers Pops\Access\ProxyObject::__get
-   * @covers Pops\Access\ProxyObject::__isset
-   * @covers Pops\Access\ProxyObject::__unset
-   * @covers Pops\Access\ProxyObject::_popsPropertyReflector
+   * @covers Ezzatron\Pops\Access\ProxyObject::__set
+   * @covers Ezzatron\Pops\Access\ProxyObject::__get
+   * @covers Ezzatron\Pops\Access\ProxyObject::__isset
+   * @covers Ezzatron\Pops\Access\ProxyObject::__unset
+   * @covers Ezzatron\Pops\Access\ProxyObject::_popsPropertyReflector
    */
   public function testSetGet()
   {

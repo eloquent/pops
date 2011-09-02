@@ -9,22 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops\Access;
+namespace Ezzatron\Pops\Access;
 
-use Pops\Test\Fixture\Object;
-use Pops\Test\TestCase;
+use Ezzatron\Pops\Test\Fixture\Object;
+use Ezzatron\Pops\Test\TestCase;
 
 class ProxyClassTest extends TestCase
 {
   protected function setUp()
   {
-    $this->_class = 'Pops\Test\Fixture\Object';
+    $this->_class = 'Ezzatron\Pops\Test\Fixture\Object';
     $this->_proxy = ProxyClass::proxy($this->_class);
   }
   
   /**
-   * @covers Pops\Access\ProxyClass::__construct
-   * @covers Pops\Access\ProxyClass::__call
+   * @covers Ezzatron\Pops\Access\ProxyClass::__construct
+   * @covers Ezzatron\Pops\Access\ProxyClass::__call
    */
   public function testCall()
   {
@@ -37,11 +37,11 @@ class ProxyClassTest extends TestCase
   }
   
   /**
-   * @covers Pops\Access\ProxyClass::__set
-   * @covers Pops\Access\ProxyClass::__get
-   * @covers Pops\Access\ProxyClass::__isset
-   * @covers Pops\Access\ProxyClass::__unset
-   * @covers Pops\Access\ProxyClass::_popsPropertyReflector
+   * @covers Ezzatron\Pops\Access\ProxyClass::__set
+   * @covers Ezzatron\Pops\Access\ProxyClass::__get
+   * @covers Ezzatron\Pops\Access\ProxyClass::__isset
+   * @covers Ezzatron\Pops\Access\ProxyClass::__unset
+   * @covers Ezzatron\Pops\Access\ProxyClass::_popsPropertyReflector
    */
   public function testSetGet()
   {
@@ -98,14 +98,14 @@ class ProxyClassTest extends TestCase
   }
   
   /**
-   * @covers Pops\Access\ProxyClass::__set
-   * @covers Pops\Access\ProxyClass::__get
-   * @covers Pops\Access\ProxyClass::__unset
+   * @covers Ezzatron\Pops\Access\ProxyClass::__set
+   * @covers Ezzatron\Pops\Access\ProxyClass::__get
+   * @covers Ezzatron\Pops\Access\ProxyClass::__unset
    * @dataProvider setGetFailureData
    */
   public function testSetGetFailure($method, array $arguments)
   {
-    $this->setExpectedException('LogicException', 'Access to undeclared static property: Pops\Test\Fixture\Object::$'.$arguments[0]);
+    $this->setExpectedException('LogicException', 'Access to undeclared static property: Ezzatron\Pops\Test\Fixture\Object::$'.$arguments[0]);
     call_user_func_array(array($this->_proxy, $method), $arguments);
   }
 

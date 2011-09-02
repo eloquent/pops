@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops;
+namespace Ezzatron\Pops;
 
 use ArrayAccess;
 use BadMethodCallException;

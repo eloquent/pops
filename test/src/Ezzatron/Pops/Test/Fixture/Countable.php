@@ -9,6 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Pops;
+namespace Ezzatron\Pops\Test\Fixture;
 
-interface Proxy {}
+use Countable as CountableInterface;
+
+class Countable extends Object implements CountableInterface
+{
+  public function count()
+  {
+    return $this->count;
+  }
+  
+  public $count = 0;
+}
