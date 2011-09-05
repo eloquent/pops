@@ -9,13 +9,18 @@ Requires PHP > 5.3.
 
 ### What is Pops?
 
-Pops is a system for wrapping PHP objects in other objects to modify their behaviour. Its main feature is the **access proxy** system, but it can be used to create other types of proxies too.
+Pops is a system for wrapping PHP objects in other objects to modify their
+behaviour. Its main feature is the **access proxy** system, but it can be used
+to create other types of proxies too.
 
-A Pops proxy will, as much as possible, imitate the object it wraps. It passes along method calls and returns the underlying result, and allows transparent access to properties (for both setting and getting).
+A Pops proxy will, as much as possible, imitate the object it wraps. It passes
+along method calls and returns the underlying result, and allows transparent
+access to properties (for both setting and getting).
 
 ### A basic example
 
-Let's write a simple proxy that converts everything to uppercase. Here we have a class:
+Let's write a simple proxy that converts everything to uppercase. Here we have a
+class:
 
     class Confusion()
     {
@@ -44,7 +49,8 @@ And here is our proxy:
       }
     }
 
-Now when we access `wat()` and `$derp` both normally, and through our proxy, we can see the effect:
+Now when we access `wat()` and `$derp` both normally, and through our proxy, we
+can see the effect:
 
     $confusion = new Confusion;
     $proxy = new UppercaseProxy($confusion);
@@ -57,7 +63,9 @@ Now when we access `wat()` and `$derp` both normally, and through our proxy, we 
 
 ### Access proxy
 
-The access proxy allows access to **protected** and **private** methods and properties of objects as if they were marked **public**. It can do so for both objects and classes (i.e. static methods and properties).
+The access proxy allows access to **protected** and **private** methods and
+properties of objects as if they were marked **public**. It can do so for both
+objects and classes (i.e. static methods and properties).
 
 #### For objects
 
@@ -69,7 +77,8 @@ Take the following class:
       private $bar = 'mind';
     }
 
-Normally there is no way to call `foo()` or access `$bar` from outside the `SeriousBusiness` class, but an **access proxy** allows you to do so with ease:
+Normally there is no way to call `foo()` or access `$bar` from outside the
+`SeriousBusiness` class, but an **access proxy** allows this to be achieved:
 
     use Ezzatron\Pops\Access\ProxyObject;
 
@@ -89,7 +98,8 @@ The same concept applies for static methods and properties:
       static private $bar = 'mind';
     }
 
-To access these, you must use a **class proxy** instead of an **object proxy**, but they operate in a similar manner:
+To access these, a **class proxy** must be used instead of an **object proxy**,
+but they operate in a similar manner:
 
     use Ezzatron\Pops\Access\ProxyClass;
 
@@ -98,14 +108,28 @@ To access these, you must use a **class proxy** instead of an **object proxy**, 
     echo $proxy->foo('not so private...');   // outputs 'foo is not so private...'
     echo $proxy->bar.' = blown';             // outputs 'mind = blown'
 
+Alternatively, Pops can generate a class that can be used statically:
+
+    use Ezzatron\Pops\Access\ProxyClass;
+
+    $proxyClass = ProxyClass::proxyClass('SeriousBusiness');
+
+    echo $proxyClass::foo('not so private...');       // outputs 'foo is not so private...'
+    echo $proxyClass::_popsProxy()->bar.' = blown';   // outputs 'mind = blown'
+
+Unfortunately, there is (currently) no __getStatic() or setStatic() in PHP, so
+accessing static properties in this way is a not as elegant as it could be.
+
 #### Access proxy applications
 
-* Writing [white-box](http://en.wikipedia.org/wiki/White-box_testing) style unit tests (testing protected/private methods).
+* Writing [white-box](http://en.wikipedia.org/wiki/White-box_testing) style unit
+  tests (testing protected/private methods).
 * Modifying behaviour of poorly designed third-party libraries.
 
 ### Code quality
 
-Pops strives to attain a high level of quality. A full test suite is available, and code coverage is closely monitored.
+Pops strives to attain a high level of quality. A full test suite is available,
+and code coverage is closely monitored.
 
 #### Latest revision test suite results
 http://ci.ezzatron.com/pops

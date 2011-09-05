@@ -21,6 +21,17 @@ class ProxyClassTest extends TestCase
     $this->_class = 'Ezzatron\Pops\Test\Fixture\Object';
     $this->_proxy = ProxyClass::proxy($this->_class);
   }
+
+  /**
+   * @covers Ezzatron\Pops\Access\ProxyClass::proxyClassDefinition
+   */
+  public function testProxyStatic()
+  {
+    $class = ProxyClass::proxyClass('Ezzatron\Pops\Test\Fixture\Object');
+    $proxy = $class::_popsProxy();
+
+    $this->assertEquals($this->_proxy, $proxy);
+  }
   
   /**
    * @covers Ezzatron\Pops\Access\ProxyClass::__construct

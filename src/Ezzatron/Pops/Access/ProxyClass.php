@@ -126,6 +126,24 @@ class ProxyClass extends PopsProxyClass
   }
 
   /**
+   * @param string $class
+   * @param string $proxyClass
+   * @param string $proxyClassClass
+   * @param string $proxyClassBaseClass
+   *
+   * @return string
+   */
+  static protected function proxyClassDefinition($class, &$proxyClass, $proxyClassClass = null, $proxyClassBaseClass = null)
+  {
+    if (null === $proxyClassClass)
+    {
+      $proxyClassClass = __CLASS__;
+    }
+
+    return parent::proxyClassDefinition($class, $proxyClass, $proxyClassClass, $proxyClassBaseClass);
+  }
+
+  /**
    * @var ReflectionClass
    */
   protected $_popsReflector;
