@@ -80,10 +80,10 @@ Take the following class:
 Normally there is no way to call `foo()` or access `$bar` from outside the
 `SeriousBusiness` class, but an **access proxy** allows this to be achieved:
 
-    use Ezzatron\Pops\Access\ProxyObject;
+    use Ezzatron\Pops\Access\Pops;
 
     $object = new SeriousBusiness;
-    $proxy = ProxyObject::proxy($object);
+    $proxy = Pops::proxy($object);
 
     echo $proxy->foo('not so private...');   // outputs 'foo is not so private...'
     echo $proxy->bar.' = blown';             // outputs 'mind = blown'
@@ -101,18 +101,18 @@ The same concept applies for static methods and properties:
 To access these, a **class proxy** must be used instead of an **object proxy**,
 but they operate in a similar manner:
 
-    use Ezzatron\Pops\Access\ProxyClass;
+    use Ezzatron\Pops\Access\Pops;
 
-    $proxy = ProxyClass::proxy('SeriousBusiness');
+    $proxy = Pops::proxyClass('SeriousBusiness');
 
     echo $proxy->foo('not so private...');   // outputs 'foo is not so private...'
     echo $proxy->bar.' = blown';             // outputs 'mind = blown'
 
 Alternatively, Pops can generate a class that can be used statically:
 
-    use Ezzatron\Pops\Access\ProxyClass;
+    use Ezzatron\Pops\Access\Pops;
 
-    $proxyClass = ProxyClass::proxyClass('SeriousBusiness');
+    $proxyClass = Pops::proxyClassStatic('SeriousBusiness');
 
     echo $proxyClass::foo('not so private...');       // outputs 'foo is not so private...'
     echo $proxyClass::_popsProxy()->bar.' = blown';   // outputs 'mind = blown'
