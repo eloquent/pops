@@ -22,7 +22,7 @@ access to properties (for both setting and getting).
 Let's write a simple proxy that converts everything to uppercase. Here we have a
 class:
 
-    class Confusion()
+    class Confusion
     {
       public function wat()
       {
@@ -94,8 +94,8 @@ The same concept applies for static methods and properties:
 
     class SeriousBusiness
     {
-      static private function foo($adjective) { return 'foo is '.$adjective; }
-      static private $bar = 'mind';
+      static private function baz($adjective) { return 'baz is '.$adjective; }
+      static private $qux = 'mind';
     }
 
 To access these, a **class proxy** must be used instead of an **object proxy**,
@@ -105,8 +105,8 @@ but they operate in a similar manner:
 
     $proxy = Pops::proxyClass('SeriousBusiness');
 
-    echo $proxy->foo('not so private...');   // outputs 'foo is not so private...'
-    echo $proxy->bar.' = blown';             // outputs 'mind = blown'
+    echo $proxy->baz('not so private...');   // outputs 'baz is not so private...'
+    echo $proxy->qux.' = blown';             // outputs 'mind = blown'
 
 Alternatively, Pops can generate a class that can be used statically:
 
@@ -114,8 +114,8 @@ Alternatively, Pops can generate a class that can be used statically:
 
     $proxyClass = Pops::proxyClassStatic('SeriousBusiness');
 
-    echo $proxyClass::foo('not so private...');       // outputs 'foo is not so private...'
-    echo $proxyClass::_popsProxy()->bar.' = blown';   // outputs 'mind = blown'
+    echo $proxyClass::baz('not so private...');       // outputs 'baz is not so private...'
+    echo $proxyClass::_popsProxy()->qux.' = blown';   // outputs 'mind = blown'
 
 Unfortunately, there is (currently) no __getStatic() or setStatic() in PHP, so
 accessing static properties in this way is a not as elegant as it could be.
