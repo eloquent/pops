@@ -9,10 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Ezzatron\Pops;
-
 use Confusion;
-use Ezzatron\Pops\Access\Pops as PopsAccess;
+use Ezzatron\Pops\Access\Pops;
 use Ezzatron\Pops\Test\TestCase;
 use SeriousBusiness;
 use UppercaseProxy;
@@ -34,7 +32,7 @@ class FunctionalTest extends TestCase
   public function testDocumentationAccessProxyObject()
   {
     $object = new SeriousBusiness;
-    $proxy = PopsAccess::proxy($object);
+    $proxy = Pops::proxy($object);
 
     $this->assertEquals('foo is not so private...', $proxy->foo('not so private...'));
     $this->assertEquals('mind = blown', $proxy->bar.' = blown');
@@ -42,7 +40,7 @@ class FunctionalTest extends TestCase
 
   public function testDocumentationAccessProxyClass()
   {
-    $proxy = PopsAccess::proxyClass('SeriousBusiness');
+    $proxy = Pops::proxyClass('SeriousBusiness');
 
     $this->assertEquals('baz is not so private...', $proxy->baz('not so private...'));
     $this->assertEquals('mind = blown', $proxy->qux.' = blown');
@@ -50,7 +48,7 @@ class FunctionalTest extends TestCase
 
   public function testDocumentationAccessProxyClassStatic()
   {
-    $proxyClass = PopsAccess::proxyClassStatic('SeriousBusiness');
+    $proxyClass = Pops::proxyClassStatic('SeriousBusiness');
 
     $this->assertEquals('baz is not so private...', $proxyClass::baz('not so private...'));
     $this->assertEquals('mind = blown', $proxyClass::_popsProxy()->qux.' = blown');

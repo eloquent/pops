@@ -129,7 +129,8 @@ accessing static properties in this way is a not as elegant as it could be.
 ### Code quality
 
 Pops strives to attain a high level of quality. A full test suite is available,
-and code coverage is closely monitored.
+and code coverage is closely monitored. All of the above code examples are also
+tested.
 
 #### Latest revision test suite results
 http://ci.ezzatron.com/pops
