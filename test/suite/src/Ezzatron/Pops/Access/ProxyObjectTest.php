@@ -20,7 +20,7 @@ class ProxyObjectTest extends TestCase
   protected function setUp()
   {
     $this->_object = new Object;
-    $this->_proxy = ProxyObject::proxy($this->_object);
+    $this->_proxy = new ProxyObject($this->_object);
   }
 
   /**
@@ -83,7 +83,7 @@ class ProxyObjectTest extends TestCase
     $object->values = array(
       'foo' => 'bar',
     );
-    $proxy = ProxyObject::proxy($object);
+    $proxy = new ProxyObject($object);
     
     $this->assertTrue(isset($proxy->foo));
     $this->assertEquals('bar', $proxy->foo);

@@ -17,30 +17,6 @@ class ProxyClass implements Proxy
 {
   /**
    * @param string $class
-   * 
-   * @return ProxyClass
-   */
-  static public function proxy($class)
-  {
-    return new static($class);
-  }
-
-  /**
-   * @param string $class
-   * @param string $proxyClass
-   *
-   * @return string
-   */
-  static public function proxyClass($class, $proxyClass = null)
-  {
-    $classDef = static::proxyClassDefinition($class, $proxyClass);
-    eval($classDef);
-
-    return $proxyClass;
-  }
-
-  /**
-   * @param string $class
    */
   public function __construct($class)
   {
@@ -113,39 +89,6 @@ class ProxyClass implements Proxy
     $class = $this->_popsClass;
     
     $class::$$property = null;
-  }
-
-  /**
-   * @param string $class
-   * @param string $proxyClass
-   * @param string $proxyClassClass
-   * @param string $proxyClassBaseClass
-   *
-   * @return string
-   */
-  static protected function proxyClassDefinition($class, &$proxyClass, $proxyClassClass = null, $proxyClassBaseClass = null)
-  {
-    if (null === $proxyClass)
-    {
-      $classParts = explode('\\', $class);
-      $proxyClassPrefix = array_pop($classParts).'_Pops_';
-      $proxyClass = uniqid($proxyClassPrefix);
-    }
-    if (null === $proxyClassClass)
-    {
-      $proxyClassClass = __CLASS__;
-    }
-    if (null === $proxyClassBaseClass)
-    {
-      $proxyClassBaseClass = __NAMESPACE__.'\ProxyClassBase';
-    }
-
-    $classDef = 'class '.$proxyClass.' extends '.$proxyClassBaseClass.' { ';
-    $classDef .= ' static protected $_popsProxyClassClass = '.var_export($proxyClassClass, true).';';
-    $classDef .= ' static protected $_popsClass = '.var_export($class, true).';';
-    $classDef .= ' }';
-
-    return $classDef;
   }
 
   /**

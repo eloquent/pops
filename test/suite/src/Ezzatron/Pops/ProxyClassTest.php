@@ -20,52 +20,17 @@ class ProxyClassTest extends TestCase
   protected function setUp()
   {
     $this->_class = __NAMESPACE__.'\Test\Fixture\Object';
-    $this->_proxy = ProxyClass::proxy($this->_class);
+    $this->_proxy = new ProxyClass($this->_class);
   }
   
   /**
-   * @covers Ezzatron\Pops\ProxyClass::proxy
    * @covers Ezzatron\Pops\ProxyClass::__construct
    * @covers Ezzatron\Pops\ProxyClass::_popsClass
    */
-  public function testProxy()
+  public function testConstruct()
   {
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyClass', $this->_proxy);
     $this->assertEquals($this->_class, $this->_proxy->_popsClass());
-  }
-
-  /**
-   * @covers Ezzatron\Pops\ProxyClass::proxyClass
-   * @covers Ezzatron\Pops\ProxyClass::proxyClassDefinition
-   * @covers Ezzatron\Pops\ProxyClassBase
-   */
-  public function testProxyStatic()
-  {
-    $class = ProxyClass::proxyClass(__NAMESPACE__.'\Test\Fixture\Object');
-
-    $this->assertTrue(class_exists($class, false));
-    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClassBase'));
-
-    $proxy = $class::_popsProxy();
-
-    $this->assertEquals($this->_proxy, $proxy);
-    $this->assertSame($proxy, $class::_popsProxy());
-
-    $this->assertEquals(
-      array('staticPublicMethod', array('foo', 'bar'))
-      , $class::staticPublicMethod('foo', 'bar')
-    );
-    $this->assertEquals(
-      array('__callStatic', array('foo', array('bar', 'baz')))
-      , $class::foo('bar', 'baz')
-    );
-
-
-    $className = uniqid('Foo');
-    $class = ProxyClass::proxyClass(__NAMESPACE__.'\Test\Fixture\Object', $className);
-    
-    $this->assertTrue(class_exists($class, false));
-    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClassBase'));
   }
   
   /**

@@ -26,15 +26,14 @@ class ProxyObjectTest extends TestCase
   protected function setUp()
   {
     $this->_object = new Object;
-    $this->_proxy = ProxyObject::proxy($this->_object);
+    $this->_proxy = new ProxyObject($this->_object);
   }
   
   /**
-   * @covers Ezzatron\Pops\ProxyObject::proxy
    * @covers Ezzatron\Pops\ProxyObject::__construct
    * @covers Ezzatron\Pops\ProxyObject::_popsObject
    */
-  public function testProxy()
+  public function testConstruct()
   {
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_proxy);
     $this->assertSame($this->_object, $this->_proxy->_popsObject());
@@ -107,7 +106,7 @@ class ProxyObjectTest extends TestCase
       'foo' => 'bar',
       'baz' => 'qux',
     );
-    $proxy = ProxyObject::proxy($object);
+    $proxy = new ProxyObject($object);
     
     $this->assertTrue(isset($proxy->foo));
     $this->assertTrue(isset($proxy->baz));
@@ -135,7 +134,7 @@ class ProxyObjectTest extends TestCase
   public function testOffsetSetGet()
   {
     $arrayaccess = new ArrayAccess;
-    $proxy = ProxyObject::proxy($arrayaccess);
+    $proxy = new ProxyObject($arrayaccess);
     
     $this->assertFalse(isset($arrayaccess['foo']));
     $this->assertFalse(isset($proxy['foo']));
@@ -179,7 +178,7 @@ class ProxyObjectTest extends TestCase
   {
     $countable = new Countable;
     $countable->count = 666;
-    $proxy = ProxyObject::proxy($countable);
+    $proxy = new ProxyObject($countable);
 
     $this->assertEquals(666, count($proxy));
   }
@@ -194,7 +193,7 @@ class ProxyObjectTest extends TestCase
       'foo' => 'bar',
       'baz' => 'qux',
     );
-    $proxy = ProxyObject::proxy($traversable);
+    $proxy = new ProxyObject($traversable);
 
     $this->assertEquals($traversable->values, iterator_to_array($proxy));
   }
@@ -206,7 +205,7 @@ class ProxyObjectTest extends TestCase
   {
     $stringable = new Stringable;
     $stringable->string = 'foo';
-    $proxy = ProxyObject::proxy($stringable);
+    $proxy = new ProxyObject($stringable);
     
     $this->assertEquals('foo', (string)$proxy);
   }
@@ -217,7 +216,7 @@ class ProxyObjectTest extends TestCase
   public function testInvoke()
   {
     $callable = new Callable;
-    $proxy = ProxyObject::proxy($callable);
+    $proxy = new ProxyObject($callable);
     $expected = array('__invoke', array('foo', 'bar'));
     
     $this->assertEquals($expected, $proxy('foo', 'bar'));

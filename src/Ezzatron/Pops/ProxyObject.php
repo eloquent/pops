@@ -22,16 +22,6 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, IteratorAggregate
 {
   /**
    * @param object $object
-   * 
-   * @return ProxyObject
-   */
-  static public function proxy($object)
-  {
-    return new static($object);
-  }
-
-  /**
-   * @param object $object
    */
   public function __construct($object)
   {
