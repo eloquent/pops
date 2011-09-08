@@ -122,9 +122,7 @@ class Pops
    */
   static protected function proxyClassStaticDefinitionHeader($proxyClass)
   {
-    $proxyClassBaseClass = __NAMESPACE__.'\ProxyClassBase';
-
-    return 'class '.$proxyClass.' extends '.$proxyClassBaseClass;
+    return 'class '.$proxyClass.' extends '.static::proxyClassClass();
   }
 
   /**
@@ -134,11 +132,6 @@ class Pops
    */
   static protected function proxyClassStaticDefinitionBody($originalClass)
   {
-    $proxyClassClass = static::proxyClassClass();
-
-    return
-      'static protected $_popsProxyClassClass = '.var_export($proxyClassClass, true).';'
-      .' static protected $_popsClass = '.var_export($originalClass, true).';'
-    ;
+    return 'static protected $_popsStaticOriginalClass = '.var_export($originalClass, true).';';
   }
 }

@@ -45,16 +45,17 @@ class PopsTest extends TestCase
    * @covers Ezzatron\Pops\Pops::proxyClassStaticProxyClass
    * @covers Ezzatron\Pops\Pops::proxyClassStaticDefinitionHeader
    * @covers Ezzatron\Pops\Pops::proxyClassStaticDefinitionBody
-   * @covers Ezzatron\Pops\ProxyClassBase
+   * @covers Ezzatron\Pops\ProxyClass::__callStatic
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxy
    */
   public function testProxyClassStatic()
   {
     $class = Pops::proxyClassStatic(__NAMESPACE__.'\Test\Fixture\Object');
 
     $this->assertTrue(class_exists($class, false));
-    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClassBase'));
+    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
 
-    $expected = new ProxyClass(__NAMESPACE__.'\Test\Fixture\Object');
+    $expected = new $class(__NAMESPACE__.'\Test\Fixture\Object');
     $proxy = $class::_popsProxy();
 
     $this->assertEquals($expected, $proxy);
@@ -74,6 +75,6 @@ class PopsTest extends TestCase
     $class = Pops::proxyClassStatic(__NAMESPACE__.'\Test\Fixture\Object', $className);
 
     $this->assertTrue(class_exists($class, false));
-    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClassBase'));
+    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
   }
 }

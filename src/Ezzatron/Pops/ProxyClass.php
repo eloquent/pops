@@ -12,9 +12,42 @@
 namespace Ezzatron\Pops;
 
 use InvalidArgumentException;
+use LogicException;
 
 class ProxyClass implements Proxy
 {
+  /**
+   * @param string $method
+   * @param array $arguments
+   *
+   * @return mixed
+   */
+  static public function __callStatic($method, array $arguments)
+  {
+    return call_user_func_array(array(self::_popsProxy(), $method), $arguments);
+  }
+
+  /**
+   * @return ProxyClass
+   */
+  static public function _popsProxy()
+  {
+    $originalClass = static::$_popsStaticOriginalClass;
+    if (null === $originalClass)
+    {
+      throw new LogicException('This class should not be called directly.');
+    }
+
+    $proxyClassClass = get_called_class();
+
+    if (!isset(self::$_popsStaticProxies[$proxyClassClass][$originalClass]))
+    {
+      self::$_popsStaticProxies[$proxyClassClass][$originalClass] = new $proxyClassClass($originalClass);
+    }
+
+    return self::$_popsStaticProxies[$proxyClassClass][$originalClass];
+  }
+
   /**
    * @param string $class
    */
@@ -90,6 +123,16 @@ class ProxyClass implements Proxy
     
     $class::$$property = null;
   }
+
+  /**
+   * @var string
+   */
+  static protected $_popsStaticOriginalClass;
+
+  /**
+   * @var array
+   */
+  static protected $_popsStaticProxies = array();
 
   /**
    * @var string

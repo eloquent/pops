@@ -44,9 +44,9 @@ class PopsTest extends TestCase
     $class = Pops::proxyClassStatic('Ezzatron\Pops\Test\Fixture\Object');
 
     $this->assertTrue(class_exists($class, false));
-    $this->assertTrue(is_subclass_of($class, 'Ezzatron\Pops\ProxyClassBase'));
+    $this->assertTrue(is_subclass_of($class, 'Ezzatron\Pops\Access\ProxyClass'));
 
-    $expected = new ProxyClass('Ezzatron\Pops\Test\Fixture\Object');
+    $expected = new $class('Ezzatron\Pops\Test\Fixture\Object');
     $proxy = $class::_popsProxy();
 
     $this->assertEquals($expected, $proxy);

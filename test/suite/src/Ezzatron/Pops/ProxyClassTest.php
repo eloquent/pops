@@ -22,6 +22,16 @@ class ProxyClassTest extends TestCase
     $this->_class = __NAMESPACE__.'\Test\Fixture\Object';
     $this->_proxy = new ProxyClass($this->_class);
   }
+
+  /**
+   * @covers Ezzatron\Pops\ProxyClass::__callStatic
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxy
+   */
+  public function testCallStaticFailure()
+  {
+    $this->setExpectedException('LogicException');
+    ProxyClass::foo();
+  }
   
   /**
    * @covers Ezzatron\Pops\ProxyClass::__construct
