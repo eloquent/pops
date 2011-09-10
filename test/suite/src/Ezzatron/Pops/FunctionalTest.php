@@ -11,6 +11,7 @@
 
 use ArrayIterator;
 use Ezzatron\Pops\Access\Pops;
+use Ezzatron\Pops\Safe\Pops as Safe;
 use Ezzatron\Pops\Test\TestCase;
 use OutputEscaper\Pops as OutputEscaper;
 
@@ -59,6 +60,7 @@ class FunctionalTest extends TestCase
       'foo',
       'bar',
       '<script>alert(document.cookie);</script>',
+      Safe::proxy('<em>ooh...</em>'),
     ));
     $proxy = OutputEscaper::proxy($list, true);
 
@@ -67,6 +69,7 @@ class FunctionalTest extends TestCase
       .'<li>foo</li>'.PHP_EOL
       .'<li>bar</li>'.PHP_EOL
       .'<li>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</li>'.PHP_EOL
+      .'<li><em>ooh...</em></li>'.PHP_EOL
       .'</ul>'
     ;
 

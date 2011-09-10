@@ -153,11 +153,13 @@ and wrap sub-values with the appropriate classes.
 The output escaper can now be used like so:
 
     use OutputEscaper\Pops as OutputEscaper;
+    use Ezzatron\Pops\Safe\Pops as Safe;
 
     $list = new ArrayIterator(array(
       'foo',
       'bar',
       '<script>alert(document.cookie);</script>',
+      Safe::proxy('<em>ooh...</em>'),
     ));
     $proxy = OutputEscaper::proxy($list, true);
 
@@ -174,10 +176,17 @@ Which would output:
     <li>foo</li>
     <li>bar</li>
     <li>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</li>
+    <li><em>ooh...</em></li>
     </ul>
 
 Note that the above example should **NOT** be used in production. Output
 escaping is a complex issue that should not be taken lightly.
+
+#### Excluding values from recursion
+
+Note that in the above example, the last list item was wrapped in a *Safe*
+proxy. When Pops applies its proxies, it will skip anything marked as safe in
+this manner.
 
 ### Code quality
 

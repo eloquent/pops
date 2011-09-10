@@ -11,6 +11,7 @@
 
 namespace Ezzatron\Pops;
 
+use Ezzatron\Pops\Safe\Proxy as SafeProxy;
 use ReflectionClass;
 
 class Pops
@@ -23,6 +24,10 @@ class Pops
    */
   static public function proxy($value, $recursive = null)
   {
+    if ($value instanceof SafeProxy)
+    {
+      return $value;
+    }
     if (is_object($value))
     {
       return static::proxyObject($value, $recursive);

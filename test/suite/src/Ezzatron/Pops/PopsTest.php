@@ -11,6 +11,7 @@
 
 namespace Ezzatron\Pops;
 
+use Ezzatron\Pops\Safe\Pops as Safe;
 use Ezzatron\Pops\Test\Fixture\Object;
 use Ezzatron\Pops\Test\TestCase;
 
@@ -28,6 +29,12 @@ class PopsTest extends TestCase
    */
   public function testProxy()
   {
+    $safe = Safe::proxy(new Object, true);
+
+    $this->assertEquals($safe, Pops::proxy($safe));
+    $this->assertEquals($safe->object(), Pops::proxy($safe->object()));
+    $this->assertEquals($safe->object(), Pops::proxy($safe)->object());
+
     $expected = new ProxyObject(new Object);
 
     $this->assertEquals($expected, Pops::proxy(new Object));
