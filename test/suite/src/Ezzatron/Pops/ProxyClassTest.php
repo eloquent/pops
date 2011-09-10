@@ -33,7 +33,7 @@ class ProxyClassTest extends TestCase
     $this->setExpectedException('LogicException');
     ProxyClass::foo();
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyClass::__construct
    * @covers Ezzatron\Pops\ProxyClass::_popsClass
@@ -43,7 +43,7 @@ class ProxyClassTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyClass', $this->_proxy);
     $this->assertEquals($this->_class, $this->_proxy->_popsClass());
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyClass::__construct
    */
@@ -65,7 +65,6 @@ class ProxyClassTest extends TestCase
   /**
    * @covers Ezzatron\Pops\ProxyClass::__call
    * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValueRecursive
    */
   public function testCall()
   {
@@ -80,31 +79,30 @@ class ProxyClassTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->staticArray());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->staticString());
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyClass::__set
    * @covers Ezzatron\Pops\ProxyClass::__get
    * @covers Ezzatron\Pops\ProxyClass::__isset
    * @covers Ezzatron\Pops\ProxyClass::__unset
    * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValueRecursive
    */
   public function testSetGet()
   {
     $this->assertTrue(isset($this->_proxy->staticPublicProperty));
     $this->assertEquals('staticPublicProperty', $this->_proxy->staticPublicProperty);
-    
+
     $this->_proxy->staticPublicProperty = 'foo';
-    
+
     $this->assertTrue(isset($this->_proxy->staticPublicProperty));
     $this->assertEquals('foo', $this->_proxy->staticPublicProperty);
-    
+
     unset($this->_proxy->staticPublicProperty);
-    
+
     $this->assertFalse(isset($this->_proxy->staticPublicProperty));
-    
+
     $this->_proxy->staticPublicProperty = 'staticPublicProperty';
-    
+
     $this->assertTrue(isset($this->_proxy->staticPublicProperty));
     $this->assertEquals('staticPublicProperty', $this->_proxy->staticPublicProperty);
 
@@ -143,6 +141,7 @@ class ProxyClassTest extends TestCase
    * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinitionBody
    * @covers Ezzatron\Pops\ProxyClass::__callStatic
    * @covers Ezzatron\Pops\ProxyClass::_popsProxy
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValue
    */
   public function testPopsGenerateStaticClassProxy()
   {
@@ -168,6 +167,16 @@ class ProxyClassTest extends TestCase
 
     // recursive tests
     $class = ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', true);
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $class::staticObject()->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $class::staticObject()->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $class::staticArray());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $class::staticString());
+
+    $class = uniqid('Foo');
+    ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', true, $class);
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());

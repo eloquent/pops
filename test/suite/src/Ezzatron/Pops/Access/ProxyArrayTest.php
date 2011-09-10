@@ -17,7 +17,7 @@ use Ezzatron\Pops\Test\TestCase;
 class ProxyArrayTest extends TestCase
 {
   /**
-   * @covers Ezzatron\Pops\Access\ProxyArray::_popsProxySubValueRecursive
+   * @covers Ezzatron\Pops\ProxyArray
    */
   public function testRecursive()
   {

@@ -115,16 +115,6 @@ class ProxyClass extends PopsProxyClass
   }
 
   /**
-   * @param mixed $value
-   *
-   * @return mixed
-   */
-  static protected function _popsProxySubValueRecursive($value)
-  {
-    return Pops::proxy($value, true);
-  }
-  
-  /**
    * @param string $property
    * 
    * @return ReflectionProperty|null

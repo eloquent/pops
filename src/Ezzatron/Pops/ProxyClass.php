@@ -13,6 +13,7 @@ namespace Ezzatron\Pops;
 
 use InvalidArgumentException;
 use LogicException;
+use ReflectionClass;
 
 class ProxyClass implements Proxy
 {
@@ -178,20 +179,21 @@ class ProxyClass implements Proxy
   {
     if ($recursive)
     {
-      return static::_popsProxySubValueRecursive($value);
+      $class = new ReflectionClass(get_called_class());
+      $namespace = $class->getNamespaceName();
+      $popsClass = $namespace.'\Pops';
+
+      if (class_exists($popsClass))
+      {
+        return $popsClass::proxy($value, true);
+      }
+
+      $parent = $class->getParentClass()->getName();
+      
+      return $parent::_popsProxySubValue($value, $recursive);
     }
 
     return $value;
-  }
-
-  /**
-   * @param mixed $value
-   *
-   * @return Proxy
-   */
-  static protected function _popsProxySubValueRecursive($value)
-  {
-    return Pops::proxy($value, true);
   }
 
   /**
@@ -225,7 +227,12 @@ class ProxyClass implements Proxy
     {
       $originalClassParts = explode('\\', $originalClass);
       $proxyClassPrefix = array_pop($originalClassParts).'_Pops_';
+      $proxyClassNamespace = implode('\\', $originalClassParts);
       $proxyClass = uniqid($proxyClassPrefix);
+      if ($proxyClassNamespace)
+      {
+        $proxyClass = $proxyClassNamespace.'\\'.$proxyClass;
+      }
     }
 
     return $proxyClass;
@@ -238,7 +245,17 @@ class ProxyClass implements Proxy
    */
   static protected function _popsStaticClassProxyDefinitionHeader($proxyClass)
   {
-    return 'class '.$proxyClass.' extends '.get_called_class();
+    $proxyClassParts = explode('\\', $proxyClass);
+    $proxyClass = array_pop($proxyClassParts);
+    $proxyClassNamespace = implode('\\', $proxyClassParts);
+
+    $header = 'class '.$proxyClass.' extends \\'.get_called_class();
+    if ($proxyClassNamespace)
+    {
+      $header = 'namespace '.$proxyClassNamespace.'; '.$header;
+    }
+
+    return $header;
   }
 
   /**

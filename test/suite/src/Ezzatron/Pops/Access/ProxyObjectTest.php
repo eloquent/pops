@@ -24,7 +24,7 @@ class ProxyObjectTest extends TestCase
   }
 
   /**
-   * @covers Ezzatron\Pops\Access\ProxyObject::_popsProxySubValueRecursive
+   * @covers Ezzatron\Pops\ProxyObject
    */
   public function testRecursive()
   {

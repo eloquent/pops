@@ -42,7 +42,6 @@ class ProxyArrayTest extends TestCase
    * @covers Ezzatron\Pops\ProxyArray::offsetExists
    * @covers Ezzatron\Pops\ProxyArray::offsetUnset
    * @covers Ezzatron\Pops\ProxyArray::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyArray::_popsProxySubValueRecursive
    */
   public function testOffsetSetGet()
   {
@@ -118,7 +117,6 @@ class ProxyArrayTest extends TestCase
    * @covers Ezzatron\Pops\ProxyArray::rewind
    * @covers Ezzatron\Pops\ProxyArray::valid
    * @covers Ezzatron\Pops\ProxyArray::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyArray::_popsProxySubValueRecursive
    */
   public function testIterator()
   {
@@ -161,8 +159,6 @@ class ProxyArrayTest extends TestCase
   /**
    * @covers Ezzatron\Pops\ProxyArray::__toString
    * @covers Ezzatron\Pops\ProxyArray::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyArray::_popsProxySubValueRecursive
-   *
    */
   public function testToString()
   {

@@ -16,6 +16,7 @@ use ArrayIterator;
 use Countable;
 use InvalidArgumentException;
 use Iterator;
+use ReflectionClass;
 
 class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
 {
@@ -143,23 +144,17 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
   /**
    * @param mixed $value
    *
-   * @return Proxy
-   */
-  static protected function _popsProxySubValueRecursive($value)
-  {
-    return Pops::proxy($value, true);
-  }
-
-  /**
-   * @param mixed $value
-   *
    * @return mixed
    */
   protected function _popsProxySubValue($value)
   {
     if ($this->_popsRecursive)
     {
-      return static::_popsProxySubValueRecursive($value);
+      $class = new ReflectionClass(get_called_class());
+      $namespace = $class->getNamespaceName();
+      $popsClass = $namespace.'\Pops';
+
+      return $popsClass::proxy($value, true);
     }
 
     return $value;

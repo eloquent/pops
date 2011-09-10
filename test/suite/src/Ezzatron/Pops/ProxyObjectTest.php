@@ -63,7 +63,6 @@ class ProxyObjectTest extends TestCase
   /**
    * @covers Ezzatron\Pops\ProxyObject::__call
    * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValueRecursive
    */
   public function testCall()
   {
@@ -85,7 +84,6 @@ class ProxyObjectTest extends TestCase
    * @covers Ezzatron\Pops\ProxyObject::__isset
    * @covers Ezzatron\Pops\ProxyObject::__unset
    * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValueRecursive
    */
   public function testSetGet()
   {
@@ -207,7 +205,6 @@ class ProxyObjectTest extends TestCase
    * @covers Ezzatron\Pops\ProxyObject::offsetExists
    * @covers Ezzatron\Pops\ProxyObject::offsetUnset
    * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValueRecursive
    */
   public function testOffsetSetGet()
   {
@@ -297,7 +294,6 @@ class ProxyObjectTest extends TestCase
    * @covers Ezzatron\Pops\ProxyObject::rewind
    * @covers Ezzatron\Pops\ProxyObject::valid
    * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValueRecursive
    */
   public function testIterator()
   {
@@ -364,8 +360,6 @@ class ProxyObjectTest extends TestCase
   /**
    * @covers Ezzatron\Pops\ProxyObject::__toString
    * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValueRecursive
-   *
    */
   public function testToString()
   {
@@ -386,7 +380,6 @@ class ProxyObjectTest extends TestCase
   /**
    * @covers Ezzatron\Pops\ProxyObject::__invoke
    * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValue
-   * @covers Ezzatron\Pops\ProxyObject::_popsProxySubValueRecursive
    */
   public function testInvoke()
   {

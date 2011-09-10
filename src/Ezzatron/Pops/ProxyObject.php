@@ -18,6 +18,7 @@ use InvalidArgumentException;
 use Iterator;
 use IteratorAggregate;
 use LogicException;
+use ReflectionClass;
 
 class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
 {
@@ -210,16 +211,6 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
   }
 
   /**
-   * @param mixed $value
-   *
-   * @return Proxy
-   */
-  static protected function _popsProxySubValueRecursive($value)
-  {
-    return Pops::proxy($value, true);
-  }
-
-  /**
    * @return Iterator
    */
   protected function _popsInnerIterator()
@@ -254,7 +245,11 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
   {
     if ($this->_popsRecursive)
     {
-      return static::_popsProxySubValueRecursive($value);
+      $class = new ReflectionClass(get_called_class());
+      $namespace = $class->getNamespaceName();
+      $popsClass = $namespace.'\Pops';
+
+      return $popsClass::proxy($value, true);
     }
 
     return $value;

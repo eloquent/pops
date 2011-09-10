@@ -13,15 +13,4 @@ namespace Ezzatron\Pops\Access;
 
 use Ezzatron\Pops\ProxyArray as PopsProxyArray;
 
-class ProxyArray extends PopsProxyArray
-{
-  /**
-   * @param mixed $value
-   *
-   * @return Proxy
-   */
-  static protected function _popsProxySubValueRecursive($value)
-  {
-    return Pops::proxy($value, true);
-  }
-}
+class ProxyArray extends PopsProxyArray {}

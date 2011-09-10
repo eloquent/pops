@@ -13,15 +13,4 @@ namespace Ezzatron\Pops\Test\Fixture\Uppercase;
 
 use Ezzatron\Pops\ProxyClass as PopsProxyClass;
 
-class ProxyClass extends PopsProxyClass
-{
-  /**
-   * @param mixed $value
-   *
-   * @return Proxy
-   */
-  static protected function _popsProxySubValueRecursive($value)
-  {
-    return Pops::proxy($value, true);
-  }
-}
+class ProxyClass extends PopsProxyClass {}
