@@ -18,13 +18,18 @@ use Ezzatron\Pops\ProxyPrimitive;
 class PopsTest extends TestCase
 {
   /**
-   * @covers Ezzatron\Pops\Access\Pops
+   * @covers Ezzatron\Pops\Pops
    */
   public function testProxy()
   {
     $expected = new ProxyClass('Ezzatron\Pops\Test\Fixture\Object');
 
     $this->assertEquals($expected, Pops::proxyClass('Ezzatron\Pops\Test\Fixture\Object'));
+
+    $class = Pops::proxyClassStatic('Ezzatron\Pops\Test\Fixture\Object');
+
+    $this->assertTrue(class_exists($class));
+    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
 
     $expected = new ProxyArray(array());
 

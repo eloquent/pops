@@ -13,28 +13,4 @@ namespace Ezzatron\Pops\Access;
 
 use Ezzatron\Pops\Pops as BasePops;
 
-class Pops extends BasePops
-{
-  /**
-   * @return string
-   */
-  static protected function proxyArrayClass()
-  {
-    return __NAMESPACE__.'\ProxyArray';
-  }
-  /**
-   * @return string
-   */
-  static protected function proxyClassClass()
-  {
-    return __NAMESPACE__.'\ProxyClass';
-  }
-
-  /**
-   * @return string
-   */
-  static protected function proxyObjectClass()
-  {
-    return __NAMESPACE__.'\ProxyObject';
-  }
-}
+class Pops extends BasePops {}

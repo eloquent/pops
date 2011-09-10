@@ -13,36 +13,4 @@ namespace Ezzatron\Pops\Test\Fixture\Uppercase;
 
 use Ezzatron\Pops\Pops as BasePops;
 
-class Pops extends BasePops
-{
-  /**
-   * @return string
-   */
-  static protected function proxyArrayClass()
-  {
-    return __NAMESPACE__.'\ProxyArray';
-  }
-  /**
-   * @return string
-   */
-  static protected function proxyClassClass()
-  {
-    return __NAMESPACE__.'\ProxyClass';
-  }
-
-  /**
-   * @return string
-   */
-  static protected function proxyObjectClass()
-  {
-    return __NAMESPACE__.'\ProxyObject';
-  }
-
-  /**
-   * @return string
-   */
-  static protected function proxyPrimitiveClass()
-  {
-    return __NAMESPACE__.'\ProxyPrimitive';
-  }
-}
+class Pops extends BasePops {}

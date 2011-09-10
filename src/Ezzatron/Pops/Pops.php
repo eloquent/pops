@@ -105,7 +105,7 @@ class Pops
    */
   static protected function proxyArrayClass()
   {
-    return __NAMESPACE__.'\ProxyArray';
+    return static::proxyDynamicClassSelect('ProxyArray');
   }
 
   /**
@@ -113,7 +113,7 @@ class Pops
    */
   static protected function proxyClassClass()
   {
-    return __NAMESPACE__.'\ProxyClass';
+    return static::proxyDynamicClassSelect('ProxyClass');
   }
 
   /**
@@ -121,7 +121,7 @@ class Pops
    */
   static protected function proxyObjectClass()
   {
-    return __NAMESPACE__.'\ProxyObject';
+    return static::proxyDynamicClassSelect('ProxyObject');
   }
 
   /**
@@ -129,6 +129,28 @@ class Pops
    */
   static protected function proxyPrimitiveClass()
   {
-    return __NAMESPACE__.'\ProxyPrimitive';
+    return static::proxyDynamicClassSelect('ProxyPrimitive');
+  }
+
+  /**
+   * @param string $proxyClass
+   *
+   * @return string
+   */
+  static protected function proxyDynamicClassSelect($proxyClass)
+  {
+    $class = new ReflectionClass(get_called_class());
+    $namespace = $class->getNamespaceName();
+    $namespaceProxyClass = $namespace.'\\'.$proxyClass;
+
+    if (class_exists($namespaceProxyClass))
+    {
+      return $namespaceProxyClass;
+    }
+
+    $parent = $class->getParentClass()->getName();
+    $method = lcfirst($proxyClass).'Class';
+
+    return $parent::$method();
   }
 }

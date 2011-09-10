@@ -18,10 +18,13 @@ class PopsTest extends TestCase
 {
   /**
    * @covers Ezzatron\Pops\Pops::proxy
+   * @covers Ezzatron\Pops\Pops::proxyArray
+   * @covers Ezzatron\Pops\Pops::proxyArrayClass
    * @covers Ezzatron\Pops\Pops::proxyObject
    * @covers Ezzatron\Pops\Pops::proxyObjectClass
    * @covers Ezzatron\Pops\Pops::proxyPrimitive
    * @covers Ezzatron\Pops\Pops::proxyPrimitiveClass
+   * @covers Ezzatron\Pops\Pops::proxyDynamicClassSelect
    */
   public function testProxy()
   {
