@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Ezzatron\Pops\Access;
+namespace Ezzatron\Pops\Test\Fixture\Uppercase;
 
 use Ezzatron\Pops\Pops as BasePops;
 
@@ -36,5 +36,13 @@ class Pops extends BasePops
   static protected function proxyObjectClass()
   {
     return __NAMESPACE__.'\ProxyObject';
+  }
+
+  /**
+   * @return string
+   */
+  static protected function proxyPrimitiveClass()
+  {
+    return __NAMESPACE__.'\ProxyPrimitive';
   }
 }

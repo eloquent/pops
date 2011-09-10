@@ -31,6 +31,9 @@ class ProxyClassTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->staticObject()->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy->staticObject()->arrayValue());
+    $this->assertInstanceOf('Ezzatron\Pops\ProxyPrimitive', $recursiveProxy->staticObject()->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy->staticArray());
     $this->assertInstanceOf('Ezzatron\Pops\ProxyPrimitive', $recursiveProxy->staticString());
   }
 
@@ -147,6 +150,9 @@ class ProxyClassTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $class::staticObject()->arrayValue());
+    $this->assertInstanceOf('Ezzatron\Pops\ProxyPrimitive', $class::staticObject()->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $class::staticArray());
     $this->assertInstanceOf('Ezzatron\Pops\ProxyPrimitive', $class::staticString());
   }
 

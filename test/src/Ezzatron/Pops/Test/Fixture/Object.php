@@ -38,6 +38,11 @@ class Object
     return new static;
   }
 
+  static public function staticArray()
+  {
+    return array();
+  }
+
   static public function staticString()
   {
     return 'string';
@@ -66,6 +71,11 @@ class Object
   public function object()
   {
     return new static;
+  }
+
+  public function arrayValue()
+  {
+    return array();
   }
 
   public function string()

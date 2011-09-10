@@ -212,7 +212,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
   /**
    * @param mixed $value
    *
-   * @return mixed
+   * @return Proxy
    */
   static protected function _popsProxySubValueRecursive($value)
   {

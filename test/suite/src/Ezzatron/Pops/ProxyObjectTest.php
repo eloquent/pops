@@ -20,6 +20,7 @@ use Ezzatron\Pops\Test\Fixture\IteratorAggregate;
 use Ezzatron\Pops\Test\Fixture\Object;
 use Ezzatron\Pops\Test\Fixture\Overload;
 use Ezzatron\Pops\Test\Fixture\Stringable;
+use Ezzatron\Pops\Test\Fixture\Uppercase\Pops as UppercasePops;
 use Ezzatron\Pops\Test\TestCase;
 
 class ProxyObjectTest extends TestCase
@@ -72,6 +73,9 @@ class ProxyObjectTest extends TestCase
     // recursive tests
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->object());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->object()->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->object()->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->object()->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->arrayValue());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->string());
   }
 
@@ -149,6 +153,26 @@ class ProxyObjectTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->publicProperty);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->publicProperty->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->publicProperty->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->publicProperty->string());
+
+    $this->_object->publicProperty = array(
+      'object' => new Object,
+      'array' => array(
+        'object' => new Object,
+        'array' => array(),
+        'string' => 'string',
+      ),
+      'string' => 'string',
+    );
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->publicProperty);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->publicProperty['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->publicProperty['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->publicProperty['array']['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->publicProperty['array']['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->publicProperty['array']['string']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->publicProperty['string']);
 
     $this->_object->publicProperty = 'string';
 
@@ -157,12 +181,23 @@ class ProxyObjectTest extends TestCase
     $object = new Overload;
     $object->values = array(
       'object' => new Object,
+      'array' => array(
+        'object' => new Object,
+        'array' => array(),
+        'string' => 'string',
+      ),
       'string' => 'string',
     );
     $recursiveProxy = new ProxyObject($object, true);
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy->object->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $recursiveProxy->object->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy->array);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->array['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy->array['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $recursiveProxy->array['string']);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $recursiveProxy->string);
   }
 
@@ -181,6 +216,13 @@ class ProxyObjectTest extends TestCase
 
     $this->assertFalse(isset($arrayaccess['foo']));
     $this->assertFalse(isset($proxy['foo']));
+
+    $arrayaccess['foo'] = null;
+
+    $this->assertTrue(isset($arrayaccess['foo']));
+    $this->assertTrue(isset($proxy['foo']));
+    $this->assertNull($arrayaccess['foo']);
+    $this->assertNull($proxy['foo']);
 
     $arrayaccess['foo'] = 'bar';
 
@@ -216,11 +258,22 @@ class ProxyObjectTest extends TestCase
     // recursive tests
     $arrayaccess = new ArrayAccess;
     $arrayaccess['object'] = new Object;
+    $arrayaccess['array'] = array(
+      'object' => new Object,
+      'array' => array(),
+      'string' => 'string',
+    );
     $arrayaccess['string'] = 'string';
     $proxy = new ProxyObject($arrayaccess, true);
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $proxy['object']);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $proxy['object']->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $proxy['object']->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy['object']->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $proxy['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $proxy['array']['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $proxy['array']['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy['array']['string']);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy['string']);
   }
 
@@ -266,19 +319,35 @@ class ProxyObjectTest extends TestCase
     $this->assertEquals($iteratorAggregate->values, iterator_to_array($proxy));
 
     // recursive tests
+    $sub_iterator = new Iterator(array(
+      'object' => new Object,
+      'array' => array(),
+      'string' => 'string',
+    ));
     $iterator = new Iterator(array(
       'object' => new Object,
+      'iterator' => $sub_iterator,
       'string' => 'string',
     ));
     $proxy = new ProxyObject($iterator, true);
     $expected = array(
       'object' => new ProxyObject(new Object, true),
+      'iterator' => new ProxyObject($sub_iterator, true),
       'string' => new ProxyPrimitive('string', true),
     );
     $actual = iterator_to_array($proxy);
 
     $this->assertEquals($expected, $actual);
+
+    $actual['iterator'] = iterator_to_array($actual['iterator']);
+
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $actual['object']->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $actual['object']->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $actual['object']->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $actual['iterator']['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $actual['iterator']['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $actual['iterator']['string']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $actual['string']);
   }
 
   /**
@@ -309,9 +378,9 @@ class ProxyObjectTest extends TestCase
     // recursive tests
     $stringable = new Stringable;
     $stringable->string = 'foo';
-    $proxy = new ProxyObject($stringable, true);
+    $proxy = UppercasePops::proxyObject($stringable, true);
 
-    $this->assertEquals('foo', (string)$proxy);
+    $this->assertEquals('FOO', (string)$proxy);
   }
 
   /**
@@ -333,6 +402,21 @@ class ProxyObjectTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $proxy());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $proxy()->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $proxy()->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy()->string());
+
+    $callable = new Callable(array(
+      'object' => new Object,
+      'array' => array(),
+      'string' => 'string',
+    ));
+    $proxy = new ProxyObject($callable, true);
+    $actual = $proxy();
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $actual);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $actual['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $actual['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $actual['string']);
 
     $callable = new Callable('string');
     $proxy = new ProxyObject($callable, true);

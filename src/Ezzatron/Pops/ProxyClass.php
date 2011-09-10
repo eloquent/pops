@@ -56,7 +56,7 @@ class ProxyClass implements Proxy
    * @param boolean $recursive
    * @param string $proxyClass
    *
-   * @return $string
+   * @return string
    */
   static public function _popsGenerateStaticClassProxy($class, $recursive = null, $proxyClass = null)
   {
@@ -187,7 +187,7 @@ class ProxyClass implements Proxy
   /**
    * @param mixed $value
    *
-   * @return mixed
+   * @return Proxy
    */
   static protected function _popsProxySubValueRecursive($value)
   {

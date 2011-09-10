@@ -75,6 +75,9 @@ class ProxyClassTest extends TestCase
     // recursive tests
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticObject()->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->staticObject()->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->staticObject()->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->staticArray());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->staticString());
   }
   
@@ -111,6 +114,19 @@ class ProxyClassTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticPublicProperty);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticPublicProperty->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->staticPublicProperty->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->staticPublicProperty->string());
+
+    Object::$staticPublicProperty = array(
+      'object' => new Object,
+      'array' => array(),
+      'string' => 'string',
+    );
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->staticPublicProperty);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticPublicProperty['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $this->_recursiveProxy->staticPublicProperty['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->staticPublicProperty['string']);
 
     Object::$staticPublicProperty = 'string';
 
@@ -155,6 +171,9 @@ class ProxyClassTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $class::staticObject()->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $class::staticObject()->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $class::staticArray());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $class::staticString());
 
     // custom class name
