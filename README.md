@@ -126,6 +126,59 @@ accessing static properties in this way is a not as elegant as it could be.
   tests (testing protected/private methods).
 * Modifying behaviour of poorly designed third-party libraries.
 
+### Recursive proxies
+
+Pops proxies can be applied to any value recursively. This comes in handy when
+designing, for example, an output escaper (similar to Symfony).
+
+Here's an example of how such a system could be created for escaping HTML
+output. The empty classes are required, so that Pops can detect the namespace
+and wrap sub-values with the appropriate classes.
+
+    namespace OutputEscaper;
+
+    class Pops extends \Ezzatron\Pops\Pops {}
+    class ProxyArray extends \Ezzatron\Pops\ProxyArray {}
+    class ProxyClass extends \Ezzatron\Pops\ProxyClass {}
+    class ProxyObject extends \Ezzatron\Pops\ProxyObject {}
+
+    class ProxyPrimitive extends \Ezzatron\Pops\ProxyPrimitive
+    {
+      public function __toString()
+      {
+        return htmlspecialchars((string)$this->_popsPrimitive, ENT_QUOTES, 'UTF-8');
+      }
+    }
+
+The output escaper can now be used like so:
+
+    use OutputEscaper\Pops as OutputEscaper;
+
+    $list = new ArrayIterator(array(
+      'foo',
+      'bar',
+      '<script>alert(document.cookie);</script>',
+    ));
+    $proxy = OutputEscaper::proxy($list, true);
+
+    echo '<ul>'.PHP_EOL;
+    foreach ($proxy as $item)
+    {
+      echo '<li>'.$item.'</li>'.PHP_EOL;
+    }
+    echo '</ul>';
+
+Which would output:
+
+    <ul>
+    <li>foo</li>
+    <li>bar</li>
+    <li>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</li>
+    </ul>
+
+Note that the above example should **NOT** be used in production. Output
+escaping is a complex issue that should not be taken lightly.
+
 ### Code quality
 
 Pops strives to attain a high level of quality. A full test suite is available,

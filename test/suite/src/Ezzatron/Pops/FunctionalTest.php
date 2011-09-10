@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
+use ArrayIterator;
 use Ezzatron\Pops\Access\Pops;
 use Ezzatron\Pops\Test\TestCase;
+use OutputEscaper\Pops as OutputEscaper;
 
 class FunctionalTest extends TestCase
 {
@@ -49,5 +51,34 @@ class FunctionalTest extends TestCase
 
     $this->assertEquals('baz is not so private...', $proxyClass::baz('not so private...'));
     $this->assertEquals('mind = blown', $proxyClass::_popsProxy()->qux.' = blown');
+  }
+
+  public function testDocumentationOutputEscaper()
+  {
+    $list = new ArrayIterator(array(
+      'foo',
+      'bar',
+      '<script>alert(document.cookie);</script>',
+    ));
+    $proxy = OutputEscaper::proxy($list, true);
+
+    $expected =
+      '<ul>'.PHP_EOL
+      .'<li>foo</li>'.PHP_EOL
+      .'<li>bar</li>'.PHP_EOL
+      .'<li>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</li>'.PHP_EOL
+      .'</ul>'
+    ;
+
+    ob_start();
+    echo '<ul>'.PHP_EOL;
+    foreach ($proxy as $item)
+    {
+      echo '<li>'.$item.'</li>'.PHP_EOL;
+    }
+    echo '</ul>';
+    $actual = ob_get_clean();
+
+    $this->assertEquals($expected, $actual);
   }
 }

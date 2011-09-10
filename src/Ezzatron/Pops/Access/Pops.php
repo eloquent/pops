@@ -11,6 +11,6 @@
 
 namespace Ezzatron\Pops\Access;
 
-use Ezzatron\Pops\Pops as BasePops;
+use Ezzatron\Pops\Pops as PopsPops;
 
-class Pops extends BasePops {}
+class Pops extends PopsPops {}

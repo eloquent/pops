@@ -11,6 +11,6 @@
 
 namespace Ezzatron\Pops\Test\Fixture\Uppercase;
 
-use Ezzatron\Pops\Pops as BasePops;
+use Ezzatron\Pops\Pops as PopsPops;
 
-class Pops extends BasePops {}
+class Pops extends PopsPops {}
