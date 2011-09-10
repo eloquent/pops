@@ -53,10 +53,9 @@ class Pops
    */
   static public function proxyClassStatic($class, $recursive = null, $proxyClass = null)
   {
-    $classDef = static::proxyClassStaticDefinition($class, $recursive, $proxyClass);
-    eval($classDef);
+    $proxyClassClass = static::proxyClassClass();
 
-    return $proxyClass;
+    return $proxyClassClass::_popsGenerateStaticClassProxy($class, $recursive, $proxyClass);
   }
 
   /**
@@ -86,66 +85,5 @@ class Pops
   static protected function proxyClassClass()
   {
     return __NAMESPACE__.'\ProxyClass';
-  }
-
-  /**
-   * @param string $originalClass
-   * @param boolean $recursive
-   * @param string $proxyClass
-   *
-   * @return string
-   */
-  static protected function proxyClassStaticDefinition($originalClass, $recursive, &$proxyClass)
-  {
-    $proxyClass = static::proxyClassStaticProxyClass($originalClass, $proxyClass);
-
-    return
-      static::proxyClassStaticDefinitionHeader($proxyClass)
-      .' { '
-      .static::proxyClassStaticDefinitionBody($originalClass, $recursive)
-      .' }'
-    ;
-  }
-
-  /**
-   * @param string $originalClass
-   * @param string $proxyClass
-   *
-   * @return string
-   */
-  static protected function proxyClassStaticProxyClass($originalClass, $proxyClass)
-  {
-    if (null === $proxyClass)
-    {
-      $originalClassParts = explode('\\', $originalClass);
-      $proxyClassPrefix = array_pop($originalClassParts).'_Pops_';
-      $proxyClass = uniqid($proxyClassPrefix);
-    }
-
-    return $proxyClass;
-  }
-
-  /**
-   * @param string $proxyClass
-   *
-   * @return string
-   */
-  static protected function proxyClassStaticDefinitionHeader($proxyClass)
-  {
-    return 'class '.$proxyClass.' extends '.static::proxyClassClass();
-  }
-
-  /**
-   * @param string $originalClass
-   * @param boolean $recursive
-   *
-   * @return string
-   */
-  static protected function proxyClassStaticDefinitionBody($originalClass, $recursive)
-  {
-    return
-      'static protected $_popsStaticOriginalClass = '.var_export($originalClass, true).';'
-      .'static protected $_popsStaticRecursive = '.var_export($recursive, true).';'
-    ;
   }
 }

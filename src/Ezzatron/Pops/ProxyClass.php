@@ -54,6 +54,30 @@ class ProxyClass implements Proxy
   /**
    * @param string $class
    * @param boolean $recursive
+   * @param string $proxyClass
+   *
+   * @return $string
+   */
+  static public function _popsGenerateStaticClassProxy($class, $recursive = null, $proxyClass = null)
+  {
+    if (null === $recursive)
+    {
+      $recursive = false;
+    }
+    if (!is_bool($recursive))
+    {
+      throw new InvalidArgumentException('Provided value is not a boolean');
+    }
+
+    $classDefinition = static::_popsStaticClassProxyDefinition($class, $recursive, $proxyClass);
+    eval($classDefinition);
+
+    return $proxyClass;
+  }
+
+  /**
+   * @param string $class
+   * @param boolean $recursive
    */
   public function __construct($class, $recursive = null)
   {
@@ -154,10 +178,81 @@ class ProxyClass implements Proxy
   {
     if ($recursive)
     {
-      return Pops::proxy($value, true);
+      return static::_popsProxySubValueRecursive($value);
     }
 
     return $value;
+  }
+
+  /**
+   * @param mixed $value
+   *
+   * @return mixed
+   */
+  static protected function _popsProxySubValueRecursive($value)
+  {
+    return Pops::proxy($value, true);
+  }
+
+  /**
+   * @param string $originalClass
+   * @param boolean $recursive
+   * @param string $proxyClass
+   *
+   * @return string
+   */
+  static protected function _popsStaticClassProxyDefinition($originalClass, $recursive, &$proxyClass)
+  {
+    $proxyClass = static::_popsStaticClassProxyDefinitionProxyClass($originalClass, $proxyClass);
+
+    return
+      static::_popsStaticClassProxyDefinitionHeader($proxyClass)
+      .' { '
+      .static::_popsStaticClassProxyDefinitionBody($originalClass, $recursive)
+      .' }'
+    ;
+  }
+
+  /**
+   * @param string $originalClass
+   * @param string $proxyClass
+   *
+   * @return string
+   */
+  static protected function _popsStaticClassProxyDefinitionProxyClass($originalClass, $proxyClass)
+  {
+    if (null === $proxyClass)
+    {
+      $originalClassParts = explode('\\', $originalClass);
+      $proxyClassPrefix = array_pop($originalClassParts).'_Pops_';
+      $proxyClass = uniqid($proxyClassPrefix);
+    }
+
+    return $proxyClass;
+  }
+
+  /**
+   * @param string $proxyClass
+   *
+   * @return string
+   */
+  static protected function _popsStaticClassProxyDefinitionHeader($proxyClass)
+  {
+    return 'class '.$proxyClass.' extends '.get_called_class();
+  }
+
+  /**
+   * @param string $originalClass
+   * @param boolean $recursive
+   *
+   * @return string
+   */
+  static protected function _popsStaticClassProxyDefinitionBody($originalClass, $recursive)
+  {
+    return
+      'static protected $_popsStaticOriginalClass = '.var_export($originalClass, true).';'
+      .' static protected $_popsStaticRecursive = '.var_export($recursive, true).';'
+    ;
   }
 
   /**

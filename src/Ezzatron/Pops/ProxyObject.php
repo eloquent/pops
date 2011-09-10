@@ -214,6 +214,16 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
   }
 
   /**
+   * @param mixed $value
+   *
+   * @return mixed
+   */
+  static protected function _popsProxySubValueRecursive($value)
+  {
+    return Pops::proxy($value, true);
+  }
+
+  /**
    * @return Iterator
    */
   protected function _popsInnerIterator()
@@ -248,7 +258,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
   {
     if ($this->_popsRecursive)
     {
-      return Pops::proxy($value, true);
+      return static::_popsProxySubValueRecursive($value);
     }
 
     return $value;

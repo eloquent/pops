@@ -65,6 +65,7 @@ class ProxyClassTest extends TestCase
   /**
    * @covers Ezzatron\Pops\ProxyClass::__call
    * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValue
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValueRecursive
    */
   public function testCall()
   {
@@ -83,6 +84,7 @@ class ProxyClassTest extends TestCase
    * @covers Ezzatron\Pops\ProxyClass::__isset
    * @covers Ezzatron\Pops\ProxyClass::__unset
    * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValue
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValueRecursive
    */
   public function testSetGet()
   {
@@ -115,6 +117,61 @@ class ProxyClassTest extends TestCase
     $this->assertEquals('string', $this->_recursiveProxy->staticPublicProperty);
 
     Object::$staticPublicProperty = $staticPublicProperty;
+  }
+
+  /**
+   * @covers Ezzatron\Pops\ProxyClass::_popsGenerateStaticClassProxy
+   * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinition
+   * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinitionProxyClass
+   * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinitionHeader
+   * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinitionBody
+   * @covers Ezzatron\Pops\ProxyClass::__callStatic
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxy
+   */
+  public function testPopsGenerateStaticClassProxy()
+  {
+    $class = ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object');
+
+    $this->assertTrue(class_exists($class, false));
+    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
+
+    $expected = new $class(__NAMESPACE__.'\Test\Fixture\Object');
+    $proxy = $class::_popsProxy();
+
+    $this->assertEquals($expected, $proxy);
+    $this->assertSame($proxy, $class::_popsProxy());
+
+    $this->assertEquals(
+      array('staticPublicMethod', array('foo', 'bar'))
+      , $class::staticPublicMethod('foo', 'bar')
+    );
+    $this->assertEquals(
+      array('__callStatic', array('foo', array('bar', 'baz')))
+      , $class::foo('bar', 'baz')
+    );
+
+    // recursive tests
+    $class = ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', true);
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());
+    $this->assertEquals('string', $class::staticString());
+
+    // custom class name
+    $class = uniqid('Foo');
+    ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', null, $class);
+
+    $this->assertTrue(class_exists($class, false));
+    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
+  }
+
+  /**
+   * @covers Ezzatron\Pops\ProxyClass::_popsGenerateStaticClassProxy
+   */
+  public function testPopsGenerateStaticClassProxyFailureRecursiveType()
+  {
+    $this->setExpectedException('InvalidArgumentException');
+    ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', 'foo');
   }
 
   /**

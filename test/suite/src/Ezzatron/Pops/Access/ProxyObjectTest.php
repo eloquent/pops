@@ -24,6 +24,18 @@ class ProxyObjectTest extends TestCase
   }
 
   /**
+   * @covers Ezzatron\Pops\Access\ProxyObject::_popsProxySubValueRecursive
+   */
+  public function testRecursive()
+  {
+    $recursiveProxy = new ProxyObject($this->_object, true);
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object()->object());
+    $this->assertEquals('string', $recursiveProxy->string());
+  }
+
+  /**
    * @covers Ezzatron\Pops\Access\ProxyObject::__construct
    * @covers Ezzatron\Pops\Access\ProxyObject::__call
    */

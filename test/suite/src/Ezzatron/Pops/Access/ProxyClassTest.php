@@ -23,6 +23,18 @@ class ProxyClassTest extends TestCase
   }
 
   /**
+   * @covers Ezzatron\Pops\Access\ProxyClass::_popsProxySubValueRecursive
+   */
+  public function testRecursive()
+  {
+    $recursiveProxy = new ProxyClass($this->_class, true);
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->staticObject());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->staticObject()->object());
+    $this->assertEquals('string', $recursiveProxy->staticString());
+  }
+
+  /**
    * @covers Ezzatron\Pops\Access\ProxyClass::__construct
    * @covers Ezzatron\Pops\Access\ProxyClass::__call
    */
@@ -107,6 +119,35 @@ class ProxyClassTest extends TestCase
   {
     $this->setExpectedException('LogicException', 'Access to undeclared static property: Ezzatron\Pops\Test\Fixture\Object::$'.$arguments[0]);
     call_user_func_array(array($this->_proxy, $method), $arguments);
+  }
+
+  /**
+   * @covers Ezzatron\Pops\ProxyClass::_popsGenerateStaticClassProxy
+   * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinition
+   * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinitionProxyClass
+   * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinitionHeader
+   * @covers Ezzatron\Pops\ProxyClass::_popsStaticClassProxyDefinitionBody
+   * @covers Ezzatron\Pops\ProxyClass::__callStatic
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxy
+   */
+  public function testPopsGenerateStaticClassProxy()
+  {
+    $class = ProxyClass::_popsGenerateStaticClassProxy('Ezzatron\Pops\Test\Fixture\Object');
+
+    $this->assertTrue(class_exists($class, false));
+    $this->assertTrue(is_subclass_of($class, 'Ezzatron\Pops\Access\ProxyClass'));
+
+    $expected = new $class('Ezzatron\Pops\Test\Fixture\Object');
+    $proxy = $class::_popsProxy();
+
+    $this->assertEquals($expected, $proxy);
+
+    // recursive tests
+    $class = ProxyClass::_popsGenerateStaticClassProxy('Ezzatron\Pops\Test\Fixture\Object', true);
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());
+    $this->assertEquals('string', $class::staticString());
   }
 
   /**

@@ -18,10 +18,11 @@ class ProxyObject extends PopsProxyObject
 {
   /**
    * @param object $object
+   * @param boolean $recursive
    */
-  public function __construct($object)
+  public function __construct($object, $recursive = null)
   {
-    parent::__construct($object);
+    parent::__construct($object, $recursive);
 
     $this->_popsReflector = new ReflectionObject($object);
   }
@@ -39,7 +40,9 @@ class ProxyObject extends PopsProxyObject
       $method = $this->_popsReflector->getMethod($method);
       $method->setAccessible(true);
 
-      return $method->invokeArgs($this->_popsObject, $arguments);
+      return $this->_popsProxySubValue(
+        $method->invokeArgs($this->_popsObject, $arguments)
+      );
     }
 
     return parent::__call($method, $arguments);
@@ -70,7 +73,9 @@ class ProxyObject extends PopsProxyObject
   {
     if ($propertyReflector = $this->_popsPropertyReflector($property))
     {
-      return $propertyReflector->getValue($this->_popsObject);
+      return $this->_popsProxySubValue(
+        $propertyReflector->getValue($this->_popsObject)
+      );
     }
     
     return parent::__get($property);
@@ -104,6 +109,16 @@ class ProxyObject extends PopsProxyObject
     }
 
     parent::__unset($property);
+  }
+
+  /**
+   * @param mixed $value
+   *
+   * @return mixed
+   */
+  static protected function _popsProxySubValueRecursive($value)
+  {
+    return Pops::proxy($value, true);
   }
   
   /**
