@@ -21,6 +21,7 @@ class ProxyClassTest extends TestCase
   {
     $this->_class = __NAMESPACE__.'\Test\Fixture\Object';
     $this->_proxy = new ProxyClass($this->_class);
+    $this->_recursiveProxy = new ProxyClass($this->_class, true);
   }
 
   /**
@@ -46,19 +47,34 @@ class ProxyClassTest extends TestCase
   /**
    * @covers Ezzatron\Pops\ProxyClass::__construct
    */
-  public function testConstructFailure()
+  public function testConstructFailureClassType()
   {
     $this->setExpectedException('InvalidArgumentException', 'Provided value is not a string');
     new ProxyClass(1);
   }
-  
+
+  /**
+   * @covers Ezzatron\Pops\ProxyClass::__construct
+   */
+  public function testConstructFailureRecursiveType()
+  {
+    $this->setExpectedException('InvalidArgumentException', 'Provided value is not a boolean');
+    new ProxyClass($this->_class, 'foo');
+  }
+
   /**
    * @covers Ezzatron\Pops\ProxyClass::__call
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValue
    */
   public function testCall()
   {
     $this->assertPopsProxyCall($this->_proxy, 'staticPublicMethod', array('foo', 'bar'));
     $this->assertPopsProxyCall($this->_proxy, 'foo', array('bar', 'baz'), true);
+
+    // recursive tests
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticObject());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticObject()->object());
+    $this->assertEquals('string', $this->_recursiveProxy->staticString());
   }
   
   /**
@@ -66,6 +82,7 @@ class ProxyClassTest extends TestCase
    * @covers Ezzatron\Pops\ProxyClass::__get
    * @covers Ezzatron\Pops\ProxyClass::__isset
    * @covers Ezzatron\Pops\ProxyClass::__unset
+   * @covers Ezzatron\Pops\ProxyClass::_popsProxySubValue
    */
   public function testSetGet()
   {
@@ -85,12 +102,30 @@ class ProxyClassTest extends TestCase
     
     $this->assertTrue(isset($this->_proxy->staticPublicProperty));
     $this->assertEquals('staticPublicProperty', $this->_proxy->staticPublicProperty);
+
+    // recursive tests
+    $staticPublicProperty = Object::$staticPublicProperty;
+    Object::$staticPublicProperty = new Object;
+
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticPublicProperty);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticPublicProperty->object());
+
+    Object::$staticPublicProperty = 'string';
+
+    $this->assertEquals('string', $this->_recursiveProxy->staticPublicProperty);
+
+    Object::$staticPublicProperty = $staticPublicProperty;
   }
 
   /**
    * @var ProxyClass
    */
   protected $_proxy;
+
+  /**
+   * @var ProxyClass
+   */
+  protected $_recursiveProxy;
 
   /**
    * @var string

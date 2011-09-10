@@ -13,8 +13,20 @@ namespace Ezzatron\Pops\Test\Fixture;
 
 class Callable extends Object
 {
+  public function __construct($returnValue = null)
+  {
+    $this->returnValue = $returnValue;
+  }
+
   public function __invoke()
   {
+    if (null !== $this->returnValue)
+    {
+      return $this->returnValue;
+    }
+
     return array(__FUNCTION__, func_get_args());
   }
+
+  protected $returnValue;
 }

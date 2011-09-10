@@ -27,6 +27,8 @@ class PopsTest extends TestCase
 
     $this->assertEquals($expected, Pops::proxy(new Object));
     $this->assertEquals($expected, Pops::proxyObject(new Object));
+
+    $this->assertEquals('string', Pops::proxy('string'));
   }
 
   /**

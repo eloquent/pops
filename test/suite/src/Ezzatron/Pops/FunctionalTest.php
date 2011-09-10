@@ -9,11 +9,8 @@
  * file that was distributed with this source code.
  */
 
-use Confusion;
 use Ezzatron\Pops\Access\Pops;
 use Ezzatron\Pops\Test\TestCase;
-use SeriousBusiness;
-use UppercaseProxy;
 
 class FunctionalTest extends TestCase
 {

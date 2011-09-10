@@ -24,7 +24,10 @@ class ProxyClass implements Proxy
    */
   static public function __callStatic($method, array $arguments)
   {
-    return call_user_func_array(array(self::_popsProxy(), $method), $arguments);
+    return static::_popsProxySubValue(
+      call_user_func_array(array(static::_popsProxy(), $method), $arguments)
+      , static::$_popsStaticRecursive
+    );
   }
 
   /**
@@ -50,15 +53,26 @@ class ProxyClass implements Proxy
 
   /**
    * @param string $class
+   * @param boolean $recursive
    */
-  public function __construct($class)
+  public function __construct($class, $recursive = null)
   {
     if (!is_string($class))
     {
       throw new InvalidArgumentException('Provided value is not a string');
     }
 
+    if (null === $recursive)
+    {
+      $recursive = false;
+    }
+    if (!is_bool($recursive))
+    {
+      throw new InvalidArgumentException('Provided value is not a boolean');
+    }
+
     $this->_popsClass = $class;
+    $this->_popsRecursive = $recursive;
   }
 
   /**
@@ -77,7 +91,10 @@ class ProxyClass implements Proxy
    */
   public function __call($method, array $arguments)
   {
-    return call_user_func_array($this->_popsClass . '::' . $method, $arguments);
+    return static::_popsProxySubValue(
+      call_user_func_array($this->_popsClass . '::' . $method, $arguments)
+      , $this->_popsRecursive
+    );
   }
 
   /**
@@ -98,8 +115,11 @@ class ProxyClass implements Proxy
   public function __get($property)
   {
     $class = $this->_popsClass;
-    
-    return $class::$$property;
+
+    return static::_popsProxySubValue(
+        $class::$$property
+      , $this->_popsRecursive
+    );
   }
 
   /**
@@ -125,9 +145,30 @@ class ProxyClass implements Proxy
   }
 
   /**
+   * @param mixed $value
+   * @param boolean $recursive
+   *
+   * @return mixed
+   */
+  static protected function _popsProxySubValue($value, $recursive)
+  {
+    if ($recursive)
+    {
+      return Pops::proxy($value, true);
+    }
+
+    return $value;
+  }
+
+  /**
    * @var string
    */
   static protected $_popsStaticOriginalClass;
+
+  /**
+   * @var string
+   */
+  static protected $_popsStaticRecursive;
 
   /**
    * @var array
@@ -138,4 +179,9 @@ class ProxyClass implements Proxy
    * @var string
    */
   protected $_popsClass;
+
+  /**
+   * @var boolean
+   */
+  protected $_popsRecursive;
 }

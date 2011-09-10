@@ -17,20 +17,27 @@ class Pops
 {
   /**
    * @param mixed $value
+   * @param boolean $recursive
    *
    * @return Proxy
    */
-  static public function proxy($value)
+  static public function proxy($value, $recursive = null)
   {
-    return static::proxyObject($value);
+    if (is_object($value))
+    {
+      return static::proxyObject($value, $recursive);
+    }
+
+    return $value;
   }
 
   /**
    * @param string $class
+   * @param boolean $recursive
    *
    * @return ProxyClass
    */
-  static public function proxyClass($class)
+  static public function proxyClass($class, $recursive = null)
   {
     $class = new ReflectionClass(static::proxyClassClass());
 
@@ -39,13 +46,14 @@ class Pops
 
   /**
    * @param string $class
+   * @param boolean $recursive
    * @param string $proxyClass
    *
    * @return $string
    */
-  static public function proxyClassStatic($class, $proxyClass = null)
+  static public function proxyClassStatic($class, $recursive = null, $proxyClass = null)
   {
-    $classDef = static::proxyClassStaticDefinition($class, $proxyClass);
+    $classDef = static::proxyClassStaticDefinition($class, $recursive, $proxyClass);
     eval($classDef);
 
     return $proxyClass;
@@ -53,10 +61,11 @@ class Pops
 
   /**
    * @param object $object
+   * @param boolean $recursive
    *
    * @return ProxyObject
    */
-  static public function proxyObject($object)
+  static public function proxyObject($object, $recursive = null)
   {
     $class = new ReflectionClass(static::proxyObjectClass());
 
@@ -81,18 +90,19 @@ class Pops
 
   /**
    * @param string $originalClass
+   * @param boolean $recursive
    * @param string $proxyClass
    *
    * @return string
    */
-  static protected function proxyClassStaticDefinition($originalClass, &$proxyClass)
+  static protected function proxyClassStaticDefinition($originalClass, $recursive, &$proxyClass)
   {
     $proxyClass = static::proxyClassStaticProxyClass($originalClass, $proxyClass);
 
     return
       static::proxyClassStaticDefinitionHeader($proxyClass)
       .' { '
-      .static::proxyClassStaticDefinitionBody($originalClass)
+      .static::proxyClassStaticDefinitionBody($originalClass, $recursive)
       .' }'
     ;
   }
@@ -127,11 +137,15 @@ class Pops
 
   /**
    * @param string $originalClass
+   * @param boolean $recursive
    *
    * @return string
    */
-  static protected function proxyClassStaticDefinitionBody($originalClass)
+  static protected function proxyClassStaticDefinitionBody($originalClass, $recursive)
   {
-    return 'static protected $_popsStaticOriginalClass = '.var_export($originalClass, true).';';
+    return
+      'static protected $_popsStaticOriginalClass = '.var_export($originalClass, true).';'
+      .'static protected $_popsStaticRecursive = '.var_export($recursive, true).';'
+    ;
   }
 }

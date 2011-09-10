@@ -12,14 +12,19 @@
 namespace Ezzatron\Pops\Test\Fixture;
 
 use ArrayIterator;
-use IteratorAggregate;
+use IteratorAggregate as IteratorAggregateInterface;
 
-class Traversable extends Object implements IteratorAggregate
+class IteratorAggregate extends Object implements IteratorAggregateInterface
 {
+  public function __construct(array $values)
+  {
+    $this->values = $values;
+  }
+
   public function getIterator()
   {
     return new ArrayIterator($this->values);
   }
 
-  public $values = array();
+  public $values;
 }
