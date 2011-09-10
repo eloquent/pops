@@ -28,7 +28,7 @@ class Pops
       return static::proxyObject($value, $recursive);
     }
 
-    return $value;
+    return static::proxyPrimitive($value);
   }
 
   /**
@@ -39,9 +39,9 @@ class Pops
    */
   static public function proxyClass($class, $recursive = null)
   {
-    $class = new ReflectionClass(static::proxyClassClass());
+    $proxyClassClass = new ReflectionClass(static::proxyClassClass());
 
-    return $class->newInstanceArgs(func_get_args());
+    return $proxyClassClass->newInstanceArgs(func_get_args());
   }
 
   /**
@@ -72,6 +72,26 @@ class Pops
   }
 
   /**
+   * @param mixed $primitive
+   *
+   * @return ProxyPrimitive
+   */
+  static public function proxyPrimitive($primitive)
+  {
+    $class = new ReflectionClass(static::proxyPrimitiveClass());
+
+    return $class->newInstanceArgs(func_get_args());
+  }
+
+  /**
+   * @return string
+   */
+  static protected function proxyClassClass()
+  {
+    return __NAMESPACE__.'\ProxyClass';
+  }
+
+  /**
    * @return string
    */
   static protected function proxyObjectClass()
@@ -82,8 +102,8 @@ class Pops
   /**
    * @return string
    */
-  static protected function proxyClassClass()
+  static protected function proxyPrimitiveClass()
   {
-    return __NAMESPACE__.'\ProxyClass';
+    return __NAMESPACE__.'\ProxyPrimitive';
   }
 }

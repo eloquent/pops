@@ -32,7 +32,7 @@ class ProxyObjectTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object()->object());
-    $this->assertEquals('string', $recursiveProxy->string());
+    $this->assertInstanceOf('Ezzatron\Pops\ProxyPrimitive', $recursiveProxy->string());
   }
 
   /**

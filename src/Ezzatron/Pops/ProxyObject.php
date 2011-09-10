@@ -121,9 +121,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function offsetGet($property)
   {
-    return $this->_popsProxySubValue(
-      $this->__call('offsetGet', func_get_args())
-    );
+    return $this->__call('offsetGet', func_get_args());
   }
 
   /**
@@ -193,9 +191,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function __toString()
   {
-    return (string)$this->_popsProxySubValue(
-      $this->__call('__toString', array())
-    );
+    return (string)$this->__call('__toString', array());
   }
 
   /**

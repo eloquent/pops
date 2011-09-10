@@ -18,16 +18,16 @@ class Pops extends BasePops
   /**
    * @return string
    */
-  static protected function proxyObjectClass()
+  static protected function proxyClassClass()
   {
-    return __NAMESPACE__.'\ProxyObject';
+    return __NAMESPACE__.'\ProxyClass';
   }
 
   /**
    * @return string
    */
-  static protected function proxyClassClass()
+  static protected function proxyObjectClass()
   {
-    return __NAMESPACE__.'\ProxyClass';
+    return __NAMESPACE__.'\ProxyObject';
   }
 }

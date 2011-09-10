@@ -75,7 +75,7 @@ class ProxyClassTest extends TestCase
     // recursive tests
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->staticObject()->object());
-    $this->assertEquals('string', $this->_recursiveProxy->staticString());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->staticString());
   }
   
   /**
@@ -114,7 +114,7 @@ class ProxyClassTest extends TestCase
 
     Object::$staticPublicProperty = 'string';
 
-    $this->assertEquals('string', $this->_recursiveProxy->staticPublicProperty);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->staticPublicProperty);
 
     Object::$staticPublicProperty = $staticPublicProperty;
   }
@@ -155,7 +155,7 @@ class ProxyClassTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());
-    $this->assertEquals('string', $class::staticString());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $class::staticString());
 
     // custom class name
     $class = uniqid('Foo');

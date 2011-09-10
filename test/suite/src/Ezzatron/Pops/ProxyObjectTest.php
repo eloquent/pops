@@ -40,7 +40,7 @@ class ProxyObjectTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_proxy);
     $this->assertSame($this->_object, $this->_proxy->_popsObject());
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyObject::__construct
    */
@@ -72,9 +72,9 @@ class ProxyObjectTest extends TestCase
     // recursive tests
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->object());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_recursiveProxy->object()->object());
-    $this->assertEquals('string', $this->_recursiveProxy->string());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->string());
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyObject::__set
    * @covers Ezzatron\Pops\ProxyObject::__get
@@ -86,61 +86,61 @@ class ProxyObjectTest extends TestCase
   public function testSetGet()
   {
     $this->assertEquals('publicProperty', $this->_proxy->publicProperty);
-      
+
     $this->assertFalse(isset($this->_object->foo));
     $this->assertFalse(isset($this->_proxy->foo));
-    
+
     $this->_object->foo = 'bar';
-    
+
     $this->assertTrue(isset($this->_object->foo));
     $this->assertTrue(isset($this->_proxy->foo));
     $this->assertEquals('bar', $this->_object->foo);
     $this->assertEquals('bar', $this->_proxy->foo);
-    
+
     $this->_proxy->foo = 'baz';
-    
+
     $this->assertTrue(isset($this->_object->foo));
     $this->assertTrue(isset($this->_proxy->foo));
     $this->assertEquals('baz', $this->_object->foo);
     $this->assertEquals('baz', $this->_proxy->foo);
-    
+
     unset($this->_object->foo);
-    
+
     $this->assertFalse(isset($this->_object->foo));
     $this->assertFalse(isset($this->_proxy->foo));
-    
+
     $this->_proxy->foo = 'qux';
-    
+
     $this->assertTrue(isset($this->_object->foo));
     $this->assertTrue(isset($this->_proxy->foo));
     $this->assertEquals('qux', $this->_object->foo);
     $this->assertEquals('qux', $this->_proxy->foo);
-    
+
     unset($this->_proxy->foo);
-    
+
     $this->assertFalse(isset($this->_object->foo));
     $this->assertFalse(isset($this->_proxy->foo));
-    
+
     $object = new Overload;
     $object->values = array(
       'foo' => 'bar',
       'baz' => 'qux',
     );
     $proxy = new ProxyObject($object);
-    
+
     $this->assertTrue(isset($proxy->foo));
     $this->assertTrue(isset($proxy->baz));
     $this->assertEquals('bar', $proxy->foo);
     $this->assertEquals('qux', $proxy->baz);
-    
+
     unset($proxy->foo);
     unset($proxy->baz);
-    
+
     $this->assertFalse(isset($proxy->foo));
     $this->assertFalse(isset($proxy->baz));
-    
+
     $proxy->foo = 'doom';
-    
+
     $this->assertTrue(isset($proxy->foo));
     $this->assertEquals('doom', $proxy->foo);
 
@@ -152,7 +152,7 @@ class ProxyObjectTest extends TestCase
 
     $this->_object->publicProperty = 'string';
 
-    $this->assertEquals('string', $this->_recursiveProxy->publicProperty);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->publicProperty);
 
     $object = new Overload;
     $object->values = array(
@@ -163,9 +163,9 @@ class ProxyObjectTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object->object());
-    $this->assertEquals('string', $recursiveProxy->string);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $recursiveProxy->string);
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyObject::offsetSet
    * @covers Ezzatron\Pops\ProxyObject::offsetGet
@@ -178,38 +178,38 @@ class ProxyObjectTest extends TestCase
   {
     $arrayaccess = new ArrayAccess;
     $proxy = new ProxyObject($arrayaccess);
-    
+
     $this->assertFalse(isset($arrayaccess['foo']));
     $this->assertFalse(isset($proxy['foo']));
-    
+
     $arrayaccess['foo'] = 'bar';
-    
+
     $this->assertTrue(isset($arrayaccess['foo']));
     $this->assertTrue(isset($proxy['foo']));
     $this->assertEquals('bar', $arrayaccess['foo']);
     $this->assertEquals('bar', $proxy['foo']);
-    
+
     $proxy['foo'] = 'baz';
-    
+
     $this->assertTrue(isset($arrayaccess['foo']));
     $this->assertTrue(isset($proxy['foo']));
     $this->assertEquals('baz', $arrayaccess['foo']);
     $this->assertEquals('baz', $proxy['foo']);
-    
+
     unset($arrayaccess['foo']);
-    
+
     $this->assertFalse(isset($arrayaccess['foo']));
     $this->assertFalse(isset($proxy['foo']));
-    
+
     $proxy['foo'] = 'qux';
-    
+
     $this->assertTrue(isset($arrayaccess['foo']));
     $this->assertTrue(isset($proxy['foo']));
     $this->assertEquals('qux', $arrayaccess['foo']);
     $this->assertEquals('qux', $proxy['foo']);
-    
+
     unset($proxy['foo']);
-    
+
     $this->assertFalse(isset($arrayaccess['foo']));
     $this->assertFalse(isset($proxy['foo']));
 
@@ -221,9 +221,9 @@ class ProxyObjectTest extends TestCase
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $proxy['object']);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $proxy['object']->object());
-    $this->assertEquals('string', $proxy['string']);
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy['string']);
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyObject::count
    */
@@ -235,7 +235,7 @@ class ProxyObjectTest extends TestCase
 
     $this->assertEquals(666, count($proxy));
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyObject::_popsInnerIterator
    * @covers Ezzatron\Pops\ProxyObject::current
@@ -273,7 +273,7 @@ class ProxyObjectTest extends TestCase
     $proxy = new ProxyObject($iterator, true);
     $expected = array(
       'object' => new ProxyObject(new Object, true),
-      'string' => 'string',
+      'string' => new ProxyPrimitive('string', true),
     );
     $actual = iterator_to_array($proxy);
 
@@ -303,7 +303,7 @@ class ProxyObjectTest extends TestCase
     $stringable = new Stringable;
     $stringable->string = 'foo';
     $proxy = new ProxyObject($stringable);
-    
+
     $this->assertEquals('foo', (string)$proxy);
 
     // recursive tests
@@ -324,7 +324,7 @@ class ProxyObjectTest extends TestCase
     $callable = new Callable;
     $proxy = new ProxyObject($callable);
     $expected = array('__invoke', array('foo', 'bar'));
-    
+
     $this->assertEquals($expected, $proxy('foo', 'bar'));
 
     // recursive tests
@@ -337,16 +337,16 @@ class ProxyObjectTest extends TestCase
     $callable = new Callable('string');
     $proxy = new ProxyObject($callable, true);
 
-    $this->assertEquals('string', $proxy());
+    $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy());
   }
-  
+
   /**
    * @covers Ezzatron\Pops\ProxyObject::__invoke
    */
   public function testInvokeFailure()
   {
     $proxy = $this->_proxy;
-    
+
     $this->setExpectedException('BadMethodCallException', 'Call to undefined method Ezzatron\Pops\Test\Fixture\Object::__invoke()');
     $proxy('foo', 'bar');
   }

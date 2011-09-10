@@ -20,6 +20,8 @@ class PopsTest extends TestCase
    * @covers Ezzatron\Pops\Pops::proxy
    * @covers Ezzatron\Pops\Pops::proxyObject
    * @covers Ezzatron\Pops\Pops::proxyObjectClass
+   * @covers Ezzatron\Pops\Pops::proxyPrimitive
+   * @covers Ezzatron\Pops\Pops::proxyPrimitiveClass
    */
   public function testProxy()
   {
@@ -28,7 +30,10 @@ class PopsTest extends TestCase
     $this->assertEquals($expected, Pops::proxy(new Object));
     $this->assertEquals($expected, Pops::proxyObject(new Object));
 
-    $this->assertEquals('string', Pops::proxy('string'));
+    $expected = new ProxyPrimitive('string');
+
+    $this->assertEquals($expected, Pops::proxy('string'));
+    $this->assertEquals($expected, Pops::proxyPrimitive('string'));
   }
 
   /**
