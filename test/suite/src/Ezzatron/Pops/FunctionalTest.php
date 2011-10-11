@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-use ArrayIterator;
 use Ezzatron\Pops\Access\Pops;
 use Ezzatron\Pops\Safe\Pops as Safe;
 use Ezzatron\Pops\Test\TestCase;

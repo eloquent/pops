@@ -10,17 +10,4 @@
  * file that was distributed with this source code.
  */
 
-define('POPS_TEST_ROOT_DIR', dirname(__DIR__));
-define('POPS_TEST_CONFIG_DIR', POPS_TEST_ROOT_DIR.DIRECTORY_SEPARATOR.'config');
-define('POPS_TEST_SUITE_DIR', POPS_TEST_ROOT_DIR.DIRECTORY_SEPARATOR.'suite');
-define('POPS_TEST_CONFIG_PATH', POPS_TEST_CONFIG_DIR.DIRECTORY_SEPARATOR.'config.xml');
-
-$command = 'phpunit --verbose --configuration '.escapeshellarg(POPS_TEST_CONFIG_PATH);
-if (isset($_SERVER['argv'][1]))
-{
-  $command .= ' '.escapeshellarg(realpath($_SERVER['argv'][1]));
-}
-
-chdir(POPS_TEST_SUITE_DIR);
-passthru($command, $code);
-exit($code);
+require __DIR__.DIRECTORY_SEPARATOR.'phpunit.php';
