@@ -162,24 +162,15 @@ class ProxyArrayTest extends TestCase
    */
   public function testToStringPre54()
   {
-//    if (version_compare(PHP_VERSION, '5.4.0') >= 0)
-//    {
-//      $this->markTestSkipped('Relevant to PHP < 5.4 only.');
-//
-//      // This is skipped in PHP >= 5.4 because it causes a PHP notice. It cannot
-//      // be tested, even by using ErrorException, because throwing an exception
-//      // from within __toString() is a fatal error. Because the proxy should act
-//      // as much like the underlying array as possible, this is the desired
-//      // behaviour.
-//
-//    }
-
     if (version_compare(PHP_VERSION, '5.4.0') >= 0)
     {
-      $error_count = 0;
-      set_error_handler(function() use(&$error_count) {
-        $error_count ++;
-      });
+      $this->markTestSkipped('Relevant to PHP < 5.4 only.');
+
+      // This is skipped in PHP >= 5.4 because it causes a PHP notice. It cannot
+      // be tested, even by using ErrorException, because throwing an exception
+      // from within __toString() is a fatal error. Because the proxy should act
+      // as much like the underlying array as possible, this is the desired
+      // behaviour.
     }
 
     $proxy = new ProxyArray(array());
@@ -190,11 +181,5 @@ class ProxyArrayTest extends TestCase
     $proxy = UppercasePops::proxyArray(array(), true);
 
     $this->assertEquals('ARRAY', (string)$proxy);
-
-    if (version_compare(PHP_VERSION, '5.4.0') >= 0)
-    {
-      $this->assertSame(2, $error_count);
-      restore_error_handler();
-    }
   }
 }
