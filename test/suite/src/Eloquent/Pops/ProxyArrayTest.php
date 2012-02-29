@@ -160,49 +160,36 @@ class ProxyArrayTest extends TestCase
    * @covers Eloquent\Pops\ProxyArray::__toString
    * @covers Eloquent\Pops\ProxyArray::_popsProxySubValue
    */
-  public function testToString()
+  public function testToStringPre54()
   {
-    set_error_handler(function($errno, $errstr, $errfile, $errline) {
-      throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
-    });
+    if (version_compare(PHP_VERSION, '5.4.0') >= 0)
+    {
+      $this->markTestSkipped('Relevant to PHP < 5.4 only.');
+    }
 
-    $exception_thrown = false;
     $proxy = new ProxyArray(array());
 
-    try
-    {
-      $actual = (string)$proxy;
-    }
-    catch (\ErrorException $e)
-    {
-      $exception_thrown = true;
-    }
-
-    if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
-      $this->assertTrue($exception_thrown);
-    } else {
-      $this->assertEquals('Array', $actual);
-    }
+    $this->assertEquals('Array', (string)$proxy);
 
     // recursive tests
-    $exception_thrown = false;
     $proxy = UppercasePops::proxyArray(array(), true);
 
-    try
+    $this->assertEquals('ARRAY', (string)$proxy);
+  }
+
+  /**
+   * @covers Eloquent\Pops\ProxyArray::__toString
+   */
+  public function testToStringPost54()
+  {
+    if (version_compare(PHP_VERSION, '5.4.0') < 0)
     {
-      $actual = (string)$proxy;
-    }
-    catch (\ErrorException $e)
-    {
-      $exception_thrown = true;
+      $this->markTestSkipped('Relevant to PHP >= 5.4 only.');
     }
 
-    if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
-      $this->assertTrue($exception_thrown);
-    } else {
-      $this->assertEquals('ARRAY', $actual);
-    }
+    $proxy = new ProxyArray(array());
 
-    restore_error_handler();
+    $this->setExpectedException('PHPUnit_Framework_Error_Notice');
+    (string)$proxy;
   }
 }
