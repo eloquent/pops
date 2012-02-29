@@ -197,7 +197,7 @@ and code coverage is closely monitored. All of the above code examples are also
 tested.
 
 ### Latest revision test suite results
-<http://ci.ezzatron.com/pops>
+[![Build Status](https://secure.travis-ci.org/eloquent/pops.png)](http://travis-ci.org/eloquent/pops)
 
 ### Latest revision test suite coverage
 <http://ci.ezzatron.com/report/pops/coverage/>
