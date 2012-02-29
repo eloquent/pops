@@ -162,6 +162,11 @@ class ProxyArrayTest extends TestCase
    */
   public function testToString()
   {
+    $error_count = 0;
+    set_error_handler(function() use(&$error_count) {
+      $error_count ++;
+    });
+
     $proxy = new ProxyArray(array());
 
     $this->assertEquals('Array', (string)$proxy);
@@ -170,5 +175,13 @@ class ProxyArrayTest extends TestCase
     $proxy = UppercasePops::proxyArray(array(), true);
     
     $this->assertEquals('ARRAY', (string)$proxy);
+
+    if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
+      $this->assertSame(2, $error_count);
+    } else {
+      $this->assertSame(0, $error_count);
+    }
+
+    restore_error_handler();
   }
 }
