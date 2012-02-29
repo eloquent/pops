@@ -162,24 +162,45 @@ class ProxyArrayTest extends TestCase
    */
   public function testToString()
   {
-    $error_count = 0;
-    set_error_handler(function() use(&$error_count) {
-      $error_count ++;
+    set_error_handler(function($errno, $errstr, $errfile, $errline) {
+      throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     });
 
+    $exception_thrown = false;
     $proxy = new ProxyArray(array());
 
-    $this->assertEquals('Array', (string)$proxy);
-
-    // recursive tests
-    $proxy = UppercasePops::proxyArray(array(), true);
-    
-    $this->assertEquals('ARRAY', (string)$proxy);
+    try
+    {
+      $actual = (string)$proxy;
+    }
+    catch (ErrorException $e)
+    {
+      $exception_thrown = true;
+    }
 
     if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
-      $this->assertSame(2, $error_count);
+      $this->assertTrue($exception_thrown);
     } else {
-      $this->assertSame(0, $error_count);
+      $this->assertEquals('Array', $actual);
+    }
+
+    // recursive tests
+    $exception_thrown = false;
+    $proxy = UppercasePops::proxyArray(array(), true);
+
+    try
+    {
+      $actual = (string)$proxy;
+    }
+    catch (ErrorException $e)
+    {
+      $exception_thrown = true;
+    }
+
+    if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
+      $this->assertTrue($exception_thrown);
+    } else {
+      $this->assertEquals('ARRAY', $actual);
     }
 
     restore_error_handler();
