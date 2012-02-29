@@ -160,17 +160,18 @@ class ProxyArrayTest extends TestCase
    * @covers Eloquent\Pops\ProxyArray::__toString
    * @covers Eloquent\Pops\ProxyArray::_popsProxySubValue
    */
-  public function testToStringPre54()
+  public function testToString()
   {
+    var_dump(PHP_VERSION, version_compare(PHP_VERSION, '5.4.0'));ob_flush();
     if (version_compare(PHP_VERSION, '5.4.0') >= 0)
     {
-      $this->markTestSkipped('Relevant to PHP < 5.4 only.');
-
       // This is skipped in PHP >= 5.4 because it causes a PHP notice. It cannot
       // be tested, even by using ErrorException, because throwing an exception
       // from within __toString() is a fatal error. Because the proxy should act
       // as much like the underlying array as possible, this is the desired
       // behaviour.
+
+      $this->markTestSkipped('Relevant to PHP < 5.4 only.');
     }
 
     $proxy = new ProxyArray(array());
