@@ -13,7 +13,7 @@ namespace Eloquent\Pops;
 
 use InvalidArgumentException;
 use Eloquent\Pops\Test\Fixture\ArrayAccess;
-use Eloquent\Pops\Test\Fixture\Callable;
+use Eloquent\Pops\Test\Fixture\CallableObject;
 use Eloquent\Pops\Test\Fixture\Countable;
 use Eloquent\Pops\Test\Fixture\Iterator;
 use Eloquent\Pops\Test\Fixture\IteratorAggregate;
@@ -383,14 +383,14 @@ class ProxyObjectTest extends TestCase
    */
   public function testInvoke()
   {
-    $callable = new Callable;
+    $callable = new CallableObject;
     $proxy = new ProxyObject($callable);
     $expected = array('__invoke', array('foo', 'bar'));
 
     $this->assertEquals($expected, $proxy('foo', 'bar'));
 
     // recursive tests
-    $callable = new Callable(new Object);
+    $callable = new CallableObject(new Object);
     $proxy = new ProxyObject($callable, true);
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $proxy());
@@ -398,7 +398,7 @@ class ProxyObjectTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $proxy()->arrayValue());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy()->string());
 
-    $callable = new Callable(array(
+    $callable = new CallableObject(array(
       'object' => new Object,
       'array' => array(),
       'string' => 'string',
@@ -411,7 +411,7 @@ class ProxyObjectTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $actual['array']);
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $actual['string']);
 
-    $callable = new Callable('string');
+    $callable = new CallableObject('string');
     $proxy = new ProxyObject($callable, true);
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy());

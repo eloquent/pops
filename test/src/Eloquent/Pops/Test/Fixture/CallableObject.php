@@ -11,7 +11,7 @@
 
 namespace Eloquent\Pops\Test\Fixture;
 
-class Callable extends Object
+class CallableObject extends Object
 {
   public function __construct($returnValue = null)
   {
