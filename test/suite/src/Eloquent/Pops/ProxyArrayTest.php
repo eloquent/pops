@@ -163,7 +163,7 @@ class ProxyArrayTest extends TestCase
   public function testToString()
   {
     set_error_handler(function($errno, $errstr, $errfile, $errline) {
-      throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+      throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
     });
 
     $exception_thrown = false;
@@ -173,7 +173,7 @@ class ProxyArrayTest extends TestCase
     {
       $actual = (string)$proxy;
     }
-    catch (ErrorException $e)
+    catch (\ErrorException $e)
     {
       $exception_thrown = true;
     }
@@ -192,7 +192,7 @@ class ProxyArrayTest extends TestCase
     {
       $actual = (string)$proxy;
     }
-    catch (ErrorException $e)
+    catch (\ErrorException $e)
     {
       $exception_thrown = true;
     }
