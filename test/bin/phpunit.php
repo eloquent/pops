@@ -16,7 +16,7 @@ if (!isset($configFile))
 {
   $configFile = 'config.xml';
 }
-$configPath = POPS_TEST_CONFIG_DIR.DIRECTORY_SEPARATOR.$configFile;
+$configPath = LQNT_TEST_CONFIG_DIR.DIRECTORY_SEPARATOR.$configFile;
 
 $command = 'phpunit --verbose --configuration '.escapeshellarg($configPath);
 

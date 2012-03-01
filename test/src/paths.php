@@ -9,11 +9,12 @@
  * file that was distributed with this source code.
  */
 
-if (!defined('POPS_ROOT_DIR')) define('POPS_ROOT_DIR', dirname(dirname(__DIR__)));
-if (!defined('POPS_SRC_DIR')) define('POPS_SRC_DIR', POPS_ROOT_DIR.DIRECTORY_SEPARATOR.'src');
-if (!defined('POPS_TEST_DIR')) define('POPS_TEST_DIR', POPS_ROOT_DIR.DIRECTORY_SEPARATOR.'test');
-if (!defined('POPS_TEST_BIN_DIR')) define('POPS_TEST_BIN_DIR', POPS_TEST_DIR.DIRECTORY_SEPARATOR.'bin');
-if (!defined('POPS_TEST_CONFIG_DIR')) define('POPS_TEST_CONFIG_DIR', POPS_TEST_DIR.DIRECTORY_SEPARATOR.'config');
-if (!defined('POPS_TEST_REPORT_DIR')) define('POPS_TEST_REPORT_DIR', POPS_TEST_DIR.DIRECTORY_SEPARATOR.'report');
-if (!defined('POPS_TEST_SRC_DIR')) define('POPS_TEST_SRC_DIR', POPS_TEST_DIR.DIRECTORY_SEPARATOR.'src');
-if (!defined('POPS_TEST_SUITE_DIR')) define('POPS_TEST_SUITE_DIR', POPS_TEST_DIR.DIRECTORY_SEPARATOR.'suite');
+if (!defined('LQNT_ROOT_DIR')) define('LQNT_ROOT_DIR', dirname(dirname(__DIR__)));
+if (!defined('LQNT_SRC_DIR')) define('LQNT_SRC_DIR', LQNT_ROOT_DIR.DIRECTORY_SEPARATOR.'src');
+if (!defined('LQNT_TEST_DIR')) define('LQNT_TEST_DIR', LQNT_ROOT_DIR.DIRECTORY_SEPARATOR.'test');
+if (!defined('LQNT_TEST_BIN_DIR')) define('LQNT_TEST_BIN_DIR', LQNT_TEST_DIR.DIRECTORY_SEPARATOR.'bin');
+if (!defined('LQNT_TEST_CONFIG_DIR')) define('LQNT_TEST_CONFIG_DIR', LQNT_TEST_DIR.DIRECTORY_SEPARATOR.'config');
+if (!defined('LQNT_TEST_REPORT_DIR')) define('LQNT_TEST_REPORT_DIR', LQNT_TEST_DIR.DIRECTORY_SEPARATOR.'report');
+if (!defined('LQNT_TEST_SRC_DIR')) define('LQNT_TEST_SRC_DIR', LQNT_TEST_DIR.DIRECTORY_SEPARATOR.'src');
+if (!defined('LQNT_TEST_SUITE_DIR')) define('LQNT_TEST_SUITE_DIR', LQNT_TEST_DIR.DIRECTORY_SEPARATOR.'suite');
+if (!defined('LQNT_VENDOR_DIR')) define('LQNT_VENDOR_DIR', LQNT_ROOT_DIR.DIRECTORY_SEPARATOR.'vendor');

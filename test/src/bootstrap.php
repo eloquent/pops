@@ -14,8 +14,13 @@ error_reporting(E_ALL | E_STRICT | E_DEPRECATED);
 // path constants
 require __DIR__.'/paths.php';
 
-// include Pops
-require POPS_SRC_DIR.DIRECTORY_SEPARATOR.'include.php';
+// use Composer for autoloading
+$autoloader = require LQNT_VENDOR_DIR.DIRECTORY_SEPARATOR.'.composer'.DIRECTORY_SEPARATOR.'autoload.php';
+$autoloader->add('Eloquent', LQNT_TEST_SRC_DIR);
 
-// include test fixtures
-require POPS_TEST_SRC_DIR.DIRECTORY_SEPARATOR.'include.php';
+// include fixtures than cannot be autoloaded
+$documentationFixturePath = LQNT_TEST_SRC_DIR.DIRECTORY_SEPARATOR.'Eloquent'.DIRECTORY_SEPARATOR.'Pops'.DIRECTORY_SEPARATOR.'Test'.DIRECTORY_SEPARATOR.'Fixture'.DIRECTORY_SEPARATOR.'Documentation';
+require $documentationFixturePath.DIRECTORY_SEPARATOR.'Confusion.php';
+require $documentationFixturePath.DIRECTORY_SEPARATOR.'OutputEscaper.php';
+require $documentationFixturePath.DIRECTORY_SEPARATOR.'SeriousBusiness.php';
+require $documentationFixturePath.DIRECTORY_SEPARATOR.'UppercaseProxy.php';
