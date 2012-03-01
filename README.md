@@ -4,10 +4,17 @@
 
 ## Installation
 
-Requires PHP > 5.3.
+Pops requires PHP 5.3 or later.
 
-* `git clone git@github.com:ezzatron/pops.git`
-* `require '/path/to/pops/src/include.php';`
+### With [Composer](http://getcomposer.org/)
+
+* Add 'eloquent/pops' to your project's composer.json dependencies
+* Run `php composer.phar install`
+
+### Bare installation
+
+* Clone from GitHub: `git clone git://github.com/eloquent/pops.git`
+* Use a [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md) compatible autoloader (namespace 'Eloquent' in the 'src' directory)
 
 ## What is Pops?
 
