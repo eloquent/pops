@@ -16,15 +16,15 @@ use IteratorAggregate as IteratorAggregateInterface;
 
 class IteratorAggregate extends Object implements IteratorAggregateInterface
 {
-  public function __construct(array $values)
-  {
-    $this->values = $values;
-  }
+    public function __construct(array $values)
+    {
+        $this->values = $values;
+    }
 
-  public function getIterator()
-  {
-    return new ArrayIterator($this->values);
-  }
+    public function getIterator()
+    {
+        return new ArrayIterator($this->values);
+    }
 
-  public $values;
+    public $values;
 }

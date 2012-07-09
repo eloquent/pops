@@ -23,56 +23,64 @@ use Eloquent\Pops\Test\TestCase;
  */
 class SafeProxyTest extends TestCase
 {
-  public function testProxy()
-  {
-    $expected = new SafeProxyClass('Eloquent\Pops\Test\Fixture\Object');
+    public function testProxy()
+    {
+        $expected = new SafeProxyClass(
+            'Eloquent\Pops\Test\Fixture\Object'
+        );
 
-    $this->assertEquals($expected, SafeProxy::proxyClass('Eloquent\Pops\Test\Fixture\Object'));
+        $this->assertEquals($expected, SafeProxy::proxyClass(
+            'Eloquent\Pops\Test\Fixture\Object'
+        ));
 
-    $class = SafeProxy::proxyClassStatic('Eloquent\Pops\Test\Fixture\Object');
+        $class = SafeProxy::proxyClassStatic(
+            'Eloquent\Pops\Test\Fixture\Object'
+        );
 
-    $this->assertTrue(class_exists($class));
-    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\SafeProxyClass'));
+        $this->assertTrue(class_exists($class));
+        $this->assertTrue(
+            is_subclass_of($class, __NAMESPACE__.'\SafeProxyClass')
+        );
 
-    $expected = new SafeProxyArray(array());
+        $expected = new SafeProxyArray(array());
 
-    $this->assertEquals($expected, SafeProxy::proxy(array()));
-    $this->assertEquals($expected, SafeProxy::proxyArray(array()));
+        $this->assertEquals($expected, SafeProxy::proxy(array()));
+        $this->assertEquals($expected, SafeProxy::proxyArray(array()));
 
-    $expected = new SafeProxyObject(new Object);
+        $expected = new SafeProxyObject(new Object);
 
-    $this->assertEquals($expected, SafeProxy::proxy(new Object));
-    $this->assertEquals($expected, SafeProxy::proxyObject(new Object));
+        $this->assertEquals($expected, SafeProxy::proxy(new Object));
+        $this->assertEquals($expected, SafeProxy::proxyObject(new Object));
 
-    $expected = new SafeProxyPrimitive('string');
+        $expected = new SafeProxyPrimitive('string');
 
-    $this->assertEquals($expected, SafeProxy::proxy('string'));
-    $this->assertEquals($expected, SafeProxy::proxyPrimitive('string'));
-  }
+        $this->assertEquals($expected, SafeProxy::proxy('string'));
+        $this->assertEquals($expected, SafeProxy::proxyPrimitive('string'));
+    }
 
-  public function testArrayRecursion()
-  {
-    $proxy = SafeProxy::proxy(array('foo' => 'bar'), true);
-    $expected = SafeProxy::proxy('bar', true);
+    public function testArrayRecursion()
+    {
+        $proxy = SafeProxy::proxy(array('foo' => 'bar'), true);
+        $expected = SafeProxy::proxy('bar', true);
 
-    $this->assertEquals($expected, $proxy['foo']);
-  }
+        $this->assertEquals($expected, $proxy['foo']);
+    }
 
-  public function testObjectRecursion()
-  {
-    $object = new Object;
-    $proxy = SafeProxy::proxy($object, true);
-    $expected = SafeProxy::proxy($object->string(), true);
+    public function testObjectRecursion()
+    {
+        $object = new Object;
+        $proxy = SafeProxy::proxy($object, true);
+        $expected = SafeProxy::proxy($object->string(), true);
 
-    $this->assertEquals($expected, $proxy->string());
-  }
+        $this->assertEquals($expected, $proxy->string());
+    }
 
-  public function testClassRecursion()
-  {
-    $class = 'Eloquent\Pops\Test\Fixture\Object';
-    $proxy = SafeProxy::proxyClassStatic($class, true);
-    $expected = SafeProxy::proxy(Object::staticString(), true);
+    public function testClassRecursion()
+    {
+        $class = 'Eloquent\Pops\Test\Fixture\Object';
+        $proxy = SafeProxy::proxyClassStatic($class, true);
+        $expected = SafeProxy::proxy(Object::staticString(), true);
 
-    $this->assertEquals($expected, $proxy::staticString());
-  }
+        $this->assertEquals($expected, $proxy::staticString());
+    }
 }

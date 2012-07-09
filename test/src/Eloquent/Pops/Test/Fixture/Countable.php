@@ -15,10 +15,10 @@ use Countable as CountableInterface;
 
 class Countable extends Object implements CountableInterface
 {
-  public function count()
-  {
-    return $this->count;
-  }
+    public function count()
+    {
+        return $this->count;
+    }
 
-  public $count = 0;
+    public $count = 0;
 }

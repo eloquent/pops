@@ -15,35 +15,35 @@ use Eloquent\Pops\Pops;
 
 class UppercaseProxy extends Pops
 {
-  /**
-   * @return string
-   */
-  static protected function proxyArrayClass()
-  {
-    return __NAMESPACE__.'\UppercaseProxyArray';
-  }
+    /**
+     * @return string
+     */
+    static protected function proxyArrayClass()
+    {
+        return __NAMESPACE__.'\UppercaseProxyArray';
+    }
 
-  /**
-   * @return string
-   */
-  static protected function proxyClassClass()
-  {
-    return __NAMESPACE__.'\UppercaseProxyClass';
-  }
+    /**
+     * @return string
+     */
+    static protected function proxyClassClass()
+    {
+        return __NAMESPACE__.'\UppercaseProxyClass';
+    }
 
-  /**
-   * @return string
-   */
-  static protected function proxyObjectClass()
-  {
-    return __NAMESPACE__.'\UppercaseProxyObject';
-  }
+    /**
+     * @return string
+     */
+    static protected function proxyObjectClass()
+    {
+        return __NAMESPACE__.'\UppercaseProxyObject';
+    }
 
-  /**
-   * @return string
-   */
-  static protected function proxyPrimitiveClass()
-  {
-    return __NAMESPACE__.'\UppercaseProxyPrimitive';
-  }
+    /**
+     * @return string
+     */
+    static protected function proxyPrimitiveClass()
+    {
+        return __NAMESPACE__.'\UppercaseProxyPrimitive';
+    }
 }

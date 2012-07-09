@@ -15,4 +15,6 @@ namespace Eloquent\Pops\Safe;
 
 use Eloquent\Pops\Proxy;
 
-interface Safe extends Proxy {}
+interface Safe extends Proxy
+{
+}

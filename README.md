@@ -44,12 +44,12 @@ Take the following class:
 
 class SeriousBusiness
 {
-  private function foo($adjective)
-  {
-    return 'foo is '.$adjective;
-  }
+    private function foo($adjective)
+    {
+        return 'foo is '.$adjective;
+    }
 
-  private $bar = 'mind';
+    private $bar = 'mind';
 }
 ```
 
@@ -77,12 +77,12 @@ The same concept applies for static methods and properties:
 
 class SeriousBusiness
 {
-  static private function baz($adjective)
-  {
-    return 'baz is '.$adjective;
-  }
+    static private function baz($adjective)
+    {
+        return 'baz is '.$adjective;
+    }
 
-  static private $qux = 'mind';
+    static private $qux = 'mind';
 }
 ```
 
@@ -132,12 +132,12 @@ class:
 
 class Confusion
 {
-  public function wat()
-  {
-    return "What is this? I don't even...";
-  }
+    public function wat()
+    {
+        return "What is this? I don't even...";
+    }
 
-  public $derp = 'Has anyone really been far even as decided to use even go want to do look more like?';
+    public $derp = 'Has anyone really been far even as decided to use even?';
 }
 ```
 
@@ -150,15 +150,15 @@ use Eloquent\Pops\ProxyObject;
 
 class UppercaseProxyObject extends ProxyObject
 {
-  public function __call($method, array $arguments)
-  {
-    return strtoupper(parent::__call($method, $arguments));
-  }
+    public function __call($method, array $arguments)
+    {
+        return strtoupper(parent::__call($method, $arguments));
+    }
 
-  public function __get($property)
-  {
-    return strtoupper(parent::__get($property));
-  }
+    public function __get($property)
+    {
+        return strtoupper(parent::__get($property));
+    }
 }
 ```
 
@@ -174,8 +174,8 @@ $proxy = new UppercaseProxyObject($confusion);
 echo $confusion->wat();   // outputs "What is this? I don't even..."
 echo $proxy->wat();       // outputs "WHAT IS THIS? I DON'T EVEN..."
 
-echo $confusion->derp;    // outputs 'Has anyone really been far even as decided to use even go want to do look more like?'
-echo $proxy->derp;        // outputs 'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED TO USE EVEN GO WANT TO DO LOOK MORE LIKE?'
+echo $confusion->derp;    // outputs 'Has anyone really been far even as decided to use even?'
+echo $proxy->derp;        // outputs 'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED TO USE EVEN?'
 ```
 
 ## Recursive proxies
@@ -191,114 +191,124 @@ output:
 
 namespace OutputEscaper;
 
+use Eloquent\Pops\Pops;
+use Eloquent\Pops\ProxyArray;
+use Eloquent\Pops\ProxyClass;
+use Eloquent\Pops\ProxyObject;
+use Eloquent\Pops\ProxyPrimitive;
+
 /**
  * Escapes output for use in HTML.
  */
-class OutputEscaperProxy extends \Eloquent\Pops\Pops
+class OutputEscaperProxy extends Pops
 {
-  /**
-   * The class to use when proxying arrays.
-   *
-   * @return string
-   */
-  static protected function proxyArrayClass()
-  {
-    return __NAMESPACE__.'\OutputEscaperProxyArray';
-  }
+    /**
+     * The class to use when proxying arrays.
+     *
+     * @return string
+     */
+    static protected function proxyArrayClass()
+    {
+        return __NAMESPACE__.'\OutputEscaperProxyArray';
+    }
 
-  /**
-   * The class to use when proxying classes.
-   *
-   * @return string
-   */
-  static protected function proxyClassClass()
-  {
-    return __NAMESPACE__.'\OutputEscaperProxyClass';
-  }
+    /**
+     * The class to use when proxying classes.
+     *
+     * @return string
+     */
+    static protected function proxyClassClass()
+    {
+        return __NAMESPACE__.'\OutputEscaperProxyClass';
+    }
 
-  /**
-   * The class to use when proxying objects.
-   *
-   * @return string
-   */
-  static protected function proxyObjectClass()
-  {
-    return __NAMESPACE__.'\OutputEscaperProxyObject';
-  }
+    /**
+     * The class to use when proxying objects.
+     *
+     * @return string
+     */
+    static protected function proxyObjectClass()
+    {
+        return __NAMESPACE__.'\OutputEscaperProxyObject';
+    }
 
-  /**
-   * The class to use when proxying primitives.
-   *
-   * @return string
-   */
-  static protected function proxyPrimitiveClass()
-  {
-    return __NAMESPACE__.'\OutputEscaperProxyPrimitive';
-  }
+    /**
+     * The class to use when proxying primitives.
+     *
+     * @return string
+     */
+    static protected function proxyPrimitiveClass()
+    {
+        return __NAMESPACE__.'\OutputEscaperProxyPrimitive';
+    }
 }
 
 /**
  * Wraps an array to escape any sub-values for use in HTML.
  */
-class OutputEscaperProxyArray extends \Eloquent\Pops\ProxyArray
+class OutputEscaperProxyArray extends ProxyArray
 {
-  /**
-   * The class to use when proxying sub-values.
-   *
-   * @return string
-   */
-  protected static function popsProxyClass()
-  {
-    return __NAMESPACE__.'\OutputEscaperProxy';
-  }
+    /**
+     * The class to use when proxying sub-values.
+     *
+     * @return string
+     */
+    protected static function popsProxyClass()
+    {
+        return __NAMESPACE__.'\OutputEscaperProxy';
+    }
 }
 
 /**
  * Wraps a class to escape any sub-values for use in HTML.
  */
-class OutputEscaperProxyClass extends \Eloquent\Pops\ProxyClass
+class OutputEscaperProxyClass extends ProxyClass
 {
-  /**
-   * The class to use when proxying sub-values.
-   *
-   * @return string
-   */
-  protected static function popsProxyClass()
-  {
-    return __NAMESPACE__.'\OutputEscaperProxy';
-  }
+    /**
+     * The class to use when proxying sub-values.
+     *
+     * @return string
+     */
+    protected static function popsProxyClass()
+    {
+        return __NAMESPACE__.'\OutputEscaperProxy';
+    }
 }
 
 /**
  * Wraps an object to escape any sub-values for use in HTML.
  */
-class OutputEscaperProxyObject extends \Eloquent\Pops\ProxyObject
+class OutputEscaperProxyObject extends ProxyObject
 {
-  /**
-   * The class to use when proxying sub-values.
-   *
-   * @return string
-   */
-  protected static function popsProxyClass()
-  {
-    return __NAMESPACE__.'\OutputEscaperProxy';
-  }
+    /**
+     * The class to use when proxying sub-values.
+     *
+     * @return string
+     */
+    protected static function popsProxyClass()
+    {
+        return __NAMESPACE__.'\OutputEscaperProxy';
+    }
 }
 
 /**
  * Wraps a primitive to escape its value for use in HTML.
  */
-class OutputEscaperProxyPrimitive extends \Eloquent\Pops\ProxyPrimitive
+class OutputEscaperProxyPrimitive extends ProxyPrimitive
 {
-  /**
-   * Returns the HTML-escaped version of this primitive.
-   *
-   * @return string
-   */
-  public function __toString()
-  {
-    return htmlspecialchars((string)$this->popsPrimitive, ENT_QUOTES, 'UTF-8');
-  }
+    /**
+     * Returns the HTML-escaped version of this primitive.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return htmlspecialchars(
+            (string) $this->popsPrimitive,
+            ENT_QUOTES,
+            'UTF-8'
+        );
+    }
 }
 ```
 
@@ -311,17 +321,16 @@ use OutputEscaper\OutputEscaperProxy;
 use Eloquent\Pops\Safe\SafeProxy;
 
 $list = new ArrayIterator(array(
-  'foo',
-  'bar',
-  '<script>alert(document.cookie);</script>',
-  SafeProxy::proxy('<em>ooh...</em>'),
+    'foo',
+    'bar',
+    '<script>alert(document.cookie);</script>',
+    SafeProxy::proxy('<em>ooh...</em>'),
 ));
 $proxy = OutputEscaperProxy::proxy($list, true);
 
 echo '<ul>'.PHP_EOL;
-foreach ($proxy as $item)
-{
-  echo '<li>'.$item.'</li>'.PHP_EOL;
+foreach ($proxy as $item) {
+    echo '<li>'.$item.'</li>'.PHP_EOL;
 }
 echo '</ul>';
 ```

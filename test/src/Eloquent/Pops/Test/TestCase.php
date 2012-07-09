@@ -17,32 +17,32 @@ use Eloquent\Pops\ProxyClass;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
-  /**
-   * @param Proxy $proxy
-   * @param string $method
-   * @param array $arguments
-   * @param boolean $magic
-   */
-  protected function assertPopsProxyCall(Proxy $proxy, $method, array $arguments = null, $magic = null)
-  {
-    $actual = call_user_func_array(array($proxy, $method), $arguments);
+    /**
+     * @param Proxy $proxy
+     * @param string $method
+     * @param array $arguments
+     * @param boolean $magic
+     */
+    protected function assertPopsProxyCall(
+        Proxy $proxy,
+        $method,
+        array $arguments = null,
+        $magic = null
+    ) {
+        $actual = call_user_func_array(array($proxy, $method), $arguments);
 
-    if ($magic)
-    {
-      $arguments = array($method, $arguments);
+        if ($magic) {
+            $arguments = array($method, $arguments);
 
-      if ($proxy instanceof ProxyClass)
-      {
-        $method = '__callStatic';
-      }
-      else
-      {
-        $method = '__call';
-      }
+            if ($proxy instanceof ProxyClass) {
+                $method = '__callStatic';
+            } else {
+                $method = '__call';
+            }
+        }
+
+        $expected = array($method, $arguments);
+
+        $this->assertEquals($expected, $actual);
     }
-
-    $expected = array($method, $arguments);
-
-    $this->assertEquals($expected, $actual);
-  }
 }

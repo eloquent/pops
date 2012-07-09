@@ -21,30 +21,40 @@ use Eloquent\Pops\ProxyPrimitive;
  */
 class AccessProxyTest extends TestCase
 {
-  public function testProxy()
-  {
-    $expected = new AccessProxyClass('Eloquent\Pops\Test\Fixture\Object');
+    public function testProxy()
+    {
+        $expected = new AccessProxyClass('Eloquent\Pops\Test\Fixture\Object');
 
-    $this->assertEquals($expected, AccessProxy::proxyClass('Eloquent\Pops\Test\Fixture\Object'));
+        $this->assertEquals($expected, AccessProxy::proxyClass(
+            'Eloquent\Pops\Test\Fixture\Object'
+        ));
 
-    $class = AccessProxy::proxyClassStatic('Eloquent\Pops\Test\Fixture\Object');
 
-    $this->assertTrue(class_exists($class));
-    $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\AccessProxyClass'));
+        $class = AccessProxy::proxyClassStatic(
+            'Eloquent\Pops\Test\Fixture\Object'
+        );
 
-    $expected = new AccessProxyArray(array());
+        $this->assertTrue(class_exists($class));
+        $this->assertTrue(
+            is_subclass_of($class, __NAMESPACE__.'\AccessProxyClass')
+        );
 
-    $this->assertEquals($expected, AccessProxy::proxy(array()));
-    $this->assertEquals($expected, AccessProxy::proxyArray(array()));
 
-    $expected = new AccessProxyObject(new Object);
+        $expected = new AccessProxyArray(array());
 
-    $this->assertEquals($expected, AccessProxy::proxy(new Object));
-    $this->assertEquals($expected, AccessProxy::proxyObject(new Object));
+        $this->assertEquals($expected, AccessProxy::proxy(array()));
+        $this->assertEquals($expected, AccessProxy::proxyArray(array()));
 
-    $expected = new ProxyPrimitive('string');
 
-    $this->assertEquals($expected, AccessProxy::proxy('string'));
-    $this->assertEquals($expected, AccessProxy::proxyPrimitive('string'));
-  }
+        $expected = new AccessProxyObject(new Object);
+
+        $this->assertEquals($expected, AccessProxy::proxy(new Object));
+        $this->assertEquals($expected, AccessProxy::proxyObject(new Object));
+
+
+        $expected = new ProxyPrimitive('string');
+
+        $this->assertEquals($expected, AccessProxy::proxy('string'));
+        $this->assertEquals($expected, AccessProxy::proxyPrimitive('string'));
+    }
 }

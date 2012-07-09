@@ -15,11 +15,11 @@ use Eloquent\Pops\ProxyArray;
 
 class AccessProxyArray extends ProxyArray
 {
-  /**
-   * @return string
-   */
-  protected static function popsProxyClass()
-  {
-    return __NAMESPACE__.'\AccessProxy';
-  }
+    /**
+     * @return string
+     */
+    protected static function popsProxyClass()
+    {
+        return __NAMESPACE__.'\AccessProxy';
+    }
 }

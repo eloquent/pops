@@ -11,10 +11,10 @@
 
 class Confusion
 {
-  public function wat()
-  {
-    return "What is this? I don't even...";
-  }
+    public function wat()
+    {
+        return "What is this? I don't even...";
+    }
 
-  public $derp = 'Has anyone really been far even as decided to use even go want to do look more like?';
+    public $derp = 'Has anyone really been far even as decided to use even?';
 }

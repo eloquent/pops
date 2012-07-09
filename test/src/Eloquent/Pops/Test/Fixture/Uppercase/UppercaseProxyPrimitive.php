@@ -15,11 +15,11 @@ use Eloquent\Pops\ProxyPrimitive;
 
 class UppercaseProxyPrimitive extends ProxyPrimitive
 {
-  /**
-   * @return string
-   */
-  public function __toString()
-  {
-    return mb_strtoupper((string)$this->popsPrimitive);
-  }
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return mb_strtoupper((string) $this->popsPrimitive);
+    }
 }

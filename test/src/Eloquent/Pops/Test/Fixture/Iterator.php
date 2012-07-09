@@ -16,37 +16,37 @@ use Iterator as IteratorInterface;
 
 class Iterator extends Object implements IteratorInterface
 {
-  public function __construct(array $values)
-  {
-    $this->values = $values;
-    $this->iterator = new ArrayIterator($this->values);
-  }
+    public function __construct(array $values)
+    {
+        $this->values = $values;
+        $this->iterator = new ArrayIterator($this->values);
+    }
 
-  public function current()
-  {
-    return $this->iterator->current();
-  }
+    public function current()
+    {
+        return $this->iterator->current();
+    }
 
-  public function key()
-  {
-    return $this->iterator->key();
-  }
+    public function key()
+    {
+        return $this->iterator->key();
+    }
 
-  public function next()
-  {
-    $this->iterator->next();
-  }
+    public function next()
+    {
+        $this->iterator->next();
+    }
 
-  public function rewind()
-  {
-    $this->iterator->rewind();
-  }
+    public function rewind()
+    {
+        $this->iterator->rewind();
+    }
 
-  public function valid()
-  {
-    return $this->iterator->valid();
-  }
+    public function valid()
+    {
+        return $this->iterator->valid();
+    }
 
-  public $iterator;
-  public $values;
+    public $iterator;
+    public $values;
 }

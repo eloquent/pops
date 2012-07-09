@@ -13,32 +13,32 @@ namespace Eloquent\Pops;
 
 class ProxyPrimitive
 {
-  /**
-   * @param mixed $primitive
-   */
-  public function __construct($primitive)
-  {
-    $this->popsPrimitive = $primitive;
-  }
+    /**
+     * @param mixed $primitive
+     */
+    public function __construct($primitive)
+    {
+        $this->popsPrimitive = $primitive;
+    }
 
-  /**
-   * @return object
-   */
-  public function popsPrimitive()
-  {
-    return $this->popsPrimitive;
-  }
+    /**
+     * @return object
+     */
+    public function popsPrimitive()
+    {
+        return $this->popsPrimitive;
+    }
 
-  /**
-   * @return string
-   */
-  public function __toString()
-  {
-    return (string)$this->popsPrimitive;
-  }
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->popsPrimitive;
+    }
 
-  /**
-   * @var mixed
-   */
-  protected $popsPrimitive;
+    /**
+     * @var mixed
+     */
+    protected $popsPrimitive;
 }

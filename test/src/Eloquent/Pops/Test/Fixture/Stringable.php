@@ -13,10 +13,10 @@ namespace Eloquent\Pops\Test\Fixture;
 
 class Stringable extends Object
 {
-  public function __toString()
-  {
-    return $this->string;
-  }
+    public function __toString()
+    {
+        return $this->string;
+    }
 
-  public $string = '';
+    public $string = '';
 }

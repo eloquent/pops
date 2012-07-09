@@ -18,16 +18,17 @@ use Eloquent\Pops\Test\TestCase;
  */
 class ProxyPrimitiveTest extends TestCase
 {
-  public function testPrimitive()
-  {
-    $proxy = new ProxyPrimitive('foo');
+    public function testPrimitive()
+    {
+        $proxy = new ProxyPrimitive('foo');
 
-    $this->assertEquals('foo', $proxy->popsPrimitive());
-    $this->assertEquals('foo', (string)$proxy);
+        $this->assertEquals('foo', $proxy->popsPrimitive());
+        $this->assertEquals('foo', (string) $proxy);
 
-    $proxy = new ProxyPrimitive(1);
 
-    $this->assertEquals(1, $proxy->popsPrimitive());
-    $this->assertEquals('1', (string)$proxy);
-  }
+        $proxy = new ProxyPrimitive(1);
+
+        $this->assertEquals(1, $proxy->popsPrimitive());
+        $this->assertEquals('1', (string) $proxy);
+    }
 }

@@ -15,11 +15,11 @@ use Eloquent\Pops\ProxyArray;
 
 class SafeProxyArray extends ProxyArray implements Safe
 {
-  /**
-   * @return string
-   */
-  protected static function popsProxyClass()
-  {
-    return __NAMESPACE__.'\SafeProxy';
-  }
+    /**
+     * @return string
+     */
+    protected static function popsProxyClass()
+    {
+        return __NAMESPACE__.'\SafeProxy';
+    }
 }

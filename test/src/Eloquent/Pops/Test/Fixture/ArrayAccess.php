@@ -15,25 +15,25 @@ use ArrayAccess as ArrayAccessInterface;
 
 class ArrayAccess extends Object implements ArrayAccessInterface
 {
-  public function offsetSet($property, $value)
-  {
-    $this->values[$property] = $value;
-  }
+    public function offsetSet($property, $value)
+    {
+        $this->values[$property] = $value;
+    }
 
-  public function offsetGet($property)
-  {
-    return $this->values[$property];
-  }
+    public function offsetGet($property)
+    {
+        return $this->values[$property];
+    }
 
-  public function offsetExists($property)
-  {
-    return array_key_exists($property, $this->values);
-  }
+    public function offsetExists($property)
+    {
+        return array_key_exists($property, $this->values);
+    }
 
-  public function offsetUnset($property)
-  {
-    unset($this->values[$property]);
-  }
+    public function offsetUnset($property)
+    {
+        unset($this->values[$property]);
+    }
 
-  public $values = array();
+    public $values = array();
 }

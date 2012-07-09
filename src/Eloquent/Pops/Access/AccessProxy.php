@@ -15,27 +15,27 @@ use Eloquent\Pops\Pops;
 
 class AccessProxy extends Pops
 {
-  /**
-   * @return string
-   */
-  protected static function proxyArrayClass()
-  {
-    return __NAMESPACE__.'\AccessProxyArray';
-  }
+    /**
+     * @return string
+     */
+    protected static function proxyArrayClass()
+    {
+        return __NAMESPACE__.'\AccessProxyArray';
+    }
 
-  /**
-   * @return string
-   */
-  protected static function proxyClassClass()
-  {
-    return __NAMESPACE__.'\AccessProxyClass';
-  }
+    /**
+     * @return string
+     */
+    protected static function proxyClassClass()
+    {
+        return __NAMESPACE__.'\AccessProxyClass';
+    }
 
-  /**
-   * @return string
-   */
-  protected static function proxyObjectClass()
-  {
-    return __NAMESPACE__.'\AccessProxyObject';
-  }
+    /**
+     * @return string
+     */
+    protected static function proxyObjectClass()
+    {
+        return __NAMESPACE__.'\AccessProxyObject';
+    }
 }

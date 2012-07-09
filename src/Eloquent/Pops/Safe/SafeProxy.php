@@ -15,35 +15,35 @@ use Eloquent\Pops\Pops;
 
 class SafeProxy extends Pops
 {
-  /**
-   * @return string
-   */
-  protected static function proxyArrayClass()
-  {
-    return __NAMESPACE__.'\SafeProxyArray';
-  }
+    /**
+     * @return string
+     */
+    protected static function proxyArrayClass()
+    {
+        return __NAMESPACE__.'\SafeProxyArray';
+    }
 
-  /**
-   * @return string
-   */
-  protected static function proxyClassClass()
-  {
-    return __NAMESPACE__.'\SafeProxyClass';
-  }
+    /**
+     * @return string
+     */
+    protected static function proxyClassClass()
+    {
+        return __NAMESPACE__.'\SafeProxyClass';
+    }
 
-  /**
-   * @return string
-   */
-  protected static function proxyObjectClass()
-  {
-    return __NAMESPACE__.'\SafeProxyObject';
-  }
+    /**
+     * @return string
+     */
+    protected static function proxyObjectClass()
+    {
+        return __NAMESPACE__.'\SafeProxyObject';
+    }
 
-  /**
-   * @return string
-   */
-  protected static function proxyPrimitiveClass()
-  {
-    return __NAMESPACE__.'\SafeProxyPrimitive';
-  }
+    /**
+     * @return string
+     */
+    protected static function proxyPrimitiveClass()
+    {
+        return __NAMESPACE__.'\SafeProxyPrimitive';
+    }
 }

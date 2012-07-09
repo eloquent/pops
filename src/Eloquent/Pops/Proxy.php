@@ -13,4 +13,6 @@
 
 namespace Eloquent\Pops;
 
-interface Proxy {}
+interface Proxy
+{
+}
