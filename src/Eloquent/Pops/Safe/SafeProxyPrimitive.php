@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+// @codeCoverageIgnoreStart
+
 namespace Eloquent\Pops\Safe;
 
 use Eloquent\Pops\ProxyPrimitive;

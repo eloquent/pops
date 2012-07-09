@@ -17,11 +17,6 @@ use Eloquent\Pops\Test\TestCase;
 
 /**
  * @covers Eloquent\Pops\Pops
- * @covers Eloquent\Pops\Safe\SafeProxy
- * @covers Eloquent\Pops\Safe\SafeProxyArray
- * @covers Eloquent\Pops\Safe\SafeProxyClass
- * @covers Eloquent\Pops\Safe\SafeProxyObject
- * @covers Eloquent\Pops\Safe\SafeProxyPrimitive
  */
 class PopsTest extends TestCase
 {
