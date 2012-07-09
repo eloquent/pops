@@ -11,7 +11,7 @@
 
 namespace Eloquent\Pops;
 
-use Eloquent\Pops\Safe\Proxy as SafeProxy;
+use Eloquent\Pops\Safe\Safe;
 use ReflectionClass;
 
 class Pops
@@ -22,9 +22,9 @@ class Pops
    *
    * @return Proxy
    */
-  static public function proxy($value, $recursive = null)
+  public static function proxy($value, $recursive = null)
   {
-    if ($value instanceof SafeProxy)
+    if ($value instanceof Safe)
     {
       return $value;
     }
@@ -46,7 +46,7 @@ class Pops
    *
    * @return ProxyArray
    */
-  static public function proxyArray($array, $recursive = null)
+  public static function proxyArray($array, $recursive = null)
   {
     $class = new ReflectionClass(static::proxyArrayClass());
 
@@ -59,7 +59,7 @@ class Pops
    *
    * @return ProxyClass
    */
-  static public function proxyClass($class, $recursive = null)
+  public static function proxyClass($class, $recursive = null)
   {
     $proxyClassClass = new ReflectionClass(static::proxyClassClass());
 
@@ -73,9 +73,9 @@ class Pops
    *
    * @return string
    */
-  static public function proxyClassStatic($class, $recursive = null, $proxyClass = null)
+  public static function proxyClassStatic($class, $recursive = null, $proxyClass = null)
   {
-    $method = static::proxyClassClass().'::_popsGenerateStaticClassProxy';
+    $method = static::proxyClassClass().'::popsGenerateStaticClassProxy';
 
     return call_user_func_array($method, func_get_args());
   }
@@ -86,7 +86,7 @@ class Pops
    *
    * @return ProxyObject
    */
-  static public function proxyObject($object, $recursive = null)
+  public static function proxyObject($object, $recursive = null)
   {
     $class = new ReflectionClass(static::proxyObjectClass());
 
@@ -98,7 +98,7 @@ class Pops
    *
    * @return ProxyPrimitive
    */
-  static public function proxyPrimitive($primitive)
+  public static function proxyPrimitive($primitive)
   {
     $class = new ReflectionClass(static::proxyPrimitiveClass());
 
@@ -108,54 +108,32 @@ class Pops
   /**
    * @return string
    */
-  static protected function proxyArrayClass()
+  protected static function proxyArrayClass()
   {
-    return static::proxyDynamicClassSelect('ProxyArray');
+    return __NAMESPACE__.'\ProxyArray';
   }
 
   /**
    * @return string
    */
-  static protected function proxyClassClass()
+  protected static function proxyClassClass()
   {
-    return static::proxyDynamicClassSelect('ProxyClass');
+    return __NAMESPACE__.'\ProxyClass';
   }
 
   /**
    * @return string
    */
-  static protected function proxyObjectClass()
+  protected static function proxyObjectClass()
   {
-    return static::proxyDynamicClassSelect('ProxyObject');
+    return __NAMESPACE__.'\ProxyObject';
   }
 
   /**
    * @return string
    */
-  static protected function proxyPrimitiveClass()
+  protected static function proxyPrimitiveClass()
   {
-    return static::proxyDynamicClassSelect('ProxyPrimitive');
-  }
-
-  /**
-   * @param string $proxyClass
-   *
-   * @return string
-   */
-  static protected function proxyDynamicClassSelect($proxyClass)
-  {
-    $class = new ReflectionClass(get_called_class());
-    $namespace = $class->getNamespaceName();
-    $namespaceProxyClass = $namespace.'\\'.$proxyClass;
-
-    if (class_exists($namespaceProxyClass))
-    {
-      return $namespaceProxyClass;
-    }
-
-    $parent = $class->getParentClass()->getName();
-    $method = lcfirst($proxyClass).'Class';
-
-    return $parent::$method();
+    return __NAMESPACE__.'\ProxyPrimitive';
   }
 }

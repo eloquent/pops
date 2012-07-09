@@ -11,7 +11,7 @@
 
 use Eloquent\Pops\ProxyObject;
 
-class UppercaseProxy extends ProxyObject
+class UppercaseProxyObject extends ProxyObject
 {
   public function __call($method, array $arguments)
   {

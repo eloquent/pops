@@ -11,20 +11,25 @@
 
 namespace Eloquent\Pops;
 
-use Eloquent\Pops\Safe\Pops as Safe;
+use Eloquent\Pops\Safe\SafeProxy;
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\TestCase;
 
 /**
  * @covers Eloquent\Pops\Pops
+ * @covers Eloquent\Pops\Safe\SafeProxy
+ * @covers Eloquent\Pops\Safe\SafeProxyArray
+ * @covers Eloquent\Pops\Safe\SafeProxyClass
+ * @covers Eloquent\Pops\Safe\SafeProxyObject
+ * @covers Eloquent\Pops\Safe\SafeProxyPrimitive
  */
 class PopsTest extends TestCase
 {
   public function testProxy()
   {
-    $safe = Safe::proxy(new Object, true);
+    $safe = SafeProxy::proxy(new Object, true);
 
-    $this->assertEquals($safe, Pops::proxy($safe));
+    $this->assertSame($safe, Pops::proxy($safe));
     $this->assertEquals($safe->object(), Pops::proxy($safe->object()));
     $this->assertEquals($safe->object(), Pops::proxy($safe)->object());
 

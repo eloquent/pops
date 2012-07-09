@@ -11,11 +11,11 @@
 
 namespace Eloquent\Pops\Access;
 
+use Eloquent\Pops\ProxyClass;
 use LogicException;
-use Eloquent\Pops\ProxyClass as PopsProxyClass;
 use ReflectionClass;
 
-class ProxyClass extends PopsProxyClass
+class AccessProxyClass extends ProxyClass
 {
   /**
    * @param string $class
@@ -25,7 +25,7 @@ class ProxyClass extends PopsProxyClass
   {
     parent::__construct($class, $recursive);
 
-    $this->_popsReflector = new ReflectionClass($class);
+    $this->popsReflector = new ReflectionClass($class);
   }
 
   /**
@@ -36,14 +36,14 @@ class ProxyClass extends PopsProxyClass
    */
   public function __call($method, array $arguments)
   {
-    if (method_exists($this->_popsClass, $method))
+    if (method_exists($this->popsClass, $method))
     {
-      $method = $this->_popsReflector->getMethod($method);
+      $method = $this->popsReflector->getMethod($method);
       $method->setAccessible(true);
 
-      return static::_popsProxySubValue(
+      return static::popsProxySubValue(
         $method->invokeArgs(null, $arguments)
-        , $this->_popsRecursive
+        , $this->popsRecursive
       );
     }
 
@@ -56,14 +56,14 @@ class ProxyClass extends PopsProxyClass
    */
   public function __set($property, $value)
   {
-    if ($propertyReflector = $this->_popsPropertyReflector($property))
+    if ($propertyReflector = $this->popsPropertyReflector($property))
     {
       $propertyReflector->setValue(null, $value);
 
       return;
     }
 
-    throw new LogicException('Access to undeclared static property: '.$this->_popsClass.'::$'.$property);
+    throw new LogicException('Access to undeclared static property: '.$this->popsClass.'::$'.$property);
   }
 
   /**
@@ -73,15 +73,15 @@ class ProxyClass extends PopsProxyClass
    */
   public function __get($property)
   {
-    if ($propertyReflector = $this->_popsPropertyReflector($property))
+    if ($propertyReflector = $this->popsPropertyReflector($property))
     {
-      return static::_popsProxySubValue(
+      return static::popsProxySubValue(
         $propertyReflector->getValue(null)
-        , $this->_popsRecursive
+        , $this->popsRecursive
       );
     }
 
-    throw new LogicException('Access to undeclared static property: '.$this->_popsClass.'::$'.$property);
+    throw new LogicException('Access to undeclared static property: '.$this->popsClass.'::$'.$property);
   }
 
   /**
@@ -91,7 +91,7 @@ class ProxyClass extends PopsProxyClass
    */
   public function __isset($property)
   {
-    if ($propertyReflector = $this->_popsPropertyReflector($property))
+    if ($propertyReflector = $this->popsPropertyReflector($property))
     {
       return null !== $propertyReflector->getValue(null);
     }
@@ -104,14 +104,22 @@ class ProxyClass extends PopsProxyClass
    */
   public function __unset($property)
   {
-    if ($propertyReflector = $this->_popsPropertyReflector($property))
+    if ($propertyReflector = $this->popsPropertyReflector($property))
     {
       $propertyReflector->setValue(null, null);
 
       return;
     }
 
-    throw new LogicException('Access to undeclared static property: '.$this->_popsClass.'::$'.$property);
+    throw new LogicException('Access to undeclared static property: '.$this->popsClass.'::$'.$property);
+  }
+
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\AccessProxy';
   }
 
   /**
@@ -119,11 +127,11 @@ class ProxyClass extends PopsProxyClass
    *
    * @return ReflectionProperty|null
    */
-  protected function _popsPropertyReflector($property)
+  protected function popsPropertyReflector($property)
   {
-    if (property_exists($this->_popsClass, $property))
+    if (property_exists($this->popsClass, $property))
     {
-      $property = $this->_popsReflector->getProperty($property);
+      $property = $this->popsReflector->getProperty($property);
       $property->setAccessible(true);
 
       return $property;
@@ -135,5 +143,5 @@ class ProxyClass extends PopsProxyClass
   /**
    * @var ReflectionClass
    */
-  protected $_popsReflector;
+  protected $popsReflector;
 }

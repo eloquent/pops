@@ -11,6 +11,6 @@
 
 namespace Eloquent\Pops\Safe;
 
-use Eloquent\Pops\ProxyPrimitive as PopsProxyPrimitive;
+use Eloquent\Pops\ProxyPrimitive;
 
-class ProxyPrimitive extends PopsProxyPrimitive implements Proxy {}
+class SafeProxyPrimitive extends ProxyPrimitive implements Safe {}

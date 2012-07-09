@@ -11,6 +11,15 @@
 
 namespace Eloquent\Pops\Test\Fixture\Uppercase;
 
-use Eloquent\Pops\ProxyObject as PopsProxyObject;
+use Eloquent\Pops\ProxyPrimitive;
 
-class ProxyObject extends PopsProxyObject {}
+class UppercaseProxyPrimitive extends ProxyPrimitive
+{
+  /**
+   * @return string
+   */
+  public function __toString()
+  {
+    return mb_strtoupper((string)$this->popsPrimitive);
+  }
+}

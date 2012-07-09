@@ -12,7 +12,7 @@
 namespace Eloquent\Pops;
 
 use Eloquent\Pops\Test\Fixture\Object;
-use Eloquent\Pops\Test\Fixture\Uppercase\Pops as UppercasePops;
+use Eloquent\Pops\Test\Fixture\Uppercase\UppercaseProxy;
 use Eloquent\Pops\Test\TestCase;
 
 /**
@@ -23,7 +23,7 @@ class ProxyArrayTest extends TestCase
   public function testConstruct()
   {
     $proxy = new ProxyArray(array('foo', 'bar'));
-    $this->assertSame(array('foo', 'bar'), $proxy->_popsArray());
+    $this->assertSame(array('foo', 'bar'), $proxy->popsArray());
   }
 
   public function testConstructFailureRecursiveType()
@@ -149,7 +149,7 @@ class ProxyArrayTest extends TestCase
     $this->assertEquals('Array', (string)$proxy);
 
     // recursive tests
-    $proxy = UppercasePops::proxyArray(array(), true);
+    $proxy = UppercaseProxy::proxyArray(array(), true);
 
     $this->assertEquals('ARRAY', (string)$proxy);
 

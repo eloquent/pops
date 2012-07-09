@@ -11,10 +11,10 @@
 
 namespace Eloquent\Pops\Access;
 
-use Eloquent\Pops\ProxyObject as PopsProxyObject;
+use Eloquent\Pops\ProxyObject;
 use ReflectionObject;
 
-class ProxyObject extends PopsProxyObject
+class AccessProxyObject extends ProxyObject
 {
   /**
    * @param object $object
@@ -24,7 +24,7 @@ class ProxyObject extends PopsProxyObject
   {
     parent::__construct($object, $recursive);
 
-    $this->_popsReflector = new ReflectionObject($object);
+    $this->popsReflector = new ReflectionObject($object);
   }
 
   /**
@@ -35,13 +35,13 @@ class ProxyObject extends PopsProxyObject
    */
   public function __call($method, array $arguments)
   {
-    if (method_exists($this->_popsObject, $method))
+    if (method_exists($this->popsObject, $method))
     {
-      $method = $this->_popsReflector->getMethod($method);
+      $method = $this->popsReflector->getMethod($method);
       $method->setAccessible(true);
 
-      return $this->_popsProxySubValue(
-        $method->invokeArgs($this->_popsObject, $arguments)
+      return $this->popsProxySubValue(
+        $method->invokeArgs($this->popsObject, $arguments)
       );
     }
 
@@ -54,9 +54,9 @@ class ProxyObject extends PopsProxyObject
    */
   public function __set($property, $value)
   {
-    if ($propertyReflector = $this->_popsPropertyReflector($property))
+    if ($propertyReflector = $this->popsPropertyReflector($property))
     {
-      $propertyReflector->setValue($this->_popsObject, $value);
+      $propertyReflector->setValue($this->popsObject, $value);
 
       return;
     }
@@ -71,10 +71,10 @@ class ProxyObject extends PopsProxyObject
    */
   public function __get($property)
   {
-    if ($propertyReflector = $this->_popsPropertyReflector($property))
+    if ($propertyReflector = $this->popsPropertyReflector($property))
     {
-      return $this->_popsProxySubValue(
-        $propertyReflector->getValue($this->_popsObject)
+      return $this->popsProxySubValue(
+        $propertyReflector->getValue($this->popsObject)
       );
     }
 
@@ -88,9 +88,9 @@ class ProxyObject extends PopsProxyObject
    */
   public function __isset($property)
   {
-    if ($propertyReflector = $this->_popsPropertyReflector($property))
+    if ($propertyReflector = $this->popsPropertyReflector($property))
     {
-      return null !== $propertyReflector->getValue($this->_popsObject);
+      return null !== $propertyReflector->getValue($this->popsObject);
     }
 
     return parent::__isset($property);
@@ -101,9 +101,9 @@ class ProxyObject extends PopsProxyObject
    */
   public function __unset($property)
   {
-    if ($propertyReflector = $this->_popsPropertyReflector($property))
+    if ($propertyReflector = $this->popsPropertyReflector($property))
     {
-      $propertyReflector->setValue($this->_popsObject, null);
+      $propertyReflector->setValue($this->popsObject, null);
 
       return;
     }
@@ -112,15 +112,23 @@ class ProxyObject extends PopsProxyObject
   }
 
   /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\AccessProxy';
+  }
+
+  /**
    * @param string $property
    *
    * @return ReflectionProperty|null
    */
-  protected function _popsPropertyReflector($property)
+  protected function popsPropertyReflector($property)
   {
-    if (property_exists($this->_popsObject, $property))
+    if (property_exists($this->popsObject, $property))
     {
-      $property = $this->_popsReflector->getProperty($property);
+      $property = $this->popsReflector->getProperty($property);
       $property->setAccessible(true);
 
       return $property;
@@ -132,5 +140,5 @@ class ProxyObject extends PopsProxyObject
   /**
    * @var ReflectionObject
    */
-  protected $_popsReflector;
+  protected $popsReflector;
 }

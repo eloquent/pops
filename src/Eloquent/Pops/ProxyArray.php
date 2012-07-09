@@ -35,17 +35,17 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
       throw new InvalidArgumentException('Provided value is not a boolean');
     }
 
-    $this->_popsArray = $array;
-    $this->_popsRecursive = $recursive;
-    $this->_popsInnerIterator = new ArrayIterator($this->_popsArray);
+    $this->popsArray = $array;
+    $this->popsRecursive = $recursive;
+    $this->popsInnerIterator = new ArrayIterator($this->popsArray);
   }
 
   /**
    * @return array
    */
-  public function _popsArray()
+  public function popsArray()
   {
-    return $this->_popsArray;
+    return $this->popsArray;
   }
 
   /**
@@ -54,7 +54,7 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function offsetSet($property, $value)
   {
-    $this->_popsArray[$property] = $value;
+    $this->popsArray[$property] = $value;
   }
 
   /**
@@ -64,8 +64,8 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function offsetGet($property)
   {
-    return $this->_popsProxySubValue(
-      $this->_popsArray[$property]
+    return $this->popsProxySubValue(
+      $this->popsArray[$property]
     );
   }
 
@@ -76,7 +76,7 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function offsetExists($property)
   {
-    return isset($this->_popsArray[$property]);
+    return isset($this->popsArray[$property]);
   }
 
   /**
@@ -84,7 +84,7 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function offsetUnset($property)
   {
-    unset($this->_popsArray[$property]);
+    unset($this->popsArray[$property]);
   }
 
   /**
@@ -92,7 +92,7 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function count()
   {
-    return count($this->_popsArray);
+    return count($this->popsArray);
   }
 
   /**
@@ -100,8 +100,8 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function current()
   {
-    return $this->_popsProxySubValue(
-      $this->_popsInnerIterator->current()
+    return $this->popsProxySubValue(
+      $this->popsInnerIterator->current()
     );
   }
 
@@ -110,17 +110,17 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function key()
   {
-    return $this->_popsInnerIterator->key();
+    return $this->popsInnerIterator->key();
   }
 
   public function next()
   {
-    $this->_popsInnerIterator->next();
+    $this->popsInnerIterator->next();
   }
 
   public function rewind()
   {
-    $this->_popsInnerIterator->rewind();
+    $this->popsInnerIterator->rewind();
   }
 
   /**
@@ -128,7 +128,7 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function valid()
   {
-    return $this->_popsInnerIterator->valid();
+    return $this->popsInnerIterator->valid();
   }
 
   /**
@@ -136,9 +136,17 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function __toString()
   {
-    return (string)$this->_popsProxySubValue(
-      (string)$this->_popsArray
+    return (string)$this->popsProxySubValue(
+      (string)$this->popsArray
     );
+  }
+
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\Pops';
   }
 
   /**
@@ -146,13 +154,11 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
    *
    * @return mixed
    */
-  protected function _popsProxySubValue($value)
+  protected function popsProxySubValue($value)
   {
-    if ($this->_popsRecursive)
+    if ($this->popsRecursive)
     {
-      $class = new ReflectionClass(get_called_class());
-      $namespace = $class->getNamespaceName();
-      $popsClass = $namespace.'\Pops';
+      $popsClass = static::popsProxyClass();
 
       return $popsClass::proxy($value, true);
     }
@@ -163,15 +169,15 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
   /**
    * @var array
    */
-  protected $_popsArray;
+  protected $popsArray;
 
   /**
    * @var boolean
    */
-  protected $_popsRecursive;
+  protected $popsRecursive;
 
   /**
    * @var Iterator
    */
-  protected $_popsInnerIterator;
+  protected $popsInnerIterator;
 }

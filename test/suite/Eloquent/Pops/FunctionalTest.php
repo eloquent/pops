@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-use Eloquent\Pops\Access\Pops;
-use Eloquent\Pops\Safe\Pops as Safe;
+use Eloquent\Pops\Access\AccessProxy;
+use Eloquent\Pops\Safe\SafeProxy;
 use Eloquent\Pops\Test\TestCase;
-use OutputEscaper\Pops as OutputEscaper;
+use OutputEscaper\OutputEscaperProxy;
 
 class FunctionalTest extends TestCase
 {
-  public function testDocumentationUppercaseProxy()
+  public function testDocumentationUppercaseProxyObject()
   {
     $confusion = new Confusion;
-    $proxy = new UppercaseProxy($confusion);
+    $proxy = new UppercaseProxyObject($confusion);
 
     $this->assertEquals("What is this? I don't even...", $confusion->wat());
     $this->assertEquals("WHAT IS THIS? I DON'T EVEN...", $proxy->wat());
@@ -31,7 +31,7 @@ class FunctionalTest extends TestCase
   public function testDocumentationAccessProxyObject()
   {
     $object = new SeriousBusiness;
-    $proxy = Pops::proxy($object);
+    $proxy = AccessProxy::proxy($object);
 
     $this->assertEquals('foo is not so private...', $proxy->foo('not so private...'));
     $this->assertEquals('mind = blown', $proxy->bar.' = blown');
@@ -39,7 +39,7 @@ class FunctionalTest extends TestCase
 
   public function testDocumentationAccessProxyClass()
   {
-    $proxy = Pops::proxyClass('SeriousBusiness');
+    $proxy = AccessProxy::proxyClass('SeriousBusiness');
 
     $this->assertEquals('baz is not so private...', $proxy->baz('not so private...'));
     $this->assertEquals('mind = blown', $proxy->qux.' = blown');
@@ -47,10 +47,10 @@ class FunctionalTest extends TestCase
 
   public function testDocumentationAccessProxyClassStatic()
   {
-    $proxyClass = Pops::proxyClassStatic('SeriousBusiness');
+    $proxyClass = AccessProxy::proxyClassStatic('SeriousBusiness');
 
     $this->assertEquals('baz is not so private...', $proxyClass::baz('not so private...'));
-    $this->assertEquals('mind = blown', $proxyClass::_popsProxy()->qux.' = blown');
+    $this->assertEquals('mind = blown', $proxyClass::popsProxy()->qux.' = blown');
   }
 
   public function testDocumentationOutputEscaper()
@@ -59,9 +59,9 @@ class FunctionalTest extends TestCase
       'foo',
       'bar',
       '<script>alert(document.cookie);</script>',
-      Safe::proxy('<em>ooh...</em>'),
+      SafeProxy::proxy('<em>ooh...</em>'),
     ));
-    $proxy = OutputEscaper::proxy($list, true);
+    $proxy = OutputEscaperProxy::proxy($list, true);
 
     $expected =
       '<ul>'.PHP_EOL

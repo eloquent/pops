@@ -16,34 +16,34 @@ use Eloquent\Pops\Test\Fixture\Overload;
 use Eloquent\Pops\Test\TestCase;
 
 /**
- * @covers Eloquent\Pops\Access\ProxyObject
+ * @covers Eloquent\Pops\Access\AccessProxyObject
  * @covers Eloquent\Pops\ProxyObject
  */
-class ProxyObjectTest extends TestCase
+class AccessProxyObjectTest extends TestCase
 {
   protected function setUp()
   {
     parent::setUp();
 
     $this->_object = new Object;
-    $this->_proxy = new ProxyObject($this->_object);
+    $this->_proxy = new AccessProxyObject($this->_object);
   }
 
   public function testRecursive()
   {
-    $recursiveProxy = new ProxyObject($this->_object, true);
+    $recursiveProxy = new AccessProxyObject($this->_object, true);
 
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object());
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy->object()->object());
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy->object()->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyObject', $recursiveProxy->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyObject', $recursiveProxy->object()->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyArray', $recursiveProxy->object()->arrayValue());
     $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $recursiveProxy->object()->string());
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyArray', $recursiveProxy->arrayValue());
     $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $recursiveProxy->string());
   }
 
   public function testCall()
   {
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_proxy);
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyObject', $this->_proxy);
 
     $this->assertPopsProxyCall($this->_proxy, 'publicMethod', array('foo', 'bar'));
     $this->assertPopsProxyCall($this->_proxy, 'protectedMethod', array('foo', 'bar'));
@@ -90,7 +90,7 @@ class ProxyObjectTest extends TestCase
     $object->values = array(
       'foo' => 'bar',
     );
-    $proxy = new ProxyObject($object);
+    $proxy = new AccessProxyObject($object);
 
     $this->assertTrue(isset($proxy->foo));
     $this->assertEquals('bar', $proxy->foo);

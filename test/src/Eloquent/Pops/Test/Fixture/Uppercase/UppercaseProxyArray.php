@@ -11,6 +11,15 @@
 
 namespace Eloquent\Pops\Test\Fixture\Uppercase;
 
-use Eloquent\Pops\ProxyArray as PopsProxyArray;
+use Eloquent\Pops\ProxyArray;
 
-class ProxyArray extends PopsProxyArray {}
+class UppercaseProxyArray extends ProxyArray
+{
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\UppercaseProxy';
+  }
+}

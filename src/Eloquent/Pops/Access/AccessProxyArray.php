@@ -11,6 +11,15 @@
 
 namespace Eloquent\Pops\Access;
 
-use Eloquent\Pops\ProxyArray as PopsProxyArray;
+use Eloquent\Pops\ProxyArray;
 
-class ProxyArray extends PopsProxyArray {}
+class AccessProxyArray extends ProxyArray
+{
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\AccessProxy';
+  }
+}

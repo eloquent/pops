@@ -15,10 +15,10 @@ use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\TestCase;
 
 /**
- * @covers Eloquent\Pops\Access\ProxyArray
+ * @covers Eloquent\Pops\Access\AccessProxyArray
  * @covers Eloquent\Pops\ProxyArray
  */
-class ProxyArrayTest extends TestCase
+class AccessProxyArrayTest extends TestCase
 {
   public function testRecursive()
   {
@@ -31,16 +31,16 @@ class ProxyArrayTest extends TestCase
        ),
       'string' => 'string',
     );
-    $recursiveProxy = new ProxyArray($array, true);
+    $recursiveProxy = new AccessProxyArray($array, true);
 
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy['object']);
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy['object']->object());
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy['object']->arrayValue());
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyObject', $recursiveProxy['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyObject', $recursiveProxy['object']->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyArray', $recursiveProxy['object']->arrayValue());
     $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $recursiveProxy['object']->string());
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy['array']);
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy['array']['object']);
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $recursiveProxy['array']['object']->object());
-    $this->assertInstanceOf(__NAMESPACE__.'\ProxyArray', $recursiveProxy['array']['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyArray', $recursiveProxy['array']);
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyObject', $recursiveProxy['array']['object']);
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyObject', $recursiveProxy['array']['object']->object());
+    $this->assertInstanceOf(__NAMESPACE__.'\AccessProxyArray', $recursiveProxy['array']['array']);
     $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $recursiveProxy['array']['string']);
     $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $recursiveProxy['string']);
   }

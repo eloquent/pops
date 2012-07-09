@@ -11,9 +11,17 @@
 
 class SeriousBusiness
 {
-  private function foo($adjective) { return 'foo is '.$adjective; }
+  private function foo($adjective)
+  {
+  	return 'foo is '.$adjective;
+  }
+
   private $bar = 'mind';
 
-  static private function baz($adjective) { return 'baz is '.$adjective; }
+  static private function baz($adjective)
+  {
+  	return 'baz is '.$adjective;
+  }
+
   static private $qux = 'mind';
 }

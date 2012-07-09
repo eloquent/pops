@@ -38,7 +38,7 @@ class ProxyClassTest extends TestCase
   public function testConstruct()
   {
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyClass', $this->_proxy);
-    $this->assertEquals($this->_class, $this->_proxy->_popsClass());
+    $this->assertEquals($this->_class, $this->_proxy->popsClass());
   }
 
   public function testConstructFailureClassType()
@@ -115,16 +115,16 @@ class ProxyClassTest extends TestCase
 
   public function testPopsGenerateStaticClassProxy()
   {
-    $class = ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object');
+    $class = ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object');
 
     $this->assertTrue(class_exists($class, false));
     $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
 
     $expected = new $class(__NAMESPACE__.'\Test\Fixture\Object');
-    $proxy = $class::_popsProxy();
+    $proxy = $class::popsProxy();
 
     $this->assertEquals($expected, $proxy);
-    $this->assertSame($proxy, $class::_popsProxy());
+    $this->assertSame($proxy, $class::popsProxy());
 
     $this->assertEquals(
       array('staticPublicMethod', array('foo', 'bar'))
@@ -136,7 +136,7 @@ class ProxyClassTest extends TestCase
     );
 
     // recursive tests
-    $class = ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', true);
+    $class = ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', true);
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());
@@ -146,7 +146,7 @@ class ProxyClassTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $class::staticString());
 
     $class = uniqid('Foo');
-    ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', true, $class);
+    ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', true, $class);
 
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject());
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $class::staticObject()->object());
@@ -157,7 +157,7 @@ class ProxyClassTest extends TestCase
 
     // custom class name
     $class = uniqid('Foo');
-    ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', null, $class);
+    ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', null, $class);
 
     $this->assertTrue(class_exists($class, false));
     $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
@@ -166,6 +166,6 @@ class ProxyClassTest extends TestCase
   public function testPopsGenerateStaticClassProxyFailureRecursiveType()
   {
     $this->setExpectedException('InvalidArgumentException');
-    ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', 'foo');
+    ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', 'foo');
   }
 }

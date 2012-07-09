@@ -11,15 +11,66 @@
 
 namespace OutputEscaper;
 
-class Pops extends \Eloquent\Pops\Pops {}
-class ProxyArray extends \Eloquent\Pops\ProxyArray {}
-class ProxyClass extends \Eloquent\Pops\ProxyClass {}
-class ProxyObject extends \Eloquent\Pops\ProxyObject {}
+class OutputEscaperProxy extends \Eloquent\Pops\Pops
+{
+  static protected function proxyArrayClass()
+  {
+    return __NAMESPACE__.'\OutputEscaperProxyArray';
+  }
 
-class ProxyPrimitive extends \Eloquent\Pops\ProxyPrimitive
+  static protected function proxyClassClass()
+  {
+    return __NAMESPACE__.'\OutputEscaperProxyClass';
+  }
+
+  static protected function proxyObjectClass()
+  {
+    return __NAMESPACE__.'\OutputEscaperProxyObject';
+  }
+
+  static protected function proxyPrimitiveClass()
+  {
+    return __NAMESPACE__.'\OutputEscaperProxyPrimitive';
+  }
+}
+
+class OutputEscaperProxyArray extends \Eloquent\Pops\ProxyArray
+{
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\OutputEscaperProxy';
+  }
+}
+
+class OutputEscaperProxyClass extends \Eloquent\Pops\ProxyClass
+{
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\OutputEscaperProxy';
+  }
+}
+
+class OutputEscaperProxyObject extends \Eloquent\Pops\ProxyObject
+{
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\OutputEscaperProxy';
+  }
+}
+
+class OutputEscaperProxyPrimitive extends \Eloquent\Pops\ProxyPrimitive
 {
   public function __toString()
   {
-    return htmlspecialchars((string)$this->_popsPrimitive, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars((string)$this->popsPrimitive, ENT_QUOTES, 'UTF-8');
   }
 }

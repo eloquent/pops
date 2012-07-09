@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Pops\Test\Fixture\Uppercase;
+// @codeCoverageIgnoreStart
 
-use Eloquent\Pops\ProxyClass as PopsProxyClass;
+namespace Eloquent\Pops\Safe;
 
-class ProxyClass extends PopsProxyClass {}
+use Eloquent\Pops\Proxy;
+
+interface Safe extends Proxy {}

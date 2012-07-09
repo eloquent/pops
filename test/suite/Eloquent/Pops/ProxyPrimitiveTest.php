@@ -22,12 +22,12 @@ class ProxyPrimitiveTest extends TestCase
   {
     $proxy = new ProxyPrimitive('foo');
 
-    $this->assertEquals('foo', $proxy->_popsPrimitive());
+    $this->assertEquals('foo', $proxy->popsPrimitive());
     $this->assertEquals('foo', (string)$proxy);
 
     $proxy = new ProxyPrimitive(1);
 
-    $this->assertEquals(1, $proxy->_popsPrimitive());
+    $this->assertEquals(1, $proxy->popsPrimitive());
     $this->assertEquals('1', (string)$proxy);
   }
 }

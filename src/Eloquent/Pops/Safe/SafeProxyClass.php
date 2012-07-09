@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Pops\Test\Fixture\Uppercase;
+namespace Eloquent\Pops\Safe;
 
-use Eloquent\Pops\ProxyPrimitive as PopsProxyPrimitive;
+use Eloquent\Pops\ProxyClass;
 
-class ProxyPrimitive extends PopsProxyPrimitive
+class SafeProxyClass extends ProxyClass implements Safe
 {
   /**
    * @return string
    */
-  public function __toString()
+  protected static function popsProxyClass()
   {
-    return mb_strtoupper((string)$this->_popsPrimitive);
+    return __NAMESPACE__.'\SafeProxy';
   }
 }

@@ -20,7 +20,7 @@ use Eloquent\Pops\Test\Fixture\IteratorAggregate;
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\Fixture\Overload;
 use Eloquent\Pops\Test\Fixture\Stringable;
-use Eloquent\Pops\Test\Fixture\Uppercase\Pops as UppercasePops;
+use Eloquent\Pops\Test\Fixture\Uppercase\UppercaseProxy;
 use Eloquent\Pops\Test\TestCase;
 
 /**
@@ -40,7 +40,7 @@ class ProxyObjectTest extends TestCase
   public function testConstruct()
   {
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_proxy);
-    $this->assertSame($this->_object, $this->_proxy->_popsObject());
+    $this->assertSame($this->_object, $this->_proxy->popsObject());
   }
 
   public function testConstructFailureObjectType()
@@ -283,20 +283,20 @@ class ProxyObjectTest extends TestCase
     $this->assertEquals($iteratorAggregate->values, iterator_to_array($proxy));
 
     // recursive tests
-    $sub_iterator = new Iterator(array(
+    $subIterator = new Iterator(array(
       'object' => new Object,
       'array' => array(),
       'string' => 'string',
     ));
     $iterator = new Iterator(array(
       'object' => new Object,
-      'iterator' => $sub_iterator,
+      'iterator' => $subIterator,
       'string' => 'string',
     ));
     $proxy = new ProxyObject($iterator, true);
     $expected = array(
       'object' => new ProxyObject(new Object, true),
-      'iterator' => new ProxyObject($sub_iterator, true),
+      'iterator' => new ProxyObject($subIterator, true),
       'string' => new ProxyPrimitive('string', true),
     );
     $actual = iterator_to_array($proxy);
@@ -333,7 +333,7 @@ class ProxyObjectTest extends TestCase
     // recursive tests
     $stringable = new Stringable;
     $stringable->string = 'foo';
-    $proxy = UppercasePops::proxyObject($stringable, true);
+    $proxy = UppercaseProxy::proxyObject($stringable, true);
 
     $this->assertEquals('FOO', (string)$proxy);
   }

@@ -21,4 +21,4 @@ $documentationFixturePath = LQNT_TEST_SRC_DIR.DIRECTORY_SEPARATOR.'Eloquent'.DIR
 require $documentationFixturePath.DIRECTORY_SEPARATOR.'Confusion.php';
 require $documentationFixturePath.DIRECTORY_SEPARATOR.'OutputEscaper.php';
 require $documentationFixturePath.DIRECTORY_SEPARATOR.'SeriousBusiness.php';
-require $documentationFixturePath.DIRECTORY_SEPARATOR.'UppercaseProxy.php';
+require $documentationFixturePath.DIRECTORY_SEPARATOR.'UppercaseProxyObject.php';

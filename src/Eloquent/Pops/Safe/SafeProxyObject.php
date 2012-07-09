@@ -11,6 +11,15 @@
 
 namespace Eloquent\Pops\Safe;
 
-use Eloquent\Pops\Proxy as PopsProxy;
+use Eloquent\Pops\ProxyObject;
 
-interface Proxy extends PopsProxy {}
+class SafeProxyObject extends ProxyObject implements Safe
+{
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\SafeProxy';
+  }
+}

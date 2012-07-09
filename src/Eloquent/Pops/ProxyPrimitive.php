@@ -18,15 +18,15 @@ class ProxyPrimitive
    */
   public function __construct($primitive)
   {
-    $this->_popsPrimitive = $primitive;
+    $this->popsPrimitive = $primitive;
   }
 
   /**
    * @return object
    */
-  public function _popsPrimitive()
+  public function popsPrimitive()
   {
-    return $this->_popsPrimitive;
+    return $this->popsPrimitive;
   }
 
   /**
@@ -34,11 +34,11 @@ class ProxyPrimitive
    */
   public function __toString()
   {
-    return (string)$this->_popsPrimitive;
+    return (string)$this->popsPrimitive;
   }
 
   /**
    * @var mixed
    */
-  protected $_popsPrimitive;
+  protected $popsPrimitive;
 }

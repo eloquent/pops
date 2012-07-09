@@ -42,16 +42,16 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
       throw new InvalidArgumentException('Provided value is not a boolean');
     }
 
-    $this->_popsObject = $object;
-    $this->_popsRecursive = $recursive;
+    $this->popsObject = $object;
+    $this->popsRecursive = $recursive;
   }
 
   /**
    * @return object
    */
-  public function _popsObject()
+  public function popsObject()
   {
-    return $this->_popsObject;
+    return $this->popsObject;
   }
 
   /**
@@ -62,8 +62,8 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function __call($method, array $arguments)
   {
-    return $this->_popsProxySubValue(
-      call_user_func_array(array($this->_popsObject, $method), $arguments)
+    return $this->popsProxySubValue(
+      call_user_func_array(array($this->popsObject, $method), $arguments)
     );
   }
 
@@ -73,7 +73,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function __set($property, $value)
   {
-    $this->_popsObject->$property = $value;
+    $this->popsObject->$property = $value;
   }
 
   /**
@@ -83,8 +83,8 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function __get($property)
   {
-    return $this->_popsProxySubValue(
-      $this->_popsObject->$property
+    return $this->popsProxySubValue(
+      $this->popsObject->$property
     );
   }
 
@@ -95,7 +95,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function __isset($property)
   {
-    return isset($this->_popsObject->$property);
+    return isset($this->popsObject->$property);
   }
 
   /**
@@ -103,7 +103,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function __unset($property)
   {
-    unset($this->_popsObject->$property);
+    unset($this->popsObject->$property);
   }
 
   /**
@@ -156,8 +156,8 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function current()
   {
-    return $this->_popsProxySubValue(
-      $this->_popsInnerIterator()->current()
+    return $this->popsProxySubValue(
+      $this->popsInnerIterator()->current()
     );
   }
 
@@ -166,17 +166,17 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function key()
   {
-    return $this->_popsInnerIterator()->key();
+    return $this->popsInnerIterator()->key();
   }
 
   public function next()
   {
-    $this->_popsInnerIterator()->next();
+    $this->popsInnerIterator()->next();
   }
 
   public function rewind()
   {
-    $this->_popsInnerIterator()->rewind();
+    $this->popsInnerIterator()->rewind();
   }
 
   /**
@@ -184,7 +184,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function valid()
   {
-    return $this->_popsInnerIterator()->valid();
+    return $this->popsInnerIterator()->valid();
   }
 
   /**
@@ -200,40 +200,48 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    */
   public function __invoke()
   {
-    if (!method_exists($this->_popsObject, '__invoke'))
+    if (!method_exists($this->popsObject, '__invoke'))
     {
-      throw new BadMethodCallException('Call to undefined method '.get_class($this->_popsObject).'::__invoke()');
+      throw new BadMethodCallException('Call to undefined method '.get_class($this->popsObject).'::__invoke()');
     }
 
-    return $this->_popsProxySubValue(
-      call_user_func_array($this->_popsObject, func_get_args())
+    return $this->popsProxySubValue(
+      call_user_func_array($this->popsObject, func_get_args())
     );
+  }
+
+  /**
+   * @return string
+   */
+  protected static function popsProxyClass()
+  {
+    return __NAMESPACE__.'\Pops';
   }
 
   /**
    * @return Iterator
    */
-  protected function _popsInnerIterator()
+  protected function popsInnerIterator()
   {
-    if (null !== $this->_popsInnerIterator)
+    if (null !== $this->popsInnerIterator)
     {
-      return $this->_popsInnerIterator;
+      return $this->popsInnerIterator;
     }
 
-    if ($this->_popsObject instanceof Iterator)
+    if ($this->popsObject instanceof Iterator)
     {
-      $this->_popsInnerIterator = $this->_popsObject;
+      $this->popsInnerIterator = $this->popsObject;
     }
-    else if ($this->_popsObject instanceof IteratorAggregate)
+    else if ($this->popsObject instanceof IteratorAggregate)
     {
-      $this->_popsInnerIterator = $this->_popsObject->getIterator();
+      $this->popsInnerIterator = $this->popsObject->getIterator();
     }
     else
     {
       throw new LogicException('Proxied object is not an instance of Traversable');
     }
 
-    return $this->_popsInnerIterator;
+    return $this->popsInnerIterator;
   }
 
   /**
@@ -241,13 +249,11 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
    *
    * @return mixed
    */
-  protected function _popsProxySubValue($value)
+  protected function popsProxySubValue($value)
   {
-    if ($this->_popsRecursive)
+    if ($this->popsRecursive)
     {
-      $class = new ReflectionClass(get_called_class());
-      $namespace = $class->getNamespaceName();
-      $popsClass = $namespace.'\Pops';
+      $popsClass = static::popsProxyClass();
 
       return $popsClass::proxy($value, true);
     }
@@ -258,15 +264,15 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
   /**
    * @var object
    */
-  protected $_popsObject;
+  protected $popsObject;
 
   /**
    * @var boolean
    */
-  protected $_popsRecursive;
+  protected $popsRecursive;
 
   /**
    * @var Iterator
    */
-  protected $_popsInnerIterator;
+  protected $popsInnerIterator;
 }
