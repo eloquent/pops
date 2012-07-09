@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2011 Erin Millard
+ * Copyright © 2012 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -23,47 +23,38 @@ use Eloquent\Pops\Test\Fixture\Stringable;
 use Eloquent\Pops\Test\Fixture\Uppercase\Pops as UppercasePops;
 use Eloquent\Pops\Test\TestCase;
 
+/**
+ * @covers Eloquent\Pops\ProxyObject
+ */
 class ProxyObjectTest extends TestCase
 {
   protected function setUp()
   {
+    parent::setUp();
+
     $this->_object = new Object;
     $this->_proxy = new ProxyObject($this->_object);
     $this->_recursiveProxy = new ProxyObject($this->_object, true);
   }
-  
-  /**
-   * @covers Eloquent\Pops\ProxyObject::__construct
-   * @covers Eloquent\Pops\ProxyObject::_popsObject
-   */
+
   public function testConstruct()
   {
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->_proxy);
     $this->assertSame($this->_object, $this->_proxy->_popsObject());
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::__construct
-   */
   public function testConstructFailureObjectType()
   {
     $this->setExpectedException('InvalidArgumentException', 'Provided value is not an object');
     new ProxyObject('foo');
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::__construct
-   */
   public function testConstructFailureRecursiveType()
   {
     $this->setExpectedException('InvalidArgumentException', 'Provided value is not a boolean');
     new ProxyObject($this->_object, 'foo');
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::__call
-   * @covers Eloquent\Pops\ProxyObject::_popsProxySubValue
-   */
   public function testCall()
   {
     $this->assertPopsProxyCall($this->_proxy, 'publicMethod', array('foo', 'bar'));
@@ -78,13 +69,6 @@ class ProxyObjectTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->string());
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::__set
-   * @covers Eloquent\Pops\ProxyObject::__get
-   * @covers Eloquent\Pops\ProxyObject::__isset
-   * @covers Eloquent\Pops\ProxyObject::__unset
-   * @covers Eloquent\Pops\ProxyObject::_popsProxySubValue
-   */
   public function testSetGet()
   {
     $this->assertEquals('publicProperty', $this->_proxy->publicProperty);
@@ -199,13 +183,6 @@ class ProxyObjectTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $recursiveProxy->string);
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::offsetSet
-   * @covers Eloquent\Pops\ProxyObject::offsetGet
-   * @covers Eloquent\Pops\ProxyObject::offsetExists
-   * @covers Eloquent\Pops\ProxyObject::offsetUnset
-   * @covers Eloquent\Pops\ProxyObject::_popsProxySubValue
-   */
   public function testOffsetSetGet()
   {
     $arrayaccess = new ArrayAccess;
@@ -286,15 +263,6 @@ class ProxyObjectTest extends TestCase
     $this->assertEquals(666, count($proxy));
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::_popsInnerIterator
-   * @covers Eloquent\Pops\ProxyObject::current
-   * @covers Eloquent\Pops\ProxyObject::key
-   * @covers Eloquent\Pops\ProxyObject::next
-   * @covers Eloquent\Pops\ProxyObject::rewind
-   * @covers Eloquent\Pops\ProxyObject::valid
-   * @covers Eloquent\Pops\ProxyObject::_popsProxySubValue
-   */
   public function testIterator()
   {
     $iterator = new Iterator(array(
@@ -346,9 +314,6 @@ class ProxyObjectTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $actual['string']);
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::_popsInnerIterator
-   */
   public function testIteratorFailure()
   {
     $proxy = new ProxyObject($this->_object);
@@ -357,10 +322,6 @@ class ProxyObjectTest extends TestCase
     iterator_to_array($proxy);
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::__toString
-   * @covers Eloquent\Pops\ProxyObject::_popsProxySubValue
-   */
   public function testToString()
   {
     $stringable = new Stringable;
@@ -377,10 +338,6 @@ class ProxyObjectTest extends TestCase
     $this->assertEquals('FOO', (string)$proxy);
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::__invoke
-   * @covers Eloquent\Pops\ProxyObject::_popsProxySubValue
-   */
   public function testInvoke()
   {
     $callable = new CallableObject;
@@ -417,9 +374,6 @@ class ProxyObjectTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy());
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyObject::__invoke
-   */
   public function testInvokeFailure()
   {
     $proxy = $this->_proxy;
@@ -427,19 +381,4 @@ class ProxyObjectTest extends TestCase
     $this->setExpectedException('BadMethodCallException', 'Call to undefined method Eloquent\Pops\Test\Fixture\Object::__invoke()');
     $proxy('foo', 'bar');
   }
-  
-  /**
-   * @var ProxyObject
-   */
-  protected $_proxy;
-
-  /**
-   * @var ProxyObject
-   */
-  protected $_recursiveProxy;
-
-  /**
-   * @var Object
-   */
-  protected $_object;
 }

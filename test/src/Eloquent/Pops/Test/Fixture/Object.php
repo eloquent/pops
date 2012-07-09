@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2011 Erin Millard
+ * Copyright © 2012 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,17 +17,17 @@ class Object
   {
     return array(__FUNCTION__, func_get_args());
   }
-  
+
   static protected function staticProtectedMethod()
   {
     return array(__FUNCTION__, func_get_args());
   }
-  
+
   static private function staticPrivateMethod()
   {
     return array(__FUNCTION__, func_get_args());
   }
-  
+
   static public function __callStatic($name, array $arguments)
   {
     return array(__FUNCTION__, func_get_args());
@@ -67,7 +67,7 @@ class Object
   {
     return array(__FUNCTION__, func_get_args());
   }
-  
+
   public function object()
   {
     return new static;

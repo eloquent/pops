@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2011 Erin Millard
+ * Copyright © 2012 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -26,11 +26,11 @@ class ProxyObject extends PopsProxyObject
 
     $this->_popsReflector = new ReflectionObject($object);
   }
-  
+
   /**
    * @param string $method
    * @param array $arguments
-   * 
+   *
    * @return mixed
    */
   public function __call($method, array $arguments)
@@ -57,16 +57,16 @@ class ProxyObject extends PopsProxyObject
     if ($propertyReflector = $this->_popsPropertyReflector($property))
     {
       $propertyReflector->setValue($this->_popsObject, $value);
-      
+
       return;
     }
-    
+
     parent::__set($property, $value);
   }
 
   /**
    * @param string $property
-   * 
+   *
    * @return mixed
    */
   public function __get($property)
@@ -77,13 +77,13 @@ class ProxyObject extends PopsProxyObject
         $propertyReflector->getValue($this->_popsObject)
       );
     }
-    
+
     return parent::__get($property);
   }
 
   /**
    * @param string $property
-   * 
+   *
    * @return boolean
    */
   public function __isset($property)
@@ -92,7 +92,7 @@ class ProxyObject extends PopsProxyObject
     {
       return null !== $propertyReflector->getValue($this->_popsObject);
     }
-    
+
     return parent::__isset($property);
   }
 
@@ -104,7 +104,7 @@ class ProxyObject extends PopsProxyObject
     if ($propertyReflector = $this->_popsPropertyReflector($property))
     {
       $propertyReflector->setValue($this->_popsObject, null);
-      
+
       return;
     }
 
@@ -113,7 +113,7 @@ class ProxyObject extends PopsProxyObject
 
   /**
    * @param string $property
-   * 
+   *
    * @return ReflectionProperty|null
    */
   protected function _popsPropertyReflector($property)
@@ -122,10 +122,10 @@ class ProxyObject extends PopsProxyObject
     {
       $property = $this->_popsReflector->getProperty($property);
       $property->setAccessible(true);
-      
+
       return $property;
     }
-    
+
     return null;
   }
 

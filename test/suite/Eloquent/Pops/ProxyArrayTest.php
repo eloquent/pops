@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2011 Erin Millard
+ * Copyright © 2012 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,34 +15,23 @@ use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\Fixture\Uppercase\Pops as UppercasePops;
 use Eloquent\Pops\Test\TestCase;
 
+/**
+ * @covers Eloquent\Pops\ProxyArray
+ */
 class ProxyArrayTest extends TestCase
 {
-  /**
-   * @covers Eloquent\Pops\ProxyArray::__construct
-   * @covers Eloquent\Pops\ProxyArray::_popsArray
-   */
   public function testConstruct()
   {
     $proxy = new ProxyArray(array('foo', 'bar'));
     $this->assertSame(array('foo', 'bar'), $proxy->_popsArray());
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyArray::__construct
-   */
   public function testConstructFailureRecursiveType()
   {
     $this->setExpectedException('InvalidArgumentException', 'Provided value is not a boolean');
     new ProxyArray(array(), 'foo');
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyArray::offsetSet
-   * @covers Eloquent\Pops\ProxyArray::offsetGet
-   * @covers Eloquent\Pops\ProxyArray::offsetExists
-   * @covers Eloquent\Pops\ProxyArray::offsetUnset
-   * @covers Eloquent\Pops\ProxyArray::_popsProxySubValue
-   */
   public function testOffsetSetGet()
   {
     $proxy = new ProxyArray(array());
@@ -100,9 +89,6 @@ class ProxyArrayTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy['string']);
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyArray::count
-   */
   public function testCount()
   {
     $proxy = new ProxyArray(array_fill(0, 666, null));
@@ -110,14 +96,6 @@ class ProxyArrayTest extends TestCase
     $this->assertEquals(666, count($proxy));
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyArray::current
-   * @covers Eloquent\Pops\ProxyArray::key
-   * @covers Eloquent\Pops\ProxyArray::next
-   * @covers Eloquent\Pops\ProxyArray::rewind
-   * @covers Eloquent\Pops\ProxyArray::valid
-   * @covers Eloquent\Pops\ProxyArray::_popsProxySubValue
-   */
   public function testIterator()
   {
     $array = array(
@@ -156,10 +134,6 @@ class ProxyArrayTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $actual['array']['object']->string());
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyArray::__toString
-   * @covers Eloquent\Pops\ProxyArray::_popsProxySubValue
-   */
   public function testToString()
   {
     if (version_compare(PHP_VERSION, '5.4.0RC0') >= 0)

@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2011 Erin Millard
+ * Copyright © 2012 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +14,12 @@ namespace Eloquent\Pops\Access;
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\TestCase;
 
+/**
+ * @covers Eloquent\Pops\Access\ProxyArray
+ * @covers Eloquent\Pops\ProxyArray
+ */
 class ProxyArrayTest extends TestCase
 {
-  /**
-   * @covers Eloquent\Pops\ProxyArray
-   */
   public function testRecursive()
   {
     $array = array(

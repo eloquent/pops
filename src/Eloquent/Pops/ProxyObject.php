@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2011 Erin Millard
+ * Copyright © 2012 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -57,7 +57,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
   /**
    * @param string $method
    * @param array $arguments
-   * 
+   *
    * @return mixed
    */
   public function __call($method, array $arguments)
@@ -78,7 +78,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
 
   /**
    * @param string $property
-   * 
+   *
    * @return mixed
    */
   public function __get($property)
@@ -90,7 +90,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
 
   /**
    * @param string $property
-   * 
+   *
    * @return boolean
    */
   public function __isset($property)
@@ -117,7 +117,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
 
   /**
    * @param string $property
-   * 
+   *
    * @return mixed
    */
   public function offsetGet($property)
@@ -127,7 +127,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
 
   /**
    * @param string $property
-   * 
+   *
    * @return boolean
    */
   public function offsetExists($property)
@@ -204,7 +204,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     {
       throw new BadMethodCallException('Call to undefined method '.get_class($this->_popsObject).'::__invoke()');
     }
-    
+
     return $this->_popsProxySubValue(
       call_user_func_array($this->_popsObject, func_get_args())
     );

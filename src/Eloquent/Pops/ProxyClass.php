@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2011 Erin Millard
+ * Copyright © 2012 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -111,7 +111,7 @@ class ProxyClass implements Proxy
   /**
    * @param string $method
    * @param array $arguments
-   * 
+   *
    * @return mixed
    */
   public function __call($method, array $arguments)
@@ -134,7 +134,7 @@ class ProxyClass implements Proxy
 
   /**
    * @param string $property
-   * 
+   *
    * @return mixed
    */
   public function __get($property)
@@ -149,13 +149,13 @@ class ProxyClass implements Proxy
 
   /**
    * @param string $property
-   * 
+   *
    * @return boolean
    */
   public function __isset($property)
   {
     $class = $this->_popsClass;
-    
+
     return isset($class::$$property);
   }
 
@@ -165,7 +165,7 @@ class ProxyClass implements Proxy
   public function __unset($property)
   {
     $class = $this->_popsClass;
-    
+
     $class::$$property = null;
   }
 
@@ -189,7 +189,7 @@ class ProxyClass implements Proxy
       }
 
       $parent = $class->getParentClass()->getName();
-      
+
       return $parent::_popsProxySubValue($value, $recursive);
     }
 

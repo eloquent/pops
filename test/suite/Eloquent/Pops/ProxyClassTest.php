@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2011 Erin Millard
+ * Copyright © 2012 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,57 +15,44 @@ use InvalidArgumentException;
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\TestCase;
 
+/**
+ * @covers Eloquent\Pops\ProxyClass
+ */
 class ProxyClassTest extends TestCase
 {
   protected function setUp()
   {
+    parent::setUp();
+
     $this->_class = __NAMESPACE__.'\Test\Fixture\Object';
     $this->_proxy = new ProxyClass($this->_class);
     $this->_recursiveProxy = new ProxyClass($this->_class, true);
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyClass::__callStatic
-   * @covers Eloquent\Pops\ProxyClass::_popsProxy
-   */
   public function testCallStaticFailure()
   {
     $this->setExpectedException('LogicException');
     ProxyClass::foo();
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyClass::__construct
-   * @covers Eloquent\Pops\ProxyClass::_popsClass
-   */
   public function testConstruct()
   {
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyClass', $this->_proxy);
     $this->assertEquals($this->_class, $this->_proxy->_popsClass());
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyClass::__construct
-   */
   public function testConstructFailureClassType()
   {
     $this->setExpectedException('InvalidArgumentException', 'Provided value is not a string');
     new ProxyClass(1);
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyClass::__construct
-   */
   public function testConstructFailureRecursiveType()
   {
     $this->setExpectedException('InvalidArgumentException', 'Provided value is not a boolean');
     new ProxyClass($this->_class, 'foo');
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyClass::__call
-   * @covers Eloquent\Pops\ProxyClass::_popsProxySubValue
-   */
   public function testCall()
   {
     $this->assertPopsProxyCall($this->_proxy, 'staticPublicMethod', array('foo', 'bar'));
@@ -80,13 +67,6 @@ class ProxyClassTest extends TestCase
     $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $this->_recursiveProxy->staticString());
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyClass::__set
-   * @covers Eloquent\Pops\ProxyClass::__get
-   * @covers Eloquent\Pops\ProxyClass::__isset
-   * @covers Eloquent\Pops\ProxyClass::__unset
-   * @covers Eloquent\Pops\ProxyClass::_popsProxySubValue
-   */
   public function testSetGet()
   {
     $this->assertTrue(isset($this->_proxy->staticPublicProperty));
@@ -133,16 +113,6 @@ class ProxyClassTest extends TestCase
     Object::$staticPublicProperty = $staticPublicProperty;
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyClass::_popsGenerateStaticClassProxy
-   * @covers Eloquent\Pops\ProxyClass::_popsStaticClassProxyDefinition
-   * @covers Eloquent\Pops\ProxyClass::_popsStaticClassProxyDefinitionProxyClass
-   * @covers Eloquent\Pops\ProxyClass::_popsStaticClassProxyDefinitionHeader
-   * @covers Eloquent\Pops\ProxyClass::_popsStaticClassProxyDefinitionBody
-   * @covers Eloquent\Pops\ProxyClass::__callStatic
-   * @covers Eloquent\Pops\ProxyClass::_popsProxy
-   * @covers Eloquent\Pops\ProxyClass::_popsProxySubValue
-   */
   public function testPopsGenerateStaticClassProxy()
   {
     $class = ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object');
@@ -193,27 +163,9 @@ class ProxyClassTest extends TestCase
     $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
   }
 
-  /**
-   * @covers Eloquent\Pops\ProxyClass::_popsGenerateStaticClassProxy
-   */
   public function testPopsGenerateStaticClassProxyFailureRecursiveType()
   {
     $this->setExpectedException('InvalidArgumentException');
     ProxyClass::_popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', 'foo');
   }
-
-  /**
-   * @var ProxyClass
-   */
-  protected $_proxy;
-
-  /**
-   * @var ProxyClass
-   */
-  protected $_recursiveProxy;
-
-  /**
-   * @var string
-   */
-  protected $_class;
 }
