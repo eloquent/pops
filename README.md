@@ -184,7 +184,7 @@ Pops proxies can be applied to any value recursively. This comes in handy when
 designing, for example, an output escaper (similar to Symfony).
 
 Here's an example of how such a system could be created for escaping HTML
-output.
+output:
 
 ```php
 <?php
