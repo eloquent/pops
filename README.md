@@ -358,8 +358,12 @@ this manner.
 ## Code quality
 
 Pops strives to attain a high level of quality. A full test suite is available,
-and code coverage is closely monitored. All of the above code examples are also
-tested.
+and code coverage is closely monitored. All of the above code examples are
+also tested.
+
+All code follows the [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
+coding standards to the degree that current [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+rulesets check.
 
 ### Latest revision test suite results
 [![Build Status](https://secure.travis-ci.org/eloquent/pops.png)](http://travis-ci.org/eloquent/pops)
