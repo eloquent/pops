@@ -28,9 +28,29 @@ class AccessProxyClassTest extends TestCase
         $this->_proxy = new AccessProxyClass($this->_class);
     }
 
-    public function testRecursive()
+    public function fixtureData()
     {
-        $recursiveProxy = new AccessProxyClass($this->_class, true);
+        $data = array();
+
+        // #0: class with no inheritance
+        $class = 'Eloquent\Pops\Test\Fixture\Object';
+        $proxy = new AccessProxyClass($class);
+        $data[] = array($class, $proxy);
+
+        // #1: child class
+        $class = 'Eloquent\Pops\Test\Fixture\ChildObject';
+        $proxy = new AccessProxyClass($class);
+        $data[] = array($class, $proxy);
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider fixtureData
+     */
+    public function testRecursive($class)
+    {
+        $recursiveProxy = new AccessProxyClass($class, true);
 
         $this->assertInstanceOf(
             __NAMESPACE__.'\AccessProxyObject',
@@ -58,94 +78,95 @@ class AccessProxyClassTest extends TestCase
         );
     }
 
-    public function testCall()
+    /**
+     * @dataProvider fixtureData
+     */
+    public function testCall($class, AccessProxyClass $proxy)
     {
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\AccessProxyClass',
-            $this->_proxy
-        );
-
         $this->assertPopsProxyCall(
-            $this->_proxy,
+            $proxy,
             'staticPublicMethod',
             array('foo', 'bar')
         );
         $this->assertPopsProxyCall(
-            $this->_proxy,
+            $proxy,
             'staticProtectedMethod',
             array('foo', 'bar')
         );
         $this->assertPopsProxyCall(
-            $this->_proxy,
+            $proxy,
             'staticPrivateMethod',
             array('foo', 'bar')
         );
         $this->assertPopsProxyCall(
-            $this->_proxy,
+            $proxy,
             'foo',
             array('bar', 'baz'),
             true
         );
     }
 
-    public function testSetGet()
+    /**
+     * @dataProvider fixtureData
+     */
+    public function testSetGet($class, AccessProxyClass $proxy)
     {
-        $this->assertTrue(isset($this->_proxy->staticPublicProperty));
-        $this->assertTrue(isset($this->_proxy->staticProtectedProperty));
-        $this->assertTrue(isset($this->_proxy->staticPrivateProperty));
+        $this->assertTrue(isset($proxy->staticPublicProperty));
+        $this->assertTrue(isset($proxy->staticProtectedProperty));
+        $this->assertTrue(isset($proxy->staticPrivateProperty));
         $this->assertEquals(
             'staticPublicProperty',
-            $this->_proxy->staticPublicProperty
+            $proxy->staticPublicProperty
         );
         $this->assertEquals(
             'staticProtectedProperty',
-            $this->_proxy->staticProtectedProperty
+            $proxy->staticProtectedProperty
         );
         $this->assertEquals(
             'staticPrivateProperty',
-            $this->_proxy->staticPrivateProperty
+            $proxy->staticPrivateProperty
         );
 
-        $this->_proxy->staticPublicProperty = 'foo';
-        $this->_proxy->staticProtectedProperty = 'bar';
-        $this->_proxy->staticPrivateProperty = 'baz';
+        $proxy->staticPublicProperty = 'foo';
+        $proxy->staticProtectedProperty = 'bar';
+        $proxy->staticPrivateProperty = 'baz';
 
-        $this->assertTrue(isset($this->_proxy->staticPublicProperty));
-        $this->assertTrue(isset($this->_proxy->staticProtectedProperty));
-        $this->assertTrue(isset($this->_proxy->staticPrivateProperty));
-        $this->assertEquals('foo', $this->_proxy->staticPublicProperty);
-        $this->assertEquals('bar', $this->_proxy->staticProtectedProperty);
-        $this->assertEquals('baz', $this->_proxy->staticPrivateProperty);
+        $this->assertTrue(isset($proxy->staticPublicProperty));
+        $this->assertTrue(isset($proxy->staticProtectedProperty));
+        $this->assertTrue(isset($proxy->staticPrivateProperty));
+        $this->assertEquals('foo', $proxy->staticPublicProperty);
+        $this->assertEquals('bar', $proxy->staticProtectedProperty);
+        $this->assertEquals('baz', $proxy->staticPrivateProperty);
 
-        unset($this->_proxy->staticPublicProperty);
-        unset($this->_proxy->staticProtectedProperty);
-        unset($this->_proxy->staticPrivateProperty);
+        unset($proxy->staticPublicProperty);
+        unset($proxy->staticProtectedProperty);
+        unset($proxy->staticPrivateProperty);
 
-        $this->assertFalse(isset($this->_proxy->staticPublicProperty));
-        $this->assertFalse(isset($this->_proxy->staticProtectedProperty));
-        $this->assertFalse(isset($this->_proxy->staticPrivateProperty));
+        $this->assertFalse(isset($proxy->staticPublicProperty));
+        $this->assertFalse(isset($proxy->staticProtectedProperty));
+        $this->assertFalse(isset($proxy->staticPrivateProperty));
 
-        $this->_proxy->staticPublicProperty = 'staticPublicProperty';
-        $this->_proxy->staticProtectedProperty = 'staticProtectedProperty';
-        $this->_proxy->staticPrivateProperty = 'staticPrivateProperty';
+        $proxy->staticPublicProperty = 'staticPublicProperty';
+        $proxy->staticProtectedProperty = 'staticProtectedProperty';
+        $proxy->staticPrivateProperty = 'staticPrivateProperty';
 
-        $this->assertTrue(isset($this->_proxy->staticPublicProperty));
-        $this->assertTrue(isset($this->_proxy->staticProtectedProperty));
-        $this->assertTrue(isset($this->_proxy->staticPrivateProperty));
+        $this->assertTrue(isset($proxy->staticPublicProperty));
+        $this->assertTrue(isset($proxy->staticProtectedProperty));
+        $this->assertTrue(isset($proxy->staticPrivateProperty));
         $this->assertEquals(
             'staticPublicProperty',
-            $this->_proxy->staticPublicProperty
+            $proxy->staticPublicProperty
         );
         $this->assertEquals(
             'staticProtectedProperty',
-            $this->_proxy->staticProtectedProperty
+            $proxy->staticProtectedProperty
         );
         $this->assertEquals(
             'staticPrivateProperty',
-            $this->_proxy->staticPrivateProperty
+            $proxy->staticPrivateProperty
         );
 
-        $this->assertFalse(isset($this->_proxy->foo));
+        $this->assertFalse(isset($proxy->foo));
     }
 
     public function setGetFailureData()

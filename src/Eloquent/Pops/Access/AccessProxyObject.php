@@ -121,11 +121,17 @@ class AccessProxyObject extends ProxyObject
      */
     protected function popsPropertyReflector($property)
     {
-        if (property_exists($this->popsObject, $property)) {
-            $property = $this->popsReflector->getProperty($property);
-            $property->setAccessible(true);
+        $classReflector = $this->popsReflector;
 
-            return $property;
+        while ($classReflector) {
+            if ($classReflector->hasProperty($property)) {
+                $propertyReflector = $classReflector->getProperty($property);
+                $propertyReflector->setAccessible(true);
+
+                return $propertyReflector;
+            }
+
+            $classReflector = $classReflector->getParentClass();
         }
 
         return null;

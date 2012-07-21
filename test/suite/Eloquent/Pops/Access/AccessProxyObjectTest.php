@@ -11,6 +11,7 @@
 
 namespace Eloquent\Pops\Access;
 
+use Eloquent\Pops\Test\Fixture\ChildObject;
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\Fixture\Overload;
 use Eloquent\Pops\Test\TestCase;
@@ -21,17 +22,29 @@ use Eloquent\Pops\Test\TestCase;
  */
 class AccessProxyObjectTest extends TestCase
 {
-    protected function setUp()
+    public function fixtureData()
     {
-        parent::setUp();
+        $data = array();
 
-        $this->_object = new Object;
-        $this->_proxy = new AccessProxyObject($this->_object);
+        // #0: object with no inheritance
+        $object = new Object;
+        $proxy = new AccessProxyObject($object);
+        $data[] = array($object, $proxy);
+
+        // #1: child object
+        $object = new ChildObject;
+        $proxy = new AccessProxyObject($object);
+        $data[] = array($object, $proxy);
+
+        return $data;
     }
 
-    public function testRecursive()
+    /**
+     * @dataProvider fixtureData
+     */
+    public function testRecursive(Object $object)
     {
-        $recursiveProxy = new AccessProxyObject($this->_object, true);
+        $recursiveProxy = new AccessProxyObject($object, true);
 
         $this->assertInstanceOf(
             __NAMESPACE__.'\AccessProxyObject',
@@ -59,79 +72,80 @@ class AccessProxyObjectTest extends TestCase
         );
     }
 
-    public function testCall()
+    /**
+     * @dataProvider fixtureData
+     */
+    public function testCall(Object $object, AccessProxyObject $proxy)
     {
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\AccessProxyObject',
-            $this->_proxy
-        );
-
         $this->assertPopsProxyCall(
-            $this->_proxy,
+            $proxy,
             'publicMethod',
             array('foo', 'bar')
         );
         $this->assertPopsProxyCall(
-            $this->_proxy,
+            $proxy,
             'protectedMethod',
             array('foo', 'bar')
         );
         $this->assertPopsProxyCall(
-            $this->_proxy,
+            $proxy,
             'privateMethod',
             array('foo', 'bar')
         );
         $this->assertPopsProxyCall(
-            $this->_proxy,
+            $proxy,
             'foo',
             array('bar', 'baz'),
             true
         );
     }
 
-    public function testSetGet()
+    /**
+     * @dataProvider fixtureData
+     */
+    public function testSetGet(Object $object, AccessProxyObject $proxy)
     {
-        $this->assertTrue(isset($this->_proxy->publicProperty));
-        $this->assertTrue(isset($this->_proxy->protectedProperty));
-        $this->assertTrue(isset($this->_proxy->privateProperty));
+        $this->assertTrue(isset($proxy->publicProperty));
+        $this->assertTrue(isset($proxy->protectedProperty));
+        $this->assertTrue(isset($proxy->privateProperty));
         $this->assertEquals(
             'publicProperty',
-            $this->_proxy->publicProperty
+            $proxy->publicProperty
         );
         $this->assertEquals(
             'protectedProperty',
-            $this->_proxy->protectedProperty
+            $proxy->protectedProperty
         );
         $this->assertEquals(
             'privateProperty',
-            $this->_proxy->privateProperty
+            $proxy->privateProperty
         );
 
-        $this->_proxy->publicProperty = 'foo';
-        $this->_proxy->protectedProperty = 'bar';
-        $this->_proxy->privateProperty = 'baz';
+        $proxy->publicProperty = 'foo';
+        $proxy->protectedProperty = 'bar';
+        $proxy->privateProperty = 'baz';
 
-        $this->assertTrue(isset($this->_proxy->publicProperty));
-        $this->assertTrue(isset($this->_proxy->protectedProperty));
-        $this->assertTrue(isset($this->_proxy->privateProperty));
-        $this->assertEquals('foo', $this->_proxy->publicProperty);
-        $this->assertEquals('bar', $this->_proxy->protectedProperty);
-        $this->assertEquals('baz', $this->_proxy->privateProperty);
+        $this->assertTrue(isset($proxy->publicProperty));
+        $this->assertTrue(isset($proxy->protectedProperty));
+        $this->assertTrue(isset($proxy->privateProperty));
+        $this->assertEquals('foo', $proxy->publicProperty);
+        $this->assertEquals('bar', $proxy->protectedProperty);
+        $this->assertEquals('baz', $proxy->privateProperty);
 
-        unset($this->_proxy->publicProperty);
-        unset($this->_proxy->protectedProperty);
-        unset($this->_proxy->privateProperty);
+        unset($proxy->publicProperty);
+        unset($proxy->protectedProperty);
+        unset($proxy->privateProperty);
 
-        $this->assertFalse(isset($this->_proxy->publicProperty));
-        $this->assertFalse(isset($this->_proxy->protectedProperty));
-        $this->assertFalse(isset($this->_proxy->privateProperty));
+        $this->assertFalse(isset($proxy->publicProperty));
+        $this->assertFalse(isset($proxy->protectedProperty));
+        $this->assertFalse(isset($proxy->privateProperty));
 
-        $this->_proxy->foo = 'bar';
+        $proxy->foo = 'bar';
 
-        $this->assertTrue(isset($this->_proxy->foo));
-        $this->assertTrue(isset($this->_object->foo));
-        $this->assertEquals('bar', $this->_proxy->foo);
-        $this->assertEquals('bar', $this->_object->foo);
+        $this->assertTrue(isset($proxy->foo));
+        $this->assertTrue(isset($object->foo));
+        $this->assertEquals('bar', $proxy->foo);
+        $this->assertEquals('bar', $object->foo);
 
         $object = new Overload;
         $object->values = array(
