@@ -7,19 +7,7 @@ $autoloader->add('Eloquent', __DIR__.'/src');
 $documentationFixturePath =
     __DIR__.'/src/Eloquent/Pops/Test/Fixture/Documentation'
 ;
-require
-    $documentationFixturePath.
-    DIRECTORY_SEPARATOR.'Confusion.php'
-;
-require
-    $documentationFixturePath.
-    DIRECTORY_SEPARATOR.'OutputEscaper.php'
-;
-require
-    $documentationFixturePath.
-    DIRECTORY_SEPARATOR.'SeriousBusiness.php'
-;
-require
-    $documentationFixturePath.
-    DIRECTORY_SEPARATOR.'UppercaseProxyObject.php'
-;
+require $documentationFixturePath.'/Confusion.php';
+require $documentationFixturePath.'/OutputEscaper.php';
+require $documentationFixturePath.'/SeriousBusiness.php';
+require $documentationFixturePath.'/UppercaseProxyObject.php';
