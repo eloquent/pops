@@ -9,5 +9,4 @@ $documentationFixturePath =
 ;
 require $documentationFixturePath.'/Confusion.php';
 require $documentationFixturePath.'/OutputEscaper.php';
-require $documentationFixturePath.'/SeriousBusiness.php';
 require $documentationFixturePath.'/UppercaseProxyObject.php';

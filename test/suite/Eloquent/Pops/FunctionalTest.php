@@ -40,49 +40,6 @@ class FunctionalTest extends TestCase
         );
     }
 
-    public function testDocumentationAccessProxyObject()
-    {
-        $object = new SeriousBusiness;
-        $proxy = AccessProxy::proxy($object);
-
-        $this->assertEquals(
-            'foo is not so private...',
-            $proxy->foo('not so private...')
-        );
-        $this->assertEquals(
-            'mind = blown',
-            $proxy->bar.' = blown'
-        );
-    }
-
-    public function testDocumentationAccessProxyClass()
-    {
-        $proxy = AccessProxy::proxyClass('SeriousBusiness');
-
-        $this->assertEquals(
-            'baz is not so private...',
-            $proxy->baz('not so private...')
-        );
-        $this->assertEquals(
-            'mind = blown',
-            $proxy->qux.' = blown'
-        );
-    }
-
-    public function testDocumentationAccessProxyClassStatic()
-    {
-        $proxyClass = AccessProxy::proxyClassStatic('SeriousBusiness');
-
-        $this->assertEquals(
-            'baz is not so private...',
-            $proxyClass::baz('not so private...')
-        );
-        $this->assertEquals(
-            'mind = blown',
-            $proxyClass::popsProxy()->qux.' = blown'
-        );
-    }
-
     public function testDocumentationOutputEscaper()
     {
         $list = new ArrayIterator(array(

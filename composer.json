@@ -1,8 +1,7 @@
 {
     "name": "eloquent/pops",
-    "type": "library",
     "description": "PHP object proxy system.",
-    "keywords": ["object","proxy","access","escaping"],
+    "keywords": ["object","proxy","escaping"],
     "homepage": "https://github.com/eloquent/pops",
     "license": "MIT",
     "authors": [
