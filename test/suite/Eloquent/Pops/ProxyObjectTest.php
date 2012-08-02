@@ -102,6 +102,15 @@ class ProxyObjectTest extends TestCase
         );
     }
 
+    public function testPopsCallByReference()
+    {
+        $variable = null;
+        $arguments = array(&$variable, 'foo');
+        $this->_proxy->popsCall('byReference', $arguments);
+
+        $this->assertSame('foo', $variable);
+    }
+
     public function testSetGet()
     {
         $this->assertEquals('publicProperty', $this->_proxy->publicProperty);

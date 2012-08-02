@@ -10,6 +10,7 @@
  */
 
 use Eloquent\Pops\Access\AccessProxy;
+use Eloquent\Pops\Pops;
 use Eloquent\Pops\Safe\SafeProxy;
 use Eloquent\Pops\Test\TestCase;
 use OutputEscaper\OutputEscaperProxy;
@@ -21,20 +22,20 @@ class FunctionalTest extends TestCase
         $confusion = new Confusion;
         $proxy = new UppercaseProxyObject($confusion);
 
-        $this->assertEquals(
+        $this->assertSame(
             "What is this? I don't even...",
             $confusion->wat()
         );
-        $this->assertEquals(
+        $this->assertSame(
             "WHAT IS THIS? I DON'T EVEN...",
             $proxy->wat()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             'Has anyone really been far even as decided to use even?',
             $confusion->derp
         );
-        $this->assertEquals(
+        $this->assertSame(
             'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED TO USE EVEN?',
             $proxy->derp
         );
@@ -68,6 +69,16 @@ class FunctionalTest extends TestCase
         echo '</ul>';
         $actual = ob_get_clean();
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
+    }
+
+    public function testDocumentationCallWithReference()
+    {
+        $proxy = Pops::proxy(new Confusion);
+        $wasPhone = null;
+        $arguments = array(&$wasPhone);
+        $proxy->popsCall('butWho', $arguments);
+
+        $this->assertSame('Hello? Yes this is dog.', $wasPhone);
     }
 }

@@ -16,5 +16,10 @@ class Confusion
         return "What is this? I don't even...";
     }
 
+    public function butWho(&$wasPhone)
+    {
+        $wasPhone = 'Hello? Yes this is dog.';
+    }
+
     public $derp = 'Has anyone really been far even as decided to use even?';
 }

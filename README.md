@@ -56,9 +56,9 @@ use Eloquent\Pops\ProxyObject;
 
 class UppercaseProxyObject extends ProxyObject
 {
-    public function __call($method, array $arguments)
+    public function popsCall($method, array &$arguments)
     {
-        return strtoupper(parent::__call($method, $arguments));
+        return strtoupper(parent::popsCall($method, $arguments));
     }
 
     public function __get($property)
@@ -67,6 +67,10 @@ class UppercaseProxyObject extends ProxyObject
     }
 }
 ```
+
+We use popsCall() here rather than __call() to get around PHP limitations to do
+with passing arguments by reference. See [below](#calling-methods-with-by-reference-parameters)
+for a depper explanation.
 
 Now when we access `wat()` and `$derp` both normally, and through our proxy, we
 can see the effect:
@@ -260,6 +264,48 @@ escaping is a complex issue that should not be taken lightly.
 Note that in the above example, the last list item was wrapped in a *Safe*
 proxy. When Pops applies its proxies, it will skip anything marked as safe in
 this manner.
+
+## Calling methods with by-reference parameters
+
+Because of PHP limitations, methods with arguments that are passed by reference
+must be called in a special way.
+
+To explain futher, let's assume our class from before also has a method which
+accepts a reference:
+
+```php
+<?php
+
+class Confusion
+{
+    public function butWho(&$wasPhone)
+    {
+        $wasPhone = 'Hello? Yes this is dog.';
+    }
+}
+```
+
+This method cannot be proxied normally because the $wasPhone argument is passed
+by reference. The correct way to call the above butWho() method through a Pops
+proxy looks like this:
+
+```php
+<?php
+
+$proxy = Pops::proxy(new Confusion);
+
+$wasPhone = null;
+$arguments = array(&$wasPhone);
+
+$proxy->popsCall('butWho', $arguments);
+
+echo $wasPhone;   // outputs 'Hello? Yes this is dog.'
+```
+
+Note that there **must** be a variable for the $wasPhone argument, and there
+**must** be a variable for the arguments themselves. Neither can be passed
+directly as a value. The arguments must also contain a **reference** to
+$wasPhone argument.
 
 ## Code quality
 

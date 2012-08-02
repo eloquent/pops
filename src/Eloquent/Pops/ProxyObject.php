@@ -57,15 +57,26 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
 
     /**
      * @param string $method
+     * @param array &$arguments
+     *
+     * @return mixed
+     */
+    public function popsCall($method, array &$arguments)
+    {
+        return $this->popsProxySubValue(
+            call_user_func_array(array($this->popsObject, $method), $arguments)
+        );
+    }
+
+    /**
+     * @param string $method
      * @param array $arguments
      *
      * @return mixed
      */
     public function __call($method, array $arguments)
     {
-        return $this->popsProxySubValue(
-            call_user_func_array(array($this->popsObject, $method), $arguments)
-        );
+        return $this->popsCall($method, $arguments);
     }
 
     /**

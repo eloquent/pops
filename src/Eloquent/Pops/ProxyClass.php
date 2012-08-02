@@ -125,16 +125,27 @@ class ProxyClass implements Proxy
 
     /**
      * @param string $method
+     * @param array &$arguments
+     *
+     * @return mixed
+     */
+    public function popsCall($method, array &$arguments)
+    {
+        return static::popsProxySubValue(
+            call_user_func_array($this->popsClass.'::'.$method, $arguments),
+            $this->popsRecursive
+        );
+    }
+
+    /**
+     * @param string $method
      * @param array $arguments
      *
      * @return mixed
      */
     public function __call($method, array $arguments)
     {
-        return static::popsProxySubValue(
-            call_user_func_array($this->popsClass.'::'.$method, $arguments),
-            $this->popsRecursive
-        );
+        return $this->popsCall($method, $arguments);
     }
 
     /**

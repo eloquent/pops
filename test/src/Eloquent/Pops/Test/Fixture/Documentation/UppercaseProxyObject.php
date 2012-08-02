@@ -13,9 +13,9 @@ use Eloquent\Pops\ProxyObject;
 
 class UppercaseProxyObject extends ProxyObject
 {
-    public function __call($method, array $arguments)
+    public function popsCall($method, array &$arguments)
     {
-        return strtoupper(parent::__call($method, $arguments));
+        return strtoupper(parent::popsCall($method, $arguments));
     }
 
     public function __get($property)

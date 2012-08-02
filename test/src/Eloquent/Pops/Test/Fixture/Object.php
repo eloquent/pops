@@ -18,16 +18,6 @@ class Object
         return array(__FUNCTION__, func_get_args());
     }
 
-    static protected function staticProtectedMethod()
-    {
-        return array(__FUNCTION__, func_get_args());
-    }
-
-    static private function staticPrivateMethod()
-    {
-        return array(__FUNCTION__, func_get_args());
-    }
-
     static public function __callStatic($name, array $arguments)
     {
         return array(__FUNCTION__, func_get_args());
@@ -48,17 +38,12 @@ class Object
         return 'string';
     }
 
+    static public function staticByReference(&$variable, $value)
+    {
+        $variable = $value;
+    }
+
     public function publicMethod()
-    {
-        return array(__FUNCTION__, func_get_args());
-    }
-
-    protected function protectedMethod()
-    {
-        return array(__FUNCTION__, func_get_args());
-    }
-
-    private function privateMethod()
     {
         return array(__FUNCTION__, func_get_args());
     }
@@ -83,11 +68,12 @@ class Object
         return 'string';
     }
 
+    public function byReference(&$variable, $value)
+    {
+        $variable = $value;
+    }
+
     static public $staticPublicProperty = 'staticPublicProperty';
-    static protected $staticProtectedProperty = 'staticProtectedProperty';
-    static private $staticPrivateProperty = 'staticPrivateProperty';
 
     public $publicProperty = 'publicProperty';
-    protected $protectedProperty = 'protectedProperty';
-    private $privateProperty = 'privateProperty';
 }
