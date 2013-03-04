@@ -2,20 +2,13 @@
 
 *PHP Object Proxy System.*
 
+[![Build Status]](http://travis-ci.org/eloquent/pops)
+[![Test Coverage]](http://eloquent-software.com/pops/artifacts/tests/coverage/)
+
 ## Installation
 
-Pops requires PHP 5.3 or later.
-
-### With [Composer](http://getcomposer.org/)
-
-* Add 'eloquent/pops' to your project's composer.json dependencies
-* Run `php composer.phar install`
-
-### Bare installation
-
-* Clone from GitHub: `git clone git://github.com/eloquent/pops.git`
-* Use a [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
-  compatible autoloader (namespace 'Eloquent\Pops' in the 'src' directory)
+Available as [Composer](http://getcomposer.org/) package
+[eloquent/pops](https://packagist.org/packages/eloquent/pops).
 
 ## What is Pops?
 
@@ -34,8 +27,6 @@ Let's write a simple proxy that converts everything to uppercase. Here we have a
 class:
 
 ```php
-<?php
-
 class Confusion
 {
     public function wat()
@@ -50,8 +41,6 @@ class Confusion
 And here is our proxy:
 
 ```php
-<?php
-
 use Eloquent\Pops\ProxyObject;
 
 class UppercaseProxyObject extends ProxyObject
@@ -76,8 +65,6 @@ Now when we access `wat()` and `$derp` both normally, and through our proxy, we
 can see the effect:
 
 ```php
-<?php
-
 $confusion = new Confusion;
 $proxy = new UppercaseProxyObject($confusion);
 
@@ -97,8 +84,6 @@ Here's an example of how such a system could be created for escaping HTML
 output:
 
 ```php
-<?php
-
 namespace OutputEscaper;
 
 use Eloquent\Pops\Pops;
@@ -225,8 +210,6 @@ class OutputEscaperProxyPrimitive extends ProxyPrimitive
 The output escaper can now be used like so:
 
 ```php
-<?php
-
 use OutputEscaper\OutputEscaperProxy;
 use Eloquent\Pops\Safe\SafeProxy;
 
@@ -274,8 +257,6 @@ To explain futher, let's assume our class from before also has a method which
 accepts a reference:
 
 ```php
-<?php
-
 class Confusion
 {
     public function butWho(&$wasPhone)
@@ -290,8 +271,6 @@ by reference. The correct way to call the above butWho() method through a Pops
 proxy looks like this:
 
 ```php
-<?php
-
 $proxy = Pops::proxy(new Confusion);
 
 $wasPhone = null;
@@ -307,14 +286,6 @@ Note that there **must** be a variable for the $wasPhone argument, and there
 directly as a value. The arguments must also contain a **reference** to
 $wasPhone argument.
 
-## Code quality
-
-Pops strives to attain a high level of quality. A full test suite is available,
-and code coverage is closely monitored. All of the above code examples are
-also tested.
-
-### Latest revision test suite results
-[![Build Status](https://secure.travis-ci.org/eloquent/pops.png)](http://travis-ci.org/eloquent/pops)
-
-### Latest revision test suite coverage
-<http://ci.ezzatron.com/report/pops/coverage/>
+<!-- references -->
+[Build Status]: https://raw.github.com/eloquent/pops/gh-pages/artifacts/images/icecave/regular/build-status.png
+[Test Coverage]: https://raw.github.com/eloquent/pops/gh-pages/artifacts/images/icecave/regular/coverage.png

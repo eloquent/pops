@@ -14,6 +14,9 @@
     "require": {
         "php": ">=5.3.0"
     },
+    "require-dev": {
+        "icecave/archer": "~0.2"
+    },
     "autoload": {
         "psr-0": {
             "Eloquent\\Pops": "src"
