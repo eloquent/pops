@@ -1,0 +1,28 @@
+
+
+Code Coverage Report 
+  2013-03-04 10:11:51
+
+ Summary: 
+  Classes: 100.00% (10/10)
+  Methods: 100.00% (75/75)
+  Lines:   100.00% (229/229)
+
+\Eloquent\Pops::Pops
+  Methods: 100.00% (10/10)   Lines: 100.00% ( 21/ 21)
+\Eloquent\Pops::ProxyArray
+  Methods: 100.00% (15/15)   Lines: 100.00% ( 37/ 37)
+\Eloquent\Pops::ProxyClass
+  Methods: 100.00% (17/17)   Lines: 100.00% ( 96/ 96)
+\Eloquent\Pops::ProxyObject
+  Methods: 100.00% (23/23)   Lines: 100.00% ( 64/ 64)
+\Eloquent\Pops::ProxyPrimitive
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% (  4/  4)
+\Eloquent\Pops\Safe::SafeProxy
+  Methods: 100.00% ( 4/ 4)   Lines: 100.00% (  4/  4)
+\Eloquent\Pops\Safe::SafeProxyArray
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
+\Eloquent\Pops\Safe::SafeProxyClass
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
+\Eloquent\Pops\Safe::SafeProxyObject
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
