@@ -59,7 +59,7 @@ class UppercaseProxyObject extends ProxyObject
 
 We use popsCall() here rather than __call() to get around PHP limitations to do
 with passing arguments by reference. See [below](#calling-methods-with-by-reference-parameters)
-for a depper explanation.
+for a deeper explanation.
 
 Now when we access `wat()` and `$derp` both normally, and through our proxy, we
 can see the effect:
