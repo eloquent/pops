@@ -11,7 +11,6 @@
 
 namespace Eloquent\Pops;
 
-use InvalidArgumentException;
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\TestCase;
 

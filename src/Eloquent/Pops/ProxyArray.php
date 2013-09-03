@@ -14,9 +14,7 @@ namespace Eloquent\Pops;
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
-use InvalidArgumentException;
 use Iterator;
-use LogicException;
 
 /**
  * A transparent array proxy.
@@ -26,7 +24,7 @@ class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
     /**
      * Construct a new array proxy.
      *
-     * @param array   $array     The array to wrap.
+     * @param array        $array     The array to wrap.
      * @param boolean|null $recursive True if the array should be recursively proxied.
      */
     public function __construct(array $array, $recursive = null)
@@ -54,7 +52,7 @@ class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
      * Set the value of an array index.
      *
      * @param integer|string $index The index to set.
-     * @param mixed  $value    The new value.
+     * @param mixed          $value The new value.
      */
     public function offsetSet($index, $value)
     {
