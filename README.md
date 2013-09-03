@@ -67,11 +67,11 @@ can see the effect:
 $confusion = new Confusion;
 $proxy = new UppercaseProxyObject($confusion);
 
-echo $confusion->wat();   // outputs "What is this? I don't even..."
-echo $proxy->wat();       // outputs "WHAT IS THIS? I DON'T EVEN..."
+echo $confusion->wat(); // outputs "What is this? I don't even..."
+echo $proxy->wat();     // outputs "WHAT IS THIS? I DON'T EVEN..."
 
-echo $confusion->derp;    // outputs 'Has anyone really been far even as decided to use even?'
-echo $proxy->derp;        // outputs 'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED TO USE EVEN?'
+echo $confusion->derp;  // outputs 'Has anyone really been far even as decided to use even?'
+echo $proxy->derp;      // outputs 'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED TO USE EVEN?'
 ```
 
 ## Recursive proxies
@@ -299,7 +299,7 @@ $arguments = array(&$wasPhone);
 
 $proxy->popsCall('butWho', $arguments);
 
-echo $wasPhone;   // outputs 'Hello? Yes this is dog.'
+echo $wasPhone; // outputs 'Hello? Yes this is dog.'
 ```
 
 Note that there **must** be a variable for the `$wasPhone` argument, and there
