@@ -15,24 +15,13 @@ use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\Fixture\Uppercase\UppercaseProxy;
 use Eloquent\Pops\Test\TestCase;
 
-/**
- * @covers Eloquent\Pops\ProxyArray
- */
 class ProxyArrayTest extends TestCase
 {
     public function testConstruct()
     {
         $proxy = new ProxyArray(array('foo', 'bar'));
-        $this->assertSame(array('foo', 'bar'), $proxy->popsArray());
-    }
 
-    public function testConstructFailureRecursiveType()
-    {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Provided value is not a boolean'
-        );
-        new ProxyArray(array(), 'foo');
+        $this->assertSame(array('foo', 'bar'), $proxy->popsArray());
     }
 
     public function testOffsetSetGet()
@@ -80,46 +69,16 @@ class ProxyArrayTest extends TestCase
         );
         $proxy = new ProxyArray($array, true);
 
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $proxy['object']
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $proxy['object']->object()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $proxy['object']->arrayValue()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $proxy['object']->string()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $proxy['array']
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $proxy['array']['object']
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $proxy['array']['object']->object()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $proxy['array']['array']
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $proxy['array']['string']
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $proxy['string']
-        );
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['object']);
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['object']->object());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['object']->arrayValue());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['object']->string());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['array']);
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['array']['object']);
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['array']['object']->object());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['array']['array']);
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['array']['string']);
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['string']);
     }
 
     public function testCount()
@@ -159,49 +118,31 @@ class ProxyArrayTest extends TestCase
         $actual = iterator_to_array($proxy);
 
         $this->assertEquals($expected, $actual);
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $actual['object']->object()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $actual['object']->arrayValue()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $actual['object']->string()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $actual['array']['object']->object()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $actual['array']['object']->arrayValue()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $actual['array']['object']->string()
-        );
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $actual['object']->object());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $actual['object']->arrayValue());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $actual['object']->string());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $actual['array']['object']->object());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $actual['array']['object']->arrayValue());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $actual['array']['object']->string());
     }
 
     public function testToString()
     {
         if (version_compare(PHP_VERSION, '5.4.0RC0') >= 0) {
             $error_count = 0;
-            set_error_handler(function() use(&$error_count) {
+            set_error_handler(function() use (&$error_count) {
                 $error_count ++;
             });
         }
 
         $proxy = new ProxyArray(array());
 
-        $this->assertEquals('Array', (string) $proxy);
+        $this->assertEquals('Array', strval($proxy));
 
         // recursive tests
         $proxy = UppercaseProxy::proxyArray(array(), true);
 
-        $this->assertEquals('ARRAY', (string) $proxy);
+        $this->assertEquals('ARRAY', strval($proxy));
 
         if (version_compare(PHP_VERSION, '5.4.0RC0') >= 0) {
             $this->assertSame(2, $error_count);

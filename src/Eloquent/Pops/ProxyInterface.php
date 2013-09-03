@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Pops\Safe;
+namespace Eloquent\Pops;
 
-use Eloquent\Pops\Proxy;
-
-interface Safe extends Proxy
+/**
+ * The interface used to identify proxied values.
+ */
+interface ProxyInterface
 {
 }

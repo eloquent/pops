@@ -2,24 +2,23 @@
 
 *PHP Object Proxy System.*
 
-[![Build Status]](http://travis-ci.org/eloquent/pops)
-[![Test Coverage]](http://eloquent-software.com/pops/artifacts/tests/coverage/)
+[![Build Status]][Latest build]
+[![Test Coverage]][Test coverage report]
+[![Uses Semantic Versioning]][SemVer]
 
-## Installation
+## Installation and documentation
 
-Available as [Composer](http://getcomposer.org/) package
-[eloquent/pops](https://packagist.org/packages/eloquent/pops).
+* Available as [Composer] package [eloquent/pops].
+* [API documentation] available.
 
-## What is Pops?
+## What is *Pops*?
 
-Pops is a system for wrapping PHP objects in other objects to modify their
-behaviour.
+*Pops* is a system for wrapping PHP objects in other objects to modify their
+behaviour. A Pops proxy will, as much as possible, imitate the object it wraps.
+It passes along method calls and returns the underlying result, and allows
+transparent access to properties (for both setting and getting).
 
-A Pops proxy will, as much as possible, imitate the object it wraps. It passes
-along method calls and returns the underlying result, and allows transparent
-access to properties (for both setting and getting).
-
-Pops is the underlying system behind [Liberator](https://github.com/eloquent/liberator).
+Pops is the underlying system behind [Liberator].
 
 ## Creating proxies
 
@@ -57,9 +56,9 @@ class UppercaseProxyObject extends ProxyObject
 }
 ```
 
-We use popsCall() here rather than __call() to get around PHP limitations to do
-with passing arguments by reference. See [below](#calling-methods-with-by-reference-parameters)
-for a deeper explanation.
+We use `popsCall()` here rather than `__call()` to get around PHP limitations to
+do with passing arguments by reference. See [calling methods with by-reference
+parameters] for a deeper explanation.
 
 Now when we access `wat()` and `$derp` both normally, and through our proxy, we
 can see the effect:
@@ -78,65 +77,65 @@ echo $proxy->derp;        // outputs 'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED
 ## Recursive proxies
 
 Pops proxies can be applied to any value recursively. This comes in handy when
-designing, for example, an output escaper (similar to Symfony).
-
-Here's an example of how such a system could be created for escaping HTML
-output:
+designing, for example, an output escaper (similar to Symfony). Here's an
+example of how such a system could be created for escaping HTML output:
 
 ```php
 namespace OutputEscaper;
 
-use Eloquent\Pops\Pops;
-use Eloquent\Pops\ProxyArray;
-use Eloquent\Pops\ProxyClass;
-use Eloquent\Pops\ProxyObject;
-use Eloquent\Pops\ProxyPrimitive;
+use Eloquent\Pops\Proxy;
 
 /**
  * Escapes output for use in HTML.
  */
-class OutputEscaperProxy extends Pops
+class OutputEscaperProxy extends Proxy
 {
     /**
-     * The class to use when proxying arrays.
+     * Get the array proxy class.
      *
-     * @return string
+     * @return string The array proxy class.
      */
-    static protected function proxyArrayClass()
+    protected static function proxyArrayClass()
     {
-        return __NAMESPACE__.'\OutputEscaperProxyArray';
+        return __NAMESPACE__ . '\OutputEscaperProxyArray';
     }
 
     /**
-     * The class to use when proxying classes.
+     * Get the class proxy class.
      *
-     * @return string
+     * @return string The class proxy class.
      */
-    static protected function proxyClassClass()
+    protected static function proxyClassClass()
     {
-        return __NAMESPACE__.'\OutputEscaperProxyClass';
+        return __NAMESPACE__ . '\OutputEscaperProxyClass';
     }
 
     /**
-     * The class to use when proxying objects.
+     * Get the object proxy class.
      *
-     * @return string
+     * @return string The object proxy class.
      */
-    static protected function proxyObjectClass()
+    protected static function proxyObjectClass()
     {
-        return __NAMESPACE__.'\OutputEscaperProxyObject';
+        return __NAMESPACE__ . '\OutputEscaperProxyObject';
     }
 
     /**
-     * The class to use when proxying primitives.
+     * Get the proxy class for primitive values.
      *
-     * @return string
+     * @return string The proxy class for primitive values.
      */
-    static protected function proxyPrimitiveClass()
+    protected static function proxyPrimitiveClass()
     {
-        return __NAMESPACE__.'\OutputEscaperProxyPrimitive';
+        return __NAMESPACE__ . '\OutputEscaperProxyPrimitive';
     }
 }
+```
+
+```php
+namespace OutputEscaper;
+
+use Eloquent\Pops\ProxyArray;
 
 /**
  * Wraps an array to escape any sub-values for use in HTML.
@@ -144,15 +143,21 @@ class OutputEscaperProxy extends Pops
 class OutputEscaperProxyArray extends ProxyArray
 {
     /**
-     * The class to use when proxying sub-values.
+     * Get the proxy class.
      *
-     * @return string
+     * @return string The proxy class.
      */
     protected static function popsProxyClass()
     {
-        return __NAMESPACE__.'\OutputEscaperProxy';
+        return __NAMESPACE__ . '\OutputEscaperProxy';
     }
 }
+```
+
+```php
+namespace OutputEscaper;
+
+use Eloquent\Pops\ProxyClass;
 
 /**
  * Wraps a class to escape any sub-values for use in HTML.
@@ -160,15 +165,21 @@ class OutputEscaperProxyArray extends ProxyArray
 class OutputEscaperProxyClass extends ProxyClass
 {
     /**
-     * The class to use when proxying sub-values.
+     * Get the proxy class.
      *
-     * @return string
+     * @return string The proxy class.
      */
     protected static function popsProxyClass()
     {
-        return __NAMESPACE__.'\OutputEscaperProxy';
+        return __NAMESPACE__ . '\OutputEscaperProxy';
     }
 }
+```
+
+```php
+namespace OutputEscaper;
+
+use Eloquent\Pops\ProxyObject;
 
 /**
  * Wraps an object to escape any sub-values for use in HTML.
@@ -176,15 +187,21 @@ class OutputEscaperProxyClass extends ProxyClass
 class OutputEscaperProxyObject extends ProxyObject
 {
     /**
-     * The class to use when proxying sub-values.
+     * Get the proxy class.
      *
-     * @return string
+     * @return string The proxy class.
      */
     protected static function popsProxyClass()
     {
-        return __NAMESPACE__.'\OutputEscaperProxy';
+        return __NAMESPACE__ . '\OutputEscaperProxy';
     }
 }
+```
+
+```php
+namespace OutputEscaper;
+
+use Eloquent\Pops\ProxyPrimitive;
 
 /**
  * Wraps a primitive to escape its value for use in HTML.
@@ -192,14 +209,14 @@ class OutputEscaperProxyObject extends ProxyObject
 class OutputEscaperProxyPrimitive extends ProxyPrimitive
 {
     /**
-     * Returns the HTML-escaped version of this primitive.
+     * Get the HTML-escaped version of this primitive.
      *
-     * @return string
+     * @return string The HTML-secaped version of this primitive.
      */
     public function __toString()
     {
         return htmlspecialchars(
-            (string) $this->popsPrimitive,
+            strval($this->popsPrimitive()),
             ENT_QUOTES,
             'UTF-8'
         );
@@ -213,19 +230,21 @@ The output escaper can now be used like so:
 use OutputEscaper\OutputEscaperProxy;
 use Eloquent\Pops\Safe\SafeProxy;
 
-$list = new ArrayIterator(array(
-    'foo',
-    'bar',
-    '<script>alert(document.cookie);</script>',
-    SafeProxy::proxy('<em>ooh...</em>'),
-));
+$list = new ArrayIterator(
+    array(
+        'foo',
+        'bar',
+        '<script>alert(document.cookie);</script>',
+        SafeProxy::proxy('<em>ooh...</em>'),
+    )
+);
 $proxy = OutputEscaperProxy::proxy($list, true);
 
-echo '<ul>'.PHP_EOL;
+echo "<ul>\n";
 foreach ($proxy as $item) {
-    echo '<li>'.$item.'</li>'.PHP_EOL;
+    printf("<li>%s</li>\n", $item);
 }
-echo '</ul>';
+echo "</ul>\n";
 ```
 
 Which would output:
@@ -266,12 +285,14 @@ class Confusion
 }
 ```
 
-This method cannot be proxied normally because the $wasPhone argument is passed
-by reference. The correct way to call the above butWho() method through a Pops
-proxy looks like this:
+This method cannot be proxied normally because the `$wasPhone` argument is
+passed by reference. The correct way to call the above butWho() method through a
+Pops proxy looks like this:
 
 ```php
-$proxy = Pops::proxy(new Confusion);
+use Eloquent\Pops\Proxy;
+
+$proxy = Proxy::proxy(new Confusion);
 
 $wasPhone = null;
 $arguments = array(&$wasPhone);
@@ -281,11 +302,22 @@ $proxy->popsCall('butWho', $arguments);
 echo $wasPhone;   // outputs 'Hello? Yes this is dog.'
 ```
 
-Note that there **must** be a variable for the $wasPhone argument, and there
+Note that there **must** be a variable for the `$wasPhone` argument, and there
 **must** be a variable for the arguments themselves. Neither can be passed
 directly as a value. The arguments must also contain a **reference** to
-$wasPhone argument.
+`$wasPhone` argument.
 
-<!-- references -->
-[Build Status]: https://raw.github.com/eloquent/pops/gh-pages/artifacts/images/icecave/regular/build-status.png
-[Test Coverage]: https://raw.github.com/eloquent/pops/gh-pages/artifacts/images/icecave/regular/coverage.png
+<!-- References -->
+
+[calling methods with by-reference parameters]: #calling-methods-with-by-reference-parameters
+[Liberator]: https://github.com/eloquent/liberator
+
+[API documentation]: http://lqnt.co/pops/artifacts/documentation/api/
+[Build Status]: https://api.travis-ci.org/eloquent/pops.png?branch=master
+[Composer]: http://getcomposer.org/
+[eloquent/pops]: https://packagist.org/packages/eloquent/pops
+[Latest build]: https://travis-ci.org/eloquent/pops
+[SemVer]: http://semver.org/
+[Test coverage report]: https://coveralls.io/r/eloquent/pops
+[Test Coverage]: https://coveralls.io/repos/eloquent/pops/badge.png?branch=master
+[Uses Semantic Versioning]: http://b.repl.ca/v1/semver-yes-brightgreen.png

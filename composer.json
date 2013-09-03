@@ -1,7 +1,7 @@
 {
     "name": "eloquent/pops",
     "description": "PHP object proxy system.",
-    "keywords": ["object","proxy","escaping"],
+    "keywords": ["object", "proxy", "method", "property"],
     "homepage": "https://github.com/eloquent/pops",
     "license": "MIT",
     "authors": [
@@ -12,10 +12,10 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3"
     },
     "require-dev": {
-        "icecave/archer": "~0.2"
+        "icecave/archer": "1.0.0-alpha.2"
     },
     "autoload": {
         "psr-0": {

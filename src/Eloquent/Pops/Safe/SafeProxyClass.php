@@ -13,13 +13,18 @@ namespace Eloquent\Pops\Safe;
 
 use Eloquent\Pops\ProxyClass;
 
-class SafeProxyClass extends ProxyClass implements Safe
+/**
+ * A class proxy that prevents recusive proxying.
+ */
+class SafeProxyClass extends ProxyClass implements SafeInterface
 {
     /**
-     * @return string
+     * Get the proxy class.
+     *
+     * @return string The proxy class.
      */
     protected static function popsProxyClass()
     {
-        return __NAMESPACE__.'\SafeProxy';
+        return __NAMESPACE__ . '\SafeProxy';
     }
 }

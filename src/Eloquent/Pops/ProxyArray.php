@@ -16,23 +16,23 @@ use ArrayIterator;
 use Countable;
 use InvalidArgumentException;
 use Iterator;
-use ReflectionClass;
+use LogicException;
 
-class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
+/**
+ * A transparent array proxy.
+ */
+class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
 {
     /**
-     * @param array $array
-     * @param boolean $recursive
+     * Construct a new array proxy.
+     *
+     * @param array   $array     The array to wrap.
+     * @param boolean|null $recursive True if the array should be recursively proxied.
      */
     public function __construct(array $array, $recursive = null)
     {
         if (null === $recursive) {
             $recursive = false;
-        }
-        if (!is_bool($recursive)) {
-            throw new InvalidArgumentException(
-                'Provided value is not a boolean'
-            );
         }
 
         $this->popsArray = $array;
@@ -41,7 +41,9 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @return array
+     * Get the wrapped array.
+     *
+     * @return array The wrapped array.
      */
     public function popsArray()
     {
@@ -49,46 +51,54 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param string $property
-     * @param mixed $value
-     */
-    public function offsetSet($property, $value)
-    {
-        $this->popsArray[$property] = $value;
-    }
-
-    /**
-     * @param string $property
+     * Set the value of an array index.
      *
-     * @return mixed
+     * @param integer|string $index The index to set.
+     * @param mixed  $value    The new value.
      */
-    public function offsetGet($property)
+    public function offsetSet($index, $value)
     {
-        return $this->popsProxySubValue(
-            $this->popsArray[$property]
-        );
+        $this->popsArray[$index] = $value;
     }
 
     /**
-     * @param string $property
+     * Get the value of an array index.
      *
-     * @return boolean
+     * @param integer|string $index The index to get.
+     *
+     * @return mixed The value.
      */
-    public function offsetExists($property)
+    public function offsetGet($index)
     {
-        return isset($this->popsArray[$property]);
+        return $this->popsProxySubValue($this->popsArray[$index]);
     }
 
     /**
-     * @param string $property
+     * Returns true if the specified array index exists.
+     *
+     * @param integer|string $index The index to search for.
+     *
+     * @return boolean True if the index exists.
      */
-    public function offsetUnset($property)
+    public function offsetExists($index)
     {
-        unset($this->popsArray[$property]);
+        return isset($this->popsArray[$index]);
     }
 
     /**
-     * @return integer
+     * Remove an array index.
+     *
+     * @param integer|string $index The index to remove.
+     */
+    public function offsetUnset($index)
+    {
+        unset($this->popsArray[$index]);
+    }
+
+    /**
+     * Get the number of elements in the array.
+     *
+     * @return integer The number of elements.
      */
     public function count()
     {
@@ -96,7 +106,9 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @return mixed
+     * Get the current iterator value.
+     *
+     * @return mixed The current value.
      */
     public function current()
     {
@@ -106,25 +118,35 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @return scalar
+     * Get the current iterator key.
+     *
+     * @return mixed The current key.
      */
     public function key()
     {
         return $this->popsInnerIterator->key();
     }
 
+    /**
+     * Move to the next iterator value.
+     */
     public function next()
     {
         $this->popsInnerIterator->next();
     }
 
+    /**
+     * Rewind to the beginning of the iterator.
+     */
     public function rewind()
     {
         $this->popsInnerIterator->rewind();
     }
 
     /**
-     * @return boolean
+     * Returns true if the current iterator position is valid.
+     *
+     * @return boolean True if the current position is valid.
      */
     public function valid()
     {
@@ -132,27 +154,31 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @return string
+     * Get the string representation of this array.
+     *
+     * @return string The string representation.
      */
     public function __toString()
     {
-        return (string) $this->popsProxySubValue(
-            (string) $this->popsArray
-        );
+        return strval($this->popsProxySubValue(strval($this->popsArray)));
     }
 
     /**
-     * @return string
+     * Get the proxy class.
+     *
+     * @return string The proxy class.
      */
     protected static function popsProxyClass()
     {
-        return __NAMESPACE__.'\Pops';
+        return __NAMESPACE__ . '\Proxy';
     }
 
     /**
-     * @param mixed $value
+     * Wrap a sub-value in a proxy if recursive proxying is enabled.
      *
-     * @return mixed
+     * @param mixed $value The value to wrap.
+     *
+     * @return mixed The proxied value, or the untouched value.
      */
     protected function popsProxySubValue($value)
     {
@@ -165,18 +191,7 @@ class ProxyArray implements Proxy, ArrayAccess, Countable, Iterator
         return $value;
     }
 
-    /**
-     * @var array
-     */
-    protected $popsArray;
-
-    /**
-     * @var boolean
-     */
-    protected $popsRecursive;
-
-    /**
-     * @var Iterator
-     */
-    protected $popsInnerIterator;
+    private $popsArray;
+    private $popsRecursive;
+    private $popsInnerIterator;
 }

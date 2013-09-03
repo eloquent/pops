@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Pops\Safe;
+namespace OutputEscaper;
 
 use Eloquent\Pops\Proxy;
 
 /**
- * A proxy for wrapping values to prevent recursive proxying.
+ * Escapes output for use in HTML.
  */
-class SafeProxy extends Proxy
+class OutputEscaperProxy extends Proxy
 {
     /**
      * Get the array proxy class.
@@ -25,7 +25,7 @@ class SafeProxy extends Proxy
      */
     protected static function proxyArrayClass()
     {
-        return __NAMESPACE__ . '\SafeProxyArray';
+        return __NAMESPACE__ . '\OutputEscaperProxyArray';
     }
 
     /**
@@ -35,7 +35,7 @@ class SafeProxy extends Proxy
      */
     protected static function proxyClassClass()
     {
-        return __NAMESPACE__ . '\SafeProxyClass';
+        return __NAMESPACE__ . '\OutputEscaperProxyClass';
     }
 
     /**
@@ -45,7 +45,7 @@ class SafeProxy extends Proxy
      */
     protected static function proxyObjectClass()
     {
-        return __NAMESPACE__ . '\SafeProxyObject';
+        return __NAMESPACE__ . '\OutputEscaperProxyObject';
     }
 
     /**
@@ -55,6 +55,6 @@ class SafeProxy extends Proxy
      */
     protected static function proxyPrimitiveClass()
     {
-        return __NAMESPACE__ . '\SafeProxyPrimitive';
+        return __NAMESPACE__ . '\OutputEscaperProxyPrimitive';
     }
 }

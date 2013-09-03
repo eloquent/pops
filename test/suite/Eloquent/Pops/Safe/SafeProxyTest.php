@@ -25,22 +25,14 @@ class SafeProxyTest extends TestCase
 {
     public function testProxy()
     {
-        $expected = new SafeProxyClass(
-            'Eloquent\Pops\Test\Fixture\Object'
-        );
+        $expected = new SafeProxyClass('Eloquent\Pops\Test\Fixture\Object');
 
-        $this->assertEquals($expected, SafeProxy::proxyClass(
-            'Eloquent\Pops\Test\Fixture\Object'
-        ));
+        $this->assertEquals($expected, SafeProxy::proxyClass('Eloquent\Pops\Test\Fixture\Object'));
 
-        $class = SafeProxy::proxyClassStatic(
-            'Eloquent\Pops\Test\Fixture\Object'
-        );
+        $class = SafeProxy::proxyClassStatic('Eloquent\Pops\Test\Fixture\Object');
 
         $this->assertTrue(class_exists($class));
-        $this->assertTrue(
-            is_subclass_of($class, __NAMESPACE__.'\SafeProxyClass')
-        );
+        $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\SafeProxyClass'));
 
         $expected = new SafeProxyArray(array());
 

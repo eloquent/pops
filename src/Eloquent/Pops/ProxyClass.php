@@ -13,15 +13,19 @@ namespace Eloquent\Pops;
 
 use InvalidArgumentException;
 use LogicException;
-use ReflectionClass;
 
-class ProxyClass implements Proxy
+/**
+ * A transparent class proxy.
+ */
+class ProxyClass implements ProxyInterface
 {
     /**
-     * @param string $method
-     * @param array $arguments
+     * Call a method on this class proxy.
      *
-     * @return mixed
+     * @param string $method    The name of the method to call.
+     * @param array  $arguments The arguments.
+     *
+     * @return mixed The result of the method call.
      */
     public static function __callStatic($method, array $arguments)
     {
@@ -35,7 +39,9 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @return ProxyClass
+     * Get the non-static class proxy for this class.
+     *
+     * @return ProxyClass The non-static class proxy.
      */
     public static function popsProxy()
     {
@@ -51,20 +57,21 @@ class ProxyClass implements Proxy
         if (
             !isset(self::$popsStaticProxies[$proxyClassClass][$originalClass])
         ) {
-            self::$popsStaticProxies[$proxyClassClass][$originalClass]
-                = new $proxyClassClass($originalClass)
-            ;
+            self::$popsStaticProxies[$proxyClassClass][$originalClass] =
+                new $proxyClassClass($originalClass);
         }
 
         return self::$popsStaticProxies[$proxyClassClass][$originalClass];
     }
 
     /**
-     * @param string $class
-     * @param boolean $recursive
-     * @param string $proxyClass
+     * Generate and load a static class proxy.
      *
-     * @return string
+     * @param string  $class      The name of the class to proxy.
+     * @param boolean|null $recursive  True if the proxy should be recursive.
+     * @param string|null  $proxyClass The class name to use for the proxy class.
+     *
+     * @return string The class name used for the procy class.
      */
     public static function popsGenerateStaticClassProxy(
         $class,
@@ -73,11 +80,6 @@ class ProxyClass implements Proxy
     ) {
         if (null === $recursive) {
             $recursive = false;
-        }
-        if (!is_bool($recursive)) {
-            throw new InvalidArgumentException(
-                'Provided value is not a boolean'
-            );
         }
 
         $classDefinition = static::popsStaticClassProxyDefinition(
@@ -91,24 +93,15 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @param string $class
-     * @param boolean $recursive
+     * Construct a new non-static class proxy.
+     *
+     * @param string  $class The name of the class to proxy.
+     * @param boolean|null $recursive True if the proxy should be recursive.
      */
     public function __construct($class, $recursive = null)
     {
-        if (!is_string($class)) {
-            throw new InvalidArgumentException(
-                'Provided value is not a string'
-            );
-        }
-
         if (null === $recursive) {
             $recursive = false;
-        }
-        if (!is_bool($recursive)) {
-            throw new InvalidArgumentException(
-                'Provided value is not a boolean'
-            );
         }
 
         $this->popsClass = $class;
@@ -116,7 +109,9 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @return string
+     * Get the name of the proxied class.
+     *
+     * @return string The proxied class name.
      */
     public function popsClass()
     {
@@ -124,24 +119,29 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @param string $method
-     * @param array &$arguments
+     * Call a static method on the proxied class with support for by-reference
+     * arguments.
      *
-     * @return mixed
+     * @param string $method     The name of the method to call.
+     * @param array  &$arguments The arguments.
+     *
+     * @return mixed The result of the method call.
      */
     public function popsCall($method, array &$arguments)
     {
         return static::popsProxySubValue(
-            call_user_func_array($this->popsClass.'::'.$method, $arguments),
+            call_user_func_array($this->popsClass . '::' . $method, $arguments),
             $this->popsRecursive
         );
     }
 
     /**
-     * @param string $method
-     * @param array $arguments
+     * Call a static method on the proxied class.
      *
-     * @return mixed
+     * @param string $method     The name of the method to call.
+     * @param array  $arguments The arguments.
+     *
+     * @return mixed The result of the method call.
      */
     public function __call($method, array $arguments)
     {
@@ -149,8 +149,10 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @param string $property
-     * @param mixed $value
+     * Set the value of a static property on the proxied class.
+     *
+     * @param string $property The name of the property to set.
+     * @param mixed  $value The new value.
      */
     public function __set($property, $value)
     {
@@ -159,9 +161,11 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @param string $property
+     * Get the value of a static property on the proxied class.
      *
-     * @return mixed
+     * @param string $property The name of the property to get.
+     *
+     * @return mixed The value of the property.
      */
     public function __get($property)
     {
@@ -174,9 +178,11 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @param string $property
+     * Returns true if the supplied static property exists on the proxied class.
      *
-     * @return boolean
+     * @param string $property The name of the property to search for.
+     *
+     * @return boolean True if the property exists.
      */
     public function __isset($property)
     {
@@ -186,7 +192,9 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @param string $property
+     * Set the value of a static property on the proxied class to null.
+     *
+     * @param string $property The name of the property to set.
      */
     public function __unset($property)
     {
@@ -196,18 +204,22 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @return string
+     * Get the proxy class.
+     *
+     * @return string The proxy class.
      */
     protected static function popsProxyClass()
     {
-        return __NAMESPACE__.'\Pops';
+        return __NAMESPACE__ . '\Proxy';
     }
 
     /**
-     * @param mixed $value
-     * @param boolean $recursive
+     * Wrap a sub-value in a proxy if recursive proxying is enabled.
      *
-     * @return mixed
+     * @param mixed $value The value to wrap.
+     * @param boolean $recursive True if recursive proxying is enabled.
+     *
+     * @return mixed The proxied value, or the untouched value.
      */
     protected static function popsProxySubValue($value, $recursive)
     {
@@ -221,11 +233,13 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @param string $originalClass
-     * @param boolean $recursive
-     * @param string $proxyClass
+     * Generate a static class proxy definition.
      *
-     * @return string
+     * @param string  $class      The name of the class to proxy.
+     * @param boolean $recursive  True if the proxy should be recursive.
+     * @param string|null  &$proxyClass The class name to use for the proxy class.
+     *
+     * @return string The proxy class definition.
      */
     protected static function popsStaticClassProxyDefinition(
         $originalClass,
@@ -237,24 +251,23 @@ class ProxyClass implements Proxy
             $proxyClass
         );
 
-        return
-            static::popsStaticClassProxyDefinitionHeader(
-                $proxyClass
-            ).
-            ' { '.
+        return sprintf(
+            '%s { %s }',
+            static::popsStaticClassProxyDefinitionHeader($proxyClass),
             static::popsStaticClassProxyDefinitionBody(
                 $originalClass,
                 $recursive
-            ).
-            ' }'
-        ;
+            )
+        );
     }
 
     /**
-     * @param string $originalClass
-     * @param string $proxyClass
+     * Generate a static class proxy class name, or return the supplied name.
      *
-     * @return string
+     * @param string $originalClass The name of the class being proxied.
+     * @param string|null $proxyClass The class name to use for the proxy class.
+     *
+     * @return string The proxy class name.
      */
     protected static function popsStaticClassProxyDefinitionProxyClass(
         $originalClass,
@@ -262,11 +275,15 @@ class ProxyClass implements Proxy
     ) {
         if (null === $proxyClass) {
             $originalClassParts = explode('\\', $originalClass);
-            $proxyClassPrefix = array_pop($originalClassParts).'_Pops_';
+            $proxyClassPrefix = array_pop($originalClassParts) . '_Pops_';
             $proxyClassNamespace = implode('\\', $originalClassParts);
             $proxyClass = uniqid($proxyClassPrefix);
             if ($proxyClassNamespace) {
-                $proxyClass = $proxyClassNamespace.'\\'.$proxyClass;
+                $proxyClass = sprintf(
+                    '%s\\%s',
+                    $proxyClassNamespace,
+                    $proxyClass
+                );
             }
         }
 
@@ -274,9 +291,11 @@ class ProxyClass implements Proxy
     }
 
     /**
-     * @param string $proxyClass
+     * Generate the class header for a static class proxy class.
      *
-     * @return string
+     * @param string $proxyClass The class name to use for the proxy class.
+     *
+     * @return string The static class proxy class header.
      */
     protected static function popsStaticClassProxyDefinitionHeader($proxyClass)
     {
@@ -284,54 +303,45 @@ class ProxyClass implements Proxy
         $proxyClass = array_pop($proxyClassParts);
         $proxyClassNamespace = implode('\\', $proxyClassParts);
 
-        $header = 'class '.$proxyClass.' extends \\'.get_called_class();
+        $header = sprintf(
+            'class %s extends \\%s',
+            $proxyClass,
+            get_called_class()
+        );
         if ($proxyClassNamespace) {
-            $header = 'namespace '.$proxyClassNamespace.'; '.$header;
+            $header = sprintf(
+                'namespace %s; %s',
+                $proxyClassNamespace,
+                $header
+            );
         }
 
         return $header;
     }
 
     /**
-     * @param string $originalClass
-     * @param boolean $recursive
+     * Generate the class body for a static class proxy class.
      *
-     * @return string
+     * @param string  $originalClass The name of the class being proxied.
+     * @param boolean $recursive True if the proxy should be recursive.
+     *
+     * @return string The static class proxy class body.
      */
     protected static function popsStaticClassProxyDefinitionBody(
         $originalClass,
         $recursive
     ) {
-        return
-            'protected static $popsStaticOriginalClass = '.
-            var_export($originalClass, true).';'.
-            ' protected static $popsStaticRecursive = '.
-            var_export($recursive, true).';'
-        ;
+        return sprintf(
+            'protected static $popsStaticOriginalClass = %s; ' .
+                'protected static $popsStaticRecursive = %s;',
+            var_export($originalClass, true),
+            var_export($recursive, true)
+        );
     }
 
-    /**
-     * @var string
-     */
-    protected static $popsStaticOriginalClass;
-
-    /**
-     * @var string
-     */
-    protected static $popsStaticRecursive;
-
-    /**
-     * @var array
-     */
-    protected static $popsStaticProxies = array();
-
-    /**
-     * @var string
-     */
-    protected $popsClass;
-
-    /**
-     * @var boolean
-     */
-    protected $popsRecursive;
+    private static $popsStaticOriginalClass;
+    private static $popsStaticRecursive;
+    private static $popsStaticProxies = array();
+    private $popsClass;
+    private $popsRecursive;
 }
