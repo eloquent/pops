@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1378221359">
-  <project timestamp="1378221359">
+<coverage generated="1378221763">
+  <project timestamp="1378221763">
     <package name="Eloquent\Pops">
       <file name="/home/travis/build/eloquent/pops/src/Eloquent/Pops/Proxy.php">
         <class name="Proxy" namespace="Eloquent\Pops">
