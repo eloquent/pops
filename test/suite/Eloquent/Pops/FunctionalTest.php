@@ -9,8 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use Eloquent\Pops\Access\AccessProxy;
-use Eloquent\Pops\Pops;
+use Eloquent\Pops\Proxy;
 use Eloquent\Pops\Safe\SafeProxy;
 use Eloquent\Pops\Test\TestCase;
 use OutputEscaper\OutputEscaperProxy;
@@ -22,23 +21,11 @@ class FunctionalTest extends TestCase
         $confusion = new Confusion;
         $proxy = new UppercaseProxyObject($confusion);
 
-        $this->assertSame(
-            "What is this? I don't even...",
-            $confusion->wat()
-        );
-        $this->assertSame(
-            "WHAT IS THIS? I DON'T EVEN...",
-            $proxy->wat()
-        );
+        $this->assertSame("What is this? I don't even...", $confusion->wat());
+        $this->assertSame("WHAT IS THIS? I DON'T EVEN...", $proxy->wat());
 
-        $this->assertSame(
-            'Has anyone really been far even as decided to use even?',
-            $confusion->derp
-        );
-        $this->assertSame(
-            'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED TO USE EVEN?',
-            $proxy->derp
-        );
+        $this->assertSame('Has anyone really been far even as decided to use even?', $confusion->derp);
+        $this->assertSame('HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED TO USE EVEN?', $proxy->derp);
     }
 
     public function testDocumentationOutputEscaper()
@@ -51,22 +38,22 @@ class FunctionalTest extends TestCase
         ));
         $proxy = OutputEscaperProxy::proxy($list, true);
 
-        $expected =
-            '<ul>'.PHP_EOL.
-            '<li>foo</li>'.PHP_EOL.
-            '<li>bar</li>'.PHP_EOL.
-            '<li>&lt;script&gt;alert(document.cookie);'.
-            '&lt;/script&gt;</li>'.PHP_EOL.
-            '<li><em>ooh...</em></li>'.PHP_EOL.
-            '</ul>'
-        ;
+        $expected = <<<'EOD'
+<ul>
+<li>foo</li>
+<li>bar</li>
+<li>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</li>
+<li><em>ooh...</em></li>
+</ul>
+
+EOD;
 
         ob_start();
-        echo '<ul>'.PHP_EOL;
+        echo "<ul>\n";
         foreach ($proxy as $item) {
-            echo '<li>'.$item.'</li>'.PHP_EOL;
+            printf("<li>%s</li>\n", $item);
         }
-        echo '</ul>';
+        echo "</ul>\n";
         $actual = ob_get_clean();
 
         $this->assertSame($expected, $actual);
@@ -74,7 +61,7 @@ class FunctionalTest extends TestCase
 
     public function testDocumentationCallWithReference()
     {
-        $proxy = Pops::proxy(new Confusion);
+        $proxy = Proxy::proxy(new Confusion);
         $wasPhone = null;
         $arguments = array(&$wasPhone);
         $proxy->popsCall('butWho', $arguments);

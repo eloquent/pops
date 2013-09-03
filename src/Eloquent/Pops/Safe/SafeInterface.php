@@ -11,11 +11,11 @@
 
 namespace Eloquent\Pops\Safe;
 
-use Eloquent\Pops\ProxyPrimitive;
+use Eloquent\Pops\ProxyInterface;
 
 /**
- * A proxy for primitives that prevents recusive proxying.
+ * The interface used to identify values that should not be recursively proxied.
  */
-class SafeProxyPrimitive extends ProxyPrimitive implements SafeInterface
+interface SafeInterface extends ProxyInterface
 {
 }

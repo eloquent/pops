@@ -13,32 +13,32 @@ namespace Eloquent\Pops\Test\Fixture;
 
 class Object
 {
-    static public function staticPublicMethod()
+    public static function staticPublicMethod()
     {
         return array(__FUNCTION__, func_get_args());
     }
 
-    static public function __callStatic($name, array $arguments)
+    public static function __callStatic($name, array $arguments)
     {
         return array(__FUNCTION__, func_get_args());
     }
 
-    static public function staticObject()
+    public static function staticObject()
     {
         return new static;
     }
 
-    static public function staticArray()
+    public static function staticArray()
     {
         return array();
     }
 
-    static public function staticString()
+    public static function staticString()
     {
         return 'string';
     }
 
-    static public function staticByReference(&$variable, $value)
+    public static function staticByReference(&$variable, $value)
     {
         $variable = $value;
     }
@@ -73,7 +73,7 @@ class Object
         $variable = $value;
     }
 
-    static public $staticPublicProperty = 'staticPublicProperty';
+    public static $staticPublicProperty = 'staticPublicProperty';
 
     public $publicProperty = 'publicProperty';
 }

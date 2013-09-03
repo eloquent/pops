@@ -11,10 +11,15 @@
 
 namespace Eloquent\Pops;
 
+/**
+ * A transparent primitive value proxy.
+ */
 class ProxyPrimitive
 {
     /**
-     * @param mixed $primitive
+     * Construct a new primitive value proxy.
+     *
+     * @param scalar|null $primitive The primitive value to wrap.
      */
     public function __construct($primitive)
     {
@@ -22,7 +27,9 @@ class ProxyPrimitive
     }
 
     /**
-     * @return object
+     * Get the wrapped value.
+     *
+     * @return scalar|null The wrapped value.
      */
     public function popsPrimitive()
     {
@@ -30,15 +37,14 @@ class ProxyPrimitive
     }
 
     /**
-     * @return string
+     * Get the string representation of this value.
+     *
+     * @return string The string representation.
      */
     public function __toString()
     {
-        return (string) $this->popsPrimitive;
+        return strval($this->popsPrimitive);
     }
 
-    /**
-     * @var mixed
-     */
-    protected $popsPrimitive;
+    private $popsPrimitive;
 }

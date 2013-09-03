@@ -15,18 +15,15 @@ use InvalidArgumentException;
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\TestCase;
 
-/**
- * @covers Eloquent\Pops\ProxyClass
- */
 class ProxyClassTest extends TestCase
 {
     protected function setUp()
     {
         parent::setUp();
 
-        $this->_class = __NAMESPACE__.'\Test\Fixture\Object';
-        $this->_proxy = new ProxyClass($this->_class);
-        $this->_recursiveProxy = new ProxyClass($this->_class, true);
+        $this->class = __NAMESPACE__ . '\Test\Fixture\Object';
+        $this->proxy = new ProxyClass($this->class);
+        $this->recursiveProxy = new ProxyClass($this->class, true);
     }
 
     public function testCallStaticFailure()
@@ -37,122 +34,65 @@ class ProxyClassTest extends TestCase
 
     public function testConstruct()
     {
-        $this->assertInstanceOf(__NAMESPACE__.'\ProxyClass', $this->_proxy);
-        $this->assertEquals($this->_class, $this->_proxy->popsClass());
-    }
-
-    public function testConstructFailureClassType()
-    {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Provided value is not a string'
-        );
-        new ProxyClass(1);
-    }
-
-    public function testConstructFailureRecursiveType()
-    {
-        $this->setExpectedException(
-            'InvalidArgumentException',
-            'Provided value is not a boolean'
-        );
-        new ProxyClass($this->_class, 'foo');
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyClass', $this->proxy);
+        $this->assertEquals($this->class, $this->proxy->popsClass());
     }
 
     public function testCall()
     {
-        $this->assertPopsProxyCall(
-            $this->_proxy,
-            'staticPublicMethod',
-            array('foo', 'bar')
-        );
-        $this->assertPopsProxyCall(
-            $this->_proxy,
-            'foo',
-            array('bar', 'baz'),
-            true
-        );
+        $this->assertPopsProxyCall($this->proxy, 'staticPublicMethod', array('foo', 'bar'));
+        $this->assertPopsProxyCall($this->proxy, 'foo', array('bar', 'baz'), true);
 
         // recursive tests
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $this->_recursiveProxy->staticObject()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $this->_recursiveProxy->staticObject()->object()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $this->_recursiveProxy->staticObject()->arrayValue()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $this->_recursiveProxy->staticObject()->string()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $this->_recursiveProxy->staticArray()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $this->_recursiveProxy->staticString()
-        );
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->staticObject());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->staticObject()->object());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->staticObject()->arrayValue());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $this->recursiveProxy->staticObject()->string());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->staticArray());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $this->recursiveProxy->staticString());
     }
 
     public function testPopsCallByReference()
     {
         $variable = null;
         $arguments = array(&$variable, 'foo');
-        $this->_proxy->popsCall('staticByReference', $arguments);
+        $this->proxy->popsCall('staticByReference', $arguments);
 
         $this->assertSame('foo', $variable);
     }
 
     public function testSetGet()
     {
-        $this->assertTrue(isset($this->_proxy->staticPublicProperty));
-        $this->assertEquals(
-            'staticPublicProperty',
-            $this->_proxy->staticPublicProperty
-        );
+        $this->assertTrue(isset($this->proxy->staticPublicProperty));
+        $this->assertEquals('staticPublicProperty', $this->proxy->staticPublicProperty);
 
-        $this->_proxy->staticPublicProperty = 'foo';
+        $this->proxy->staticPublicProperty = 'foo';
 
-        $this->assertTrue(isset($this->_proxy->staticPublicProperty));
-        $this->assertEquals('foo', $this->_proxy->staticPublicProperty);
+        $this->assertTrue(isset($this->proxy->staticPublicProperty));
+        $this->assertEquals('foo', $this->proxy->staticPublicProperty);
 
-        unset($this->_proxy->staticPublicProperty);
+        unset($this->proxy->staticPublicProperty);
 
-        $this->assertFalse(isset($this->_proxy->staticPublicProperty));
+        $this->assertFalse(isset($this->proxy->staticPublicProperty));
 
-        $this->_proxy->staticPublicProperty = 'staticPublicProperty';
+        $this->proxy->staticPublicProperty = 'staticPublicProperty';
 
-        $this->assertTrue(isset($this->_proxy->staticPublicProperty));
-        $this->assertEquals(
-            'staticPublicProperty',
-            $this->_proxy->staticPublicProperty
-        );
+        $this->assertTrue(isset($this->proxy->staticPublicProperty));
+        $this->assertEquals('staticPublicProperty', $this->proxy->staticPublicProperty);
 
         // recursive tests
         $staticPublicProperty = Object::$staticPublicProperty;
         Object::$staticPublicProperty = new Object;
 
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->staticPublicProperty);
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->staticPublicProperty->object());
         $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $this->_recursiveProxy->staticPublicProperty
+            __NAMESPACE__ . '\ProxyArray',
+            $this->recursiveProxy->staticPublicProperty->arrayValue()
         );
         $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $this->_recursiveProxy->staticPublicProperty->object()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $this->_recursiveProxy->staticPublicProperty->arrayValue()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $this->_recursiveProxy->staticPublicProperty->string()
+            __NAMESPACE__ . '\ProxyPrimitive',
+            $this->recursiveProxy->staticPublicProperty->string()
         );
 
         Object::$staticPublicProperty = array(
@@ -161,43 +101,29 @@ class ProxyClassTest extends TestCase
             'string' => 'string',
         );
 
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->staticPublicProperty);
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->staticPublicProperty['object']);
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->staticPublicProperty['array']);
         $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $this->_recursiveProxy->staticPublicProperty
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $this->_recursiveProxy->staticPublicProperty['object']
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $this->_recursiveProxy->staticPublicProperty['array']
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $this->_recursiveProxy->staticPublicProperty['string']
+            __NAMESPACE__ . '\ProxyPrimitive',
+            $this->recursiveProxy->staticPublicProperty['string']
         );
 
         Object::$staticPublicProperty = 'string';
 
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $this->_recursiveProxy->staticPublicProperty
-        );
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $this->recursiveProxy->staticPublicProperty);
 
         Object::$staticPublicProperty = $staticPublicProperty;
     }
 
     public function testPopsGenerateStaticClassProxy()
     {
-        $class = ProxyClass::popsGenerateStaticClassProxy(
-            __NAMESPACE__.'\Test\Fixture\Object'
-        );
+        $class = ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__ . '\Test\Fixture\Object');
 
         $this->assertTrue(class_exists($class, false));
-        $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
+        $this->assertTrue(is_subclass_of($class, __NAMESPACE__ . '\ProxyClass'));
 
-        $expected = new $class(__NAMESPACE__.'\Test\Fixture\Object');
+        $expected = new $class(__NAMESPACE__ . '\Test\Fixture\Object');
         $proxy = $class::popsProxy();
 
         $this->assertEquals($expected, $proxy);
@@ -213,86 +139,30 @@ class ProxyClassTest extends TestCase
         );
 
         // recursive tests
-        $class = ProxyClass::popsGenerateStaticClassProxy(
-            __NAMESPACE__.'\Test\Fixture\Object',
-            true
-        );
+        $class = ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__ . '\Test\Fixture\Object', true);
 
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $class::staticObject()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $class::staticObject()->object()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $class::staticObject()->arrayValue()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $class::staticObject()->string()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $class::staticArray()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $class::staticString()
-        );
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $class::staticObject());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $class::staticObject()->object());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $class::staticObject()->arrayValue());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $class::staticObject()->string());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $class::staticArray());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $class::staticString());
 
         $class = uniqid('Foo');
-        ProxyClass::popsGenerateStaticClassProxy(
-            __NAMESPACE__.'\Test\Fixture\Object',
-            true,
-            $class
-        );
+        ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', true, $class);
 
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $class::staticObject()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyObject',
-            $class::staticObject()->object()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $class::staticObject()->arrayValue()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $class::staticObject()->string()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyArray',
-            $class::staticArray()
-        );
-        $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
-            $class::staticString()
-        );
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $class::staticObject());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $class::staticObject()->object());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $class::staticObject()->arrayValue());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $class::staticObject()->string());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $class::staticArray());
+        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $class::staticString());
 
         // custom class name
         $class = uniqid('Foo');
-        ProxyClass::popsGenerateStaticClassProxy(
-            __NAMESPACE__.'\Test\Fixture\Object',
-            null,
-            $class
-        );
+        ProxyClass::popsGenerateStaticClassProxy(__NAMESPACE__.'\Test\Fixture\Object', null, $class);
 
         $this->assertTrue(class_exists($class, false));
         $this->assertTrue(is_subclass_of($class, __NAMESPACE__.'\ProxyClass'));
-    }
-
-    public function testPopsGenerateStaticClassProxyFailureRecursiveType()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-        ProxyClass::popsGenerateStaticClassProxy(
-            __NAMESPACE__.'\Test\Fixture\Object',
-            'foo'
-        );
     }
 }

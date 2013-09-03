@@ -18,13 +18,17 @@ use InvalidArgumentException;
 use Iterator;
 use IteratorAggregate;
 use LogicException;
-use ReflectionClass;
 
-class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
+/**
+ * A transparent object proxy.
+ */
+class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
 {
     /**
-     * @param object $object
-     * @param boolean $recursive
+     * Construct a new object proxy.
+     *
+     * @param object  $object The object to wrap.
+     * @param boolean|null $recursive True if the object should be recursively proxied.
      */
     public function __construct($object, $recursive = null)
     {
@@ -48,7 +52,9 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @return object
+     * Get the wrapped object.
+     *
+     * @return object The wrapped object.
      */
     public function popsObject()
     {
@@ -56,10 +62,13 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param string $method
-     * @param array &$arguments
+     * Call a method on the wrapped object with support for by-reference
+     * arguments.
      *
-     * @return mixed
+     * @param string $method    The name of the method to call.
+     * @param array  &$arguments The arguments.
+     *
+     * @return mixed The result of the method call.
      */
     public function popsCall($method, array &$arguments)
     {
@@ -69,10 +78,12 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param string $method
-     * @param array $arguments
+     * Call a method on the wrapped object.
      *
-     * @return mixed
+     * @param string $method    The name of the method to call.
+     * @param array  $arguments The arguments.
+     *
+     * @return mixed The result of the method call.
      */
     public function __call($method, array $arguments)
     {
@@ -80,8 +91,10 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param string $property
-     * @param mixed $value
+     * Set the value of a property on the wrapped object.
+     *
+     * @param string $property The property name.
+     * @param mixed  $value The new value.
      */
     public function __set($property, $value)
     {
@@ -89,9 +102,11 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param string $property
+     * Get the value of a property from the wrapped object.
      *
-     * @return mixed
+     * @param string $property The property name.
+     *
+     * @return mixed The property value.
      */
     public function __get($property)
     {
@@ -101,9 +116,11 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param string $property
+     * Returns true if the property exists on the wrapped object.
      *
-     * @return boolean
+     * @param string $property The name of the property to search for.
+     *
+     * @return boolean True if the property exists.
      */
     public function __isset($property)
     {
@@ -111,7 +128,9 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param string $property
+     * Unset a property from the wrapped object.
+     *
+     * @param string $property The property name.
      */
     public function __unset($property)
     {
@@ -119,44 +138,55 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param string $property
-     * @param mixed $value
+     * Set a value on the wrapped object using the ArrayAccess interface.
+     *
+     * @param string $key The key to set.
+     * @param mixed  $value The new value.
      */
-    public function offsetSet($property, $value)
+    public function offsetSet($key, $value)
     {
         $this->__call('offsetSet', func_get_args());
     }
 
     /**
-     * @param string $property
+     * Get a value from the wrapped object using the ArrayAccess interface.
      *
-     * @return mixed
+     * @param string $key The key to get.
+     *
+     * @return mixed The value.
      */
-    public function offsetGet($property)
+    public function offsetGet($key)
     {
         return $this->__call('offsetGet', func_get_args());
     }
 
     /**
-     * @param string $property
+     * Returns true if the supplied key exists on the wrapped object according
+     * to the ArrayAccess interface.
      *
-     * @return boolean
+     * @param string $key The key to search for.
+     *
+     * @return boolean True if the key exists.
      */
-    public function offsetExists($property)
+    public function offsetExists($key)
     {
         return $this->__call('offsetExists', func_get_args());
     }
 
     /**
-     * @param string $property
+     * Remove a key from the wrapped object using the ArrayAccess interface.
+     *
+     * @param string $key The key to remove.
      */
-    public function offsetUnset($property)
+    public function offsetUnset($key)
     {
         $this->__call('offsetUnset', func_get_args());
     }
 
     /**
-     * @return integer
+     * Return the result of the wrapped object's count method.
+     *
+     * @return integer The wrapped object's count.
      */
     public function count()
     {
@@ -164,35 +194,45 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @return mixed
+     * Get the current iterator value.
+     *
+     * @return mixed The current value.
      */
     public function current()
     {
-        return $this->popsProxySubValue(
-            $this->popsInnerIterator()->current()
-        );
+        return $this->popsProxySubValue($this->popsInnerIterator()->current());
     }
 
     /**
-     * @return scalar
+     * Get the current iterator key.
+     *
+     * @return mixed The current key.
      */
     public function key()
     {
         return $this->popsInnerIterator()->key();
     }
 
+    /**
+     * Move to the next iterator value.
+     */
     public function next()
     {
         $this->popsInnerIterator()->next();
     }
 
+    /**
+     * Rewind to the beginning of the iterator.
+     */
     public function rewind()
     {
         $this->popsInnerIterator()->rewind();
     }
 
     /**
-     * @return boolean
+     * Returns true if the current iterator position is valid.
+     *
+     * @return boolean True if the current position is valid.
      */
     public function valid()
     {
@@ -204,18 +244,22 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
      */
     public function __toString()
     {
-        return (string) $this->__call('__toString', array());
+        return strval($this->__call('__toString', array()));
     }
 
     /**
-     * @return mixed
+     * Get the string representation of this object.
+     *
+     * @return string The string representation.
      */
     public function __invoke()
     {
         if (!method_exists($this->popsObject, '__invoke')) {
             throw new BadMethodCallException(
-                'Call to undefined method '.
-                get_class($this->popsObject).'::__invoke()'
+                sprintf(
+                    'Call to undefined method %s::__invoke()',
+                    get_class($this->popsObject)
+                )
             );
         }
 
@@ -225,15 +269,19 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @return string
+     * Get the proxy class.
+     *
+     * @return string The proxy class.
      */
     protected static function popsProxyClass()
     {
-        return __NAMESPACE__.'\Pops';
+        return __NAMESPACE__ . '\Proxy';
     }
 
     /**
-     * @return Iterator
+     * Get an iterator for the wrapped object.
+     *
+     * @return Iterator An iterator for the wrapped object.
      */
     protected function popsInnerIterator()
     {
@@ -255,9 +303,11 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * @param mixed $value
+     * Wrap a sub-value in a proxy if recursive proxying is enabled.
      *
-     * @return mixed
+     * @param mixed $value The value to wrap.
+     *
+     * @return mixed The proxied value, or the untouched value.
      */
     protected function popsProxySubValue($value)
     {
@@ -270,18 +320,7 @@ class ProxyObject implements Proxy, ArrayAccess, Countable, Iterator
         return $value;
     }
 
-    /**
-     * @var object
-     */
-    protected $popsObject;
-
-    /**
-     * @var boolean
-     */
-    protected $popsRecursive;
-
-    /**
-     * @var Iterator
-     */
-    protected $popsInnerIterator;
+    private $popsObject;
+    private $popsRecursive;
+    private $popsInnerIterator;
 }

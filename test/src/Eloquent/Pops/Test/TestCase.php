@@ -12,19 +12,19 @@
 namespace Eloquent\Pops\Test;
 
 use PHPUnit_Framework_TestCase;
-use Eloquent\Pops\Proxy;
+use Eloquent\Pops\ProxyInterface;
 use Eloquent\Pops\ProxyClass;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
-     * @param Proxy $proxy
-     * @param string $method
-     * @param array $arguments
-     * @param boolean $magic
+     * @param ProxyInterface $proxy
+     * @param string         $method
+     * @param array          $arguments
+     * @param boolean        $magic
      */
     protected function assertPopsProxyCall(
-        Proxy $proxy,
+        ProxyInterface $proxy,
         $method,
         array $arguments = null,
         $magic = null
