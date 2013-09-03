@@ -1,182 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1378221763">
-  <project timestamp="1378221763">
+<coverage generated="1378221945">
+  <project timestamp="1378221945">
     <package name="Eloquent\Pops">
       <file name="/home/travis/build/eloquent/pops/src/Eloquent/Pops/Proxy.php">
         <class name="Proxy" namespace="Eloquent\Pops">
           <metrics methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="21" elements="31" coveredelements="31"/>
         </class>
         <line num="0" type="stmt" count="1"/>
-        <line num="31" type="method" name="proxy" crap="4" count="3"/>
-        <line num="33" type="stmt" count="3"/>
-        <line num="34" type="stmt" count="2"/>
+        <line num="30" type="method" name="proxy" crap="4" count="3"/>
+        <line num="32" type="stmt" count="3"/>
+        <line num="33" type="stmt" count="2"/>
+        <line num="35" type="stmt" count="3"/>
         <line num="36" type="stmt" count="3"/>
-        <line num="37" type="stmt" count="3"/>
-        <line num="39" type="stmt" count="2"/>
-        <line num="40" type="stmt" count="1"/>
-        <line num="43" type="stmt" count="2"/>
-        <line num="54" type="method" name="proxyArray" crap="1" count="1"/>
-        <line num="56" type="stmt" count="1"/>
-        <line num="58" type="stmt" count="1"/>
-        <line num="69" type="method" name="proxyClass" crap="1" count="1"/>
-        <line num="71" type="stmt" count="1"/>
-        <line num="73" type="stmt" count="1"/>
-        <line num="85" type="method" name="proxyClassStatic" crap="1" count="1"/>
-        <line num="90" type="stmt" count="1"/>
-        <line num="92" type="stmt" count="1"/>
-        <line num="103" type="method" name="proxyObject" crap="1" count="3"/>
-        <line num="105" type="stmt" count="3"/>
-        <line num="107" type="stmt" count="3"/>
-        <line num="117" type="method" name="proxyPrimitive" crap="1" count="2"/>
-        <line num="119" type="stmt" count="2"/>
-        <line num="121" type="stmt" count="2"/>
-        <line num="129" type="method" name="proxyArrayClass" crap="1" count="1"/>
-        <line num="131" type="stmt" count="1"/>
-        <line num="139" type="method" name="proxyClassClass" crap="1" count="2"/>
-        <line num="141" type="stmt" count="2"/>
-        <line num="149" type="method" name="proxyObjectClass" crap="1" count="2"/>
-        <line num="151" type="stmt" count="2"/>
-        <line num="159" type="method" name="proxyPrimitiveClass" crap="1" count="1"/>
-        <line num="161" type="stmt" count="1"/>
-        <line num="164" type="stmt" count="1"/>
-        <metrics loc="163" ncloc="84" classes="1" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="21" elements="31" coveredelements="31"/>
+        <line num="38" type="stmt" count="2"/>
+        <line num="39" type="stmt" count="1"/>
+        <line num="42" type="stmt" count="2"/>
+        <line num="53" type="method" name="proxyArray" crap="1" count="1"/>
+        <line num="55" type="stmt" count="1"/>
+        <line num="57" type="stmt" count="1"/>
+        <line num="68" type="method" name="proxyClass" crap="1" count="1"/>
+        <line num="70" type="stmt" count="1"/>
+        <line num="72" type="stmt" count="1"/>
+        <line num="84" type="method" name="proxyClassStatic" crap="1" count="1"/>
+        <line num="89" type="stmt" count="1"/>
+        <line num="91" type="stmt" count="1"/>
+        <line num="102" type="method" name="proxyObject" crap="1" count="3"/>
+        <line num="104" type="stmt" count="3"/>
+        <line num="106" type="stmt" count="3"/>
+        <line num="116" type="method" name="proxyPrimitive" crap="1" count="2"/>
+        <line num="118" type="stmt" count="2"/>
+        <line num="120" type="stmt" count="2"/>
+        <line num="128" type="method" name="proxyArrayClass" crap="1" count="1"/>
+        <line num="130" type="stmt" count="1"/>
+        <line num="138" type="method" name="proxyClassClass" crap="1" count="2"/>
+        <line num="140" type="stmt" count="2"/>
+        <line num="148" type="method" name="proxyObjectClass" crap="1" count="2"/>
+        <line num="150" type="stmt" count="2"/>
+        <line num="158" type="method" name="proxyPrimitiveClass" crap="1" count="1"/>
+        <line num="160" type="stmt" count="1"/>
+        <line num="163" type="stmt" count="1"/>
+        <metrics loc="162" ncloc="83" classes="1" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="21" elements="31" coveredelements="31"/>
       </file>
       <file name="/home/travis/build/eloquent/pops/src/Eloquent/Pops/ProxyArray.php">
         <class name="ProxyArray" namespace="Eloquent\Pops">
           <metrics methods="15" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="30" elements="45" coveredelements="45"/>
         </class>
-        <line num="32" type="method" name="__construct" crap="2" count="5"/>
+        <line num="30" type="method" name="__construct" crap="2" count="5"/>
+        <line num="32" type="stmt" count="5"/>
+        <line num="33" type="stmt" count="5"/>
         <line num="34" type="stmt" count="5"/>
-        <line num="35" type="stmt" count="5"/>
         <line num="36" type="stmt" count="5"/>
+        <line num="37" type="stmt" count="5"/>
         <line num="38" type="stmt" count="5"/>
         <line num="39" type="stmt" count="5"/>
-        <line num="40" type="stmt" count="5"/>
-        <line num="41" type="stmt" count="5"/>
-        <line num="48" type="method" name="popsArray" crap="1" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="59" type="method" name="offsetSet" crap="1" count="1"/>
-        <line num="61" type="stmt" count="1"/>
-        <line num="62" type="stmt" count="1"/>
-        <line num="71" type="method" name="offsetGet" crap="1" count="2"/>
-        <line num="73" type="stmt" count="2"/>
-        <line num="83" type="method" name="offsetExists" crap="1" count="1"/>
-        <line num="85" type="stmt" count="1"/>
-        <line num="93" type="method" name="offsetUnset" crap="1" count="1"/>
-        <line num="95" type="stmt" count="1"/>
-        <line num="96" type="stmt" count="1"/>
-        <line num="103" type="method" name="count" crap="1" count="1"/>
-        <line num="105" type="stmt" count="1"/>
-        <line num="113" type="method" name="current" crap="1" count="1"/>
+        <line num="46" type="method" name="popsArray" crap="1" count="1"/>
+        <line num="48" type="stmt" count="1"/>
+        <line num="57" type="method" name="offsetSet" crap="1" count="1"/>
+        <line num="59" type="stmt" count="1"/>
+        <line num="60" type="stmt" count="1"/>
+        <line num="69" type="method" name="offsetGet" crap="1" count="2"/>
+        <line num="71" type="stmt" count="2"/>
+        <line num="81" type="method" name="offsetExists" crap="1" count="1"/>
+        <line num="83" type="stmt" count="1"/>
+        <line num="91" type="method" name="offsetUnset" crap="1" count="1"/>
+        <line num="93" type="stmt" count="1"/>
+        <line num="94" type="stmt" count="1"/>
+        <line num="101" type="method" name="count" crap="1" count="1"/>
+        <line num="103" type="stmt" count="1"/>
+        <line num="111" type="method" name="current" crap="1" count="1"/>
+        <line num="113" type="stmt" count="1"/>
+        <line num="114" type="stmt" count="1"/>
         <line num="115" type="stmt" count="1"/>
-        <line num="116" type="stmt" count="1"/>
-        <line num="117" type="stmt" count="1"/>
-        <line num="125" type="method" name="key" crap="1" count="1"/>
-        <line num="127" type="stmt" count="1"/>
-        <line num="133" type="method" name="next" crap="1" count="1"/>
-        <line num="135" type="stmt" count="1"/>
-        <line num="136" type="stmt" count="1"/>
-        <line num="141" type="method" name="rewind" crap="1" count="1"/>
-        <line num="143" type="stmt" count="1"/>
-        <line num="144" type="stmt" count="1"/>
-        <line num="151" type="method" name="valid" crap="1" count="1"/>
-        <line num="153" type="stmt" count="1"/>
-        <line num="161" type="method" name="__toString" crap="1" count="1"/>
-        <line num="163" type="stmt" count="1"/>
-        <line num="171" type="method" name="popsProxyClass" crap="1" count="2"/>
-        <line num="173" type="stmt" count="2"/>
-        <line num="183" type="method" name="popsProxySubValue" crap="2" count="3"/>
-        <line num="185" type="stmt" count="3"/>
+        <line num="123" type="method" name="key" crap="1" count="1"/>
+        <line num="125" type="stmt" count="1"/>
+        <line num="131" type="method" name="next" crap="1" count="1"/>
+        <line num="133" type="stmt" count="1"/>
+        <line num="134" type="stmt" count="1"/>
+        <line num="139" type="method" name="rewind" crap="1" count="1"/>
+        <line num="141" type="stmt" count="1"/>
+        <line num="142" type="stmt" count="1"/>
+        <line num="149" type="method" name="valid" crap="1" count="1"/>
+        <line num="151" type="stmt" count="1"/>
+        <line num="159" type="method" name="__toString" crap="1" count="1"/>
+        <line num="161" type="stmt" count="1"/>
+        <line num="169" type="method" name="popsProxyClass" crap="1" count="2"/>
+        <line num="171" type="stmt" count="2"/>
+        <line num="181" type="method" name="popsProxySubValue" crap="2" count="3"/>
+        <line num="183" type="stmt" count="3"/>
+        <line num="184" type="stmt" count="3"/>
         <line num="186" type="stmt" count="3"/>
-        <line num="188" type="stmt" count="3"/>
-        <line num="191" type="stmt" count="3"/>
-        <line num="198" type="stmt" count="0"/>
-        <metrics loc="197" ncloc="107" classes="1" methods="15" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="30" elements="45" coveredelements="45"/>
+        <line num="189" type="stmt" count="3"/>
+        <line num="196" type="stmt" count="0"/>
+        <metrics loc="195" ncloc="105" classes="1" methods="15" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="30" elements="45" coveredelements="45"/>
       </file>
       <file name="/home/travis/build/eloquent/pops/src/Eloquent/Pops/ProxyClass.php">
         <class name="ProxyClass" namespace="Eloquent\Pops">
           <metrics methods="17" coveredmethods="17" conditionals="0" coveredconditionals="0" statements="98" coveredstatements="98" elements="115" coveredelements="115"/>
         </class>
-        <line num="30" type="method" name="__callStatic" crap="1" count="2"/>
+        <line num="29" type="method" name="__callStatic" crap="1" count="2"/>
+        <line num="31" type="stmt" count="2"/>
         <line num="32" type="stmt" count="2"/>
         <line num="33" type="stmt" count="2"/>
-        <line num="34" type="stmt" count="2"/>
-        <line num="36" type="stmt" count="1"/>
-        <line num="38" type="stmt" count="1"/>
-        <line num="46" type="method" name="popsProxy" crap="3" count="2"/>
+        <line num="35" type="stmt" count="1"/>
+        <line num="37" type="stmt" count="1"/>
+        <line num="45" type="method" name="popsProxy" crap="3" count="2"/>
+        <line num="47" type="stmt" count="2"/>
         <line num="48" type="stmt" count="2"/>
-        <line num="49" type="stmt" count="2"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="52" type="stmt" count="1"/>
-        <line num="55" type="stmt" count="1"/>
+        <line num="49" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="54" type="stmt" count="1"/>
+        <line num="57" type="stmt" count="1"/>
         <line num="58" type="stmt" count="1"/>
         <line num="59" type="stmt" count="1"/>
         <line num="60" type="stmt" count="1"/>
         <line num="61" type="stmt" count="1"/>
-        <line num="62" type="stmt" count="1"/>
-        <line num="64" type="stmt" count="1"/>
-        <line num="76" type="method" name="popsGenerateStaticClassProxy" crap="2" count="1"/>
+        <line num="63" type="stmt" count="1"/>
+        <line num="75" type="method" name="popsGenerateStaticClassProxy" crap="2" count="1"/>
+        <line num="80" type="stmt" count="1"/>
         <line num="81" type="stmt" count="1"/>
         <line num="82" type="stmt" count="1"/>
-        <line num="83" type="stmt" count="1"/>
+        <line num="84" type="stmt" count="1"/>
         <line num="85" type="stmt" count="1"/>
         <line num="86" type="stmt" count="1"/>
-        <line num="87" type="stmt" count="1"/>
+        <line num="88" type="stmt" count="1"/>
         <line num="89" type="stmt" count="1"/>
-        <line num="90" type="stmt" count="1"/>
-        <line num="92" type="stmt" count="1"/>
-        <line num="101" type="method" name="__construct" crap="2" count="6"/>
+        <line num="91" type="stmt" count="1"/>
+        <line num="100" type="method" name="__construct" crap="2" count="6"/>
+        <line num="102" type="stmt" count="6"/>
         <line num="103" type="stmt" count="6"/>
         <line num="104" type="stmt" count="6"/>
-        <line num="105" type="stmt" count="6"/>
+        <line num="106" type="stmt" count="6"/>
         <line num="107" type="stmt" count="6"/>
         <line num="108" type="stmt" count="6"/>
-        <line num="109" type="stmt" count="6"/>
-        <line num="116" type="method" name="popsClass" crap="1" count="1"/>
-        <line num="118" type="stmt" count="1"/>
-        <line num="130" type="method" name="popsCall" crap="1" count="3"/>
+        <line num="115" type="method" name="popsClass" crap="1" count="1"/>
+        <line num="117" type="stmt" count="1"/>
+        <line num="129" type="method" name="popsCall" crap="1" count="3"/>
+        <line num="131" type="stmt" count="3"/>
         <line num="132" type="stmt" count="3"/>
         <line num="133" type="stmt" count="3"/>
         <line num="134" type="stmt" count="3"/>
-        <line num="135" type="stmt" count="3"/>
-        <line num="146" type="method" name="__call" crap="1" count="2"/>
-        <line num="148" type="stmt" count="2"/>
-        <line num="157" type="method" name="__set" crap="1" count="1"/>
+        <line num="145" type="method" name="__call" crap="1" count="2"/>
+        <line num="147" type="stmt" count="2"/>
+        <line num="156" type="method" name="__set" crap="1" count="1"/>
+        <line num="158" type="stmt" count="1"/>
         <line num="159" type="stmt" count="1"/>
         <line num="160" type="stmt" count="1"/>
-        <line num="161" type="stmt" count="1"/>
-        <line num="170" type="method" name="__get" crap="1" count="1"/>
-        <line num="172" type="stmt" count="1"/>
+        <line num="169" type="method" name="__get" crap="1" count="1"/>
+        <line num="171" type="stmt" count="1"/>
+        <line num="173" type="stmt" count="1"/>
         <line num="174" type="stmt" count="1"/>
         <line num="175" type="stmt" count="1"/>
         <line num="176" type="stmt" count="1"/>
-        <line num="177" type="stmt" count="1"/>
-        <line num="187" type="method" name="__isset" crap="1" count="1"/>
-        <line num="189" type="stmt" count="1"/>
-        <line num="191" type="stmt" count="1"/>
-        <line num="199" type="method" name="__unset" crap="1" count="1"/>
-        <line num="201" type="stmt" count="1"/>
+        <line num="186" type="method" name="__isset" crap="1" count="1"/>
+        <line num="188" type="stmt" count="1"/>
+        <line num="190" type="stmt" count="1"/>
+        <line num="198" type="method" name="__unset" crap="1" count="1"/>
+        <line num="200" type="stmt" count="1"/>
+        <line num="202" type="stmt" count="1"/>
         <line num="203" type="stmt" count="1"/>
-        <line num="204" type="stmt" count="1"/>
-        <line num="211" type="method" name="popsProxyClass" crap="1" count="3"/>
-        <line num="213" type="stmt" count="3"/>
-        <line num="224" type="method" name="popsProxySubValue" crap="2" count="4"/>
-        <line num="226" type="stmt" count="4"/>
-        <line num="227" type="stmt" count="3"/>
-        <line num="229" type="stmt" count="3"/>
-        <line num="232" type="stmt" count="4"/>
-        <line num="244" type="method" name="popsStaticClassProxyDefinition" crap="1" count="1"/>
+        <line num="210" type="method" name="popsProxyClass" crap="1" count="3"/>
+        <line num="212" type="stmt" count="3"/>
+        <line num="223" type="method" name="popsProxySubValue" crap="2" count="4"/>
+        <line num="225" type="stmt" count="4"/>
+        <line num="226" type="stmt" count="3"/>
+        <line num="228" type="stmt" count="3"/>
+        <line num="231" type="stmt" count="4"/>
+        <line num="243" type="method" name="popsStaticClassProxyDefinition" crap="1" count="1"/>
+        <line num="248" type="stmt" count="1"/>
         <line num="249" type="stmt" count="1"/>
-        <line num="250" type="stmt" count="1"/>
-        <line num="252" type="stmt" count="1"/>
+        <line num="251" type="stmt" count="1"/>
+        <line num="253" type="stmt" count="1"/>
         <line num="254" type="stmt" count="1"/>
         <line num="255" type="stmt" count="1"/>
         <line num="256" type="stmt" count="1"/>
         <line num="257" type="stmt" count="1"/>
-        <line num="258" type="stmt" count="1"/>
+        <line num="259" type="stmt" count="1"/>
         <line num="260" type="stmt" count="1"/>
-        <line num="261" type="stmt" count="1"/>
-        <line num="272" type="method" name="popsStaticClassProxyDefinitionProxyClass" crap="3" count="1"/>
+        <line num="271" type="method" name="popsStaticClassProxyDefinitionProxyClass" crap="3" count="1"/>
+        <line num="275" type="stmt" count="1"/>
         <line num="276" type="stmt" count="1"/>
         <line num="277" type="stmt" count="1"/>
         <line num="278" type="stmt" count="1"/>
@@ -185,15 +186,15 @@
         <line num="281" type="stmt" count="1"/>
         <line num="282" type="stmt" count="1"/>
         <line num="283" type="stmt" count="1"/>
-        <line num="284" type="stmt" count="1"/>
+        <line num="285" type="stmt" count="1"/>
         <line num="286" type="stmt" count="1"/>
         <line num="287" type="stmt" count="1"/>
-        <line num="288" type="stmt" count="1"/>
-        <line num="290" type="stmt" count="1"/>
-        <line num="300" type="method" name="popsStaticClassProxyDefinitionHeader" crap="2" count="1"/>
+        <line num="289" type="stmt" count="1"/>
+        <line num="299" type="method" name="popsStaticClassProxyDefinitionHeader" crap="2" count="1"/>
+        <line num="301" type="stmt" count="1"/>
         <line num="302" type="stmt" count="1"/>
         <line num="303" type="stmt" count="1"/>
-        <line num="304" type="stmt" count="1"/>
+        <line num="305" type="stmt" count="1"/>
         <line num="306" type="stmt" count="1"/>
         <line num="307" type="stmt" count="1"/>
         <line num="308" type="stmt" count="1"/>
@@ -202,18 +203,17 @@
         <line num="311" type="stmt" count="1"/>
         <line num="312" type="stmt" count="1"/>
         <line num="313" type="stmt" count="1"/>
-        <line num="314" type="stmt" count="1"/>
+        <line num="315" type="stmt" count="1"/>
         <line num="316" type="stmt" count="1"/>
-        <line num="317" type="stmt" count="1"/>
-        <line num="319" type="stmt" count="1"/>
-        <line num="330" type="method" name="popsStaticClassProxyDefinitionBody" crap="1" count="1"/>
-        <line num="334" type="stmt" count="1"/>
+        <line num="318" type="stmt" count="1"/>
+        <line num="329" type="method" name="popsStaticClassProxyDefinitionBody" crap="1" count="1"/>
+        <line num="333" type="stmt" count="1"/>
+        <line num="335" type="stmt" count="1"/>
         <line num="336" type="stmt" count="1"/>
         <line num="337" type="stmt" count="1"/>
         <line num="338" type="stmt" count="1"/>
-        <line num="339" type="stmt" count="1"/>
-        <line num="348" type="stmt" count="0"/>
-        <metrics loc="347" ncloc="216" classes="1" methods="17" coveredmethods="17" conditionals="0" coveredconditionals="0" statements="98" coveredstatements="98" elements="115" coveredelements="115"/>
+        <line num="347" type="stmt" count="0"/>
+        <metrics loc="346" ncloc="215" classes="1" methods="17" coveredmethods="17" conditionals="0" coveredconditionals="0" statements="98" coveredstatements="98" elements="115" coveredelements="115"/>
       </file>
       <file name="/home/travis/build/eloquent/pops/src/Eloquent/Pops/ProxyObject.php">
         <class name="ProxyObject" namespace="Eloquent\Pops">
@@ -384,6 +384,6 @@
         <metrics loc="21" ncloc="10" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="12" loc="1294" ncloc="715" classes="10" methods="75" coveredmethods="75" conditionals="0" coveredconditionals="0" statements="225" coveredstatements="225" elements="300" coveredelements="300"/>
+    <metrics files="12" loc="1290" ncloc="711" classes="10" methods="75" coveredmethods="75" conditionals="0" coveredconditionals="0" statements="225" coveredstatements="225" elements="300" coveredelements="300"/>
   </project>
 </coverage>
