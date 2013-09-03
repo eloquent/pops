@@ -11,7 +11,6 @@
 
 namespace Eloquent\Pops;
 
-use InvalidArgumentException;
 use LogicException;
 
 /**
@@ -67,7 +66,7 @@ class ProxyClass implements ProxyInterface
     /**
      * Generate and load a static class proxy.
      *
-     * @param string  $class      The name of the class to proxy.
+     * @param string       $class      The name of the class to proxy.
      * @param boolean|null $recursive  True if the proxy should be recursive.
      * @param string|null  $proxyClass The class name to use for the proxy class.
      *
@@ -95,7 +94,7 @@ class ProxyClass implements ProxyInterface
     /**
      * Construct a new non-static class proxy.
      *
-     * @param string  $class The name of the class to proxy.
+     * @param string       $class     The name of the class to proxy.
      * @param boolean|null $recursive True if the proxy should be recursive.
      */
     public function __construct($class, $recursive = null)
@@ -138,7 +137,7 @@ class ProxyClass implements ProxyInterface
     /**
      * Call a static method on the proxied class.
      *
-     * @param string $method     The name of the method to call.
+     * @param string $method    The name of the method to call.
      * @param array  $arguments The arguments.
      *
      * @return mixed The result of the method call.
@@ -152,7 +151,7 @@ class ProxyClass implements ProxyInterface
      * Set the value of a static property on the proxied class.
      *
      * @param string $property The name of the property to set.
-     * @param mixed  $value The new value.
+     * @param mixed  $value    The new value.
      */
     public function __set($property, $value)
     {
@@ -216,7 +215,7 @@ class ProxyClass implements ProxyInterface
     /**
      * Wrap a sub-value in a proxy if recursive proxying is enabled.
      *
-     * @param mixed $value The value to wrap.
+     * @param mixed   $value     The value to wrap.
      * @param boolean $recursive True if recursive proxying is enabled.
      *
      * @return mixed The proxied value, or the untouched value.
@@ -235,9 +234,9 @@ class ProxyClass implements ProxyInterface
     /**
      * Generate a static class proxy definition.
      *
-     * @param string  $class      The name of the class to proxy.
-     * @param boolean $recursive  True if the proxy should be recursive.
-     * @param string|null  &$proxyClass The class name to use for the proxy class.
+     * @param string      $class       The name of the class to proxy.
+     * @param boolean     $recursive   True if the proxy should be recursive.
+     * @param string|null &$proxyClass The class name to use for the proxy class.
      *
      * @return string The proxy class definition.
      */
@@ -264,8 +263,8 @@ class ProxyClass implements ProxyInterface
     /**
      * Generate a static class proxy class name, or return the supplied name.
      *
-     * @param string $originalClass The name of the class being proxied.
-     * @param string|null $proxyClass The class name to use for the proxy class.
+     * @param string      $originalClass The name of the class being proxied.
+     * @param string|null $proxyClass    The class name to use for the proxy class.
      *
      * @return string The proxy class name.
      */
@@ -323,7 +322,7 @@ class ProxyClass implements ProxyInterface
      * Generate the class body for a static class proxy class.
      *
      * @param string  $originalClass The name of the class being proxied.
-     * @param boolean $recursive True if the proxy should be recursive.
+     * @param boolean $recursive     True if the proxy should be recursive.
      *
      * @return string The static class proxy class body.
      */

@@ -27,7 +27,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
     /**
      * Construct a new object proxy.
      *
-     * @param object  $object The object to wrap.
+     * @param object       $object    The object to wrap.
      * @param boolean|null $recursive True if the object should be recursively proxied.
      */
     public function __construct($object, $recursive = null)
@@ -65,7 +65,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
      * Call a method on the wrapped object with support for by-reference
      * arguments.
      *
-     * @param string $method    The name of the method to call.
+     * @param string $method     The name of the method to call.
      * @param array  &$arguments The arguments.
      *
      * @return mixed The result of the method call.
@@ -94,7 +94,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
      * Set the value of a property on the wrapped object.
      *
      * @param string $property The property name.
-     * @param mixed  $value The new value.
+     * @param mixed  $value    The new value.
      */
     public function __set($property, $value)
     {
@@ -140,7 +140,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
     /**
      * Set a value on the wrapped object using the ArrayAccess interface.
      *
-     * @param string $key The key to set.
+     * @param string $key   The key to set.
      * @param mixed  $value The new value.
      */
     public function offsetSet($key, $value)

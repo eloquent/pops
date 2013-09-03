@@ -12,7 +12,6 @@
 namespace Eloquent\Pops;
 
 use Eloquent\Pops\Safe\SafeInterface;
-use LogicException;
 use ReflectionClass;
 
 /**
@@ -23,7 +22,7 @@ class Proxy
     /**
      * Wrap the supplied value in a proxy.
      *
-     * @param mixed   $value     The value to wrap.
+     * @param mixed        $value     The value to wrap.
      * @param boolean|null $recursive True if the value should be recursively proxied.
      *
      * @return ProxyInterface The proxied value.
@@ -46,7 +45,7 @@ class Proxy
     /**
      * Wrap the supplied array in a proxy.
      *
-     * @param array   $array     The array to wrap.
+     * @param array        $array     The array to wrap.
      * @param boolean|null $recursive True if the array should be recursively proxied.
      *
      * @return ProxyArray The proxied array.
@@ -61,7 +60,7 @@ class Proxy
     /**
      * Wrap the supplied class in a non-static proxy.
      *
-     * @param string  $class     The name of the class to wrap.
+     * @param string       $class     The name of the class to wrap.
      * @param boolean|null $recursive True if the class should be recursively proxied.
      *
      * @return ProxyClass The non-static class proxy.
@@ -76,9 +75,9 @@ class Proxy
     /**
      * Wrap the supplied class in a static proxy.
      *
-     * @param string  $class     The name of the class to wrap.
-     * @param boolean|null $recursive True if the class should be recursively proxied.
-     * @param string  $proxyClass
+     * @param string       $class      The name of the class to wrap.
+     * @param boolean|null $recursive  True if the class should be recursively proxied.
+     * @param string       $proxyClass
      *
      * @return string The static class proxy.
      */
@@ -95,7 +94,7 @@ class Proxy
     /**
      * Wrap the supplied object in a proxy.
      *
-     * @param object  $object    The object to wrap.
+     * @param object       $object    The object to wrap.
      * @param boolean|null $recursive True if the object should be recursively proxied.
      *
      * @return ProxyObject The proxied object.
