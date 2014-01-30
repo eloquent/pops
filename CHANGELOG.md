@@ -1,5 +1,9 @@
 # Pops changelog
 
+## 4.0.1 (2014-01-30)
+
+- **[MAINTENANCE]** General repository maintanance
+
 ## 4.0.0 (2013-09-04)
 
 - **[BC BREAK]** Interface name changes:
