@@ -14,9 +14,9 @@
 ## What is *Pops*?
 
 *Pops* is a system for wrapping PHP objects in other objects to modify their
-behaviour. A Pops proxy will, as much as possible, imitate the object it wraps.
-It passes along method calls and returns the underlying result, and allows
-transparent access to properties (for both setting and getting).
+behaviour. A *Pops* proxy will, as much as possible, imitate the object it
+wraps. It passes along method calls and returns the underlying result, and
+allows transparent access to properties (for both setting and getting).
 
 Pops is the underlying system behind [Liberator].
 
@@ -76,7 +76,7 @@ echo $proxy->derp;      // outputs 'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED T
 
 ## Recursive proxies
 
-Pops proxies can be applied to any value recursively. This comes in handy when
+*Pops* proxies can be applied to any value recursively. This comes in handy when
 designing, for example, an output escaper (similar to Symfony). Here's an
 example of how such a system could be created for escaping HTML output:
 
@@ -264,7 +264,7 @@ escaping is a complex issue that should not be taken lightly.
 ### Excluding values from recursion
 
 Note that in the above example, the last list item was wrapped in a *Safe*
-proxy. When Pops applies its proxies, it will skip anything marked as safe in
+proxy. When *Pops* applies its proxies, it will skip anything marked as safe in
 this manner.
 
 ## Calling methods with by-reference parameters
@@ -287,7 +287,7 @@ class Confusion
 
 This method cannot be proxied normally because the `$wasPhone` argument is
 passed by reference. The correct way to call the above butWho() method through a
-Pops proxy looks like this:
+*Pops* proxy looks like this:
 
 ```php
 use Eloquent\Pops\Proxy;
