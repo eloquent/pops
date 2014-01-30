@@ -2,7 +2,7 @@
 
 *PHP Object Proxy System.*
 
-[![The most recent stable version is 4.0.0][version-image]][Semantic versioning]
+[![The most recent stable version is 4.0.1][version-image]][Semantic versioning]
 [![Current build status image][build-image]][Current build status]
 [![Current coverage status image][coverage-image]][Current coverage status]
 
@@ -320,4 +320,4 @@ directly as a value. The arguments must also contain a **reference** to
 [Current coverage status]: https://coveralls.io/r/eloquent/pops
 [eloquent/pops]: https://packagist.org/packages/eloquent/pops
 [Semantic versioning]: http://semver.org/
-[version-image]: http://img.shields.io/:semver-4.0.0-brightgreen.svg "This project uses semantic versioning"
+[version-image]: http://img.shields.io/:semver-4.0.1-brightgreen.svg "This project uses semantic versioning"
