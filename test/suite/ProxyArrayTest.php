@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2013 Erin Millard
+ * Copyright © 2014 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -130,7 +130,7 @@ class ProxyArrayTest extends TestCase
     {
         if (version_compare(PHP_VERSION, '5.4.0RC0') >= 0) {
             $error_count = 0;
-            set_error_handler(function() use (&$error_count) {
+            set_error_handler(function () use (&$error_count) {
                 $error_count ++;
             });
         }
