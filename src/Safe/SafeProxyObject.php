@@ -3,7 +3,7 @@
 /*
  * This file is part of the Pops package.
  *
- * Copyright © 2013 Erin Millard
+ * Copyright © 2014 Erin Millard
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,12 +11,12 @@
 
 namespace Eloquent\Pops\Safe;
 
-use Eloquent\Pops\ProxyArray;
+use Eloquent\Pops\ProxyObject;
 
 /**
- * An array proxy that prevents recusive proxying.
+ * An object proxy that prevents recusive proxying.
  */
-class SafeProxyArray extends ProxyArray implements SafeInterface
+class SafeProxyObject extends ProxyObject implements SafeInterface
 {
     /**
      * Get the proxy class.

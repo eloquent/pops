@@ -2,9 +2,9 @@
 
 *PHP Object Proxy System.*
 
-[![Build Status]][Latest build]
-[![Test Coverage]][Test coverage report]
-[![Uses Semantic Versioning]][SemVer]
+[![The most recent stable version is 4.0.1][version-image]][Semantic versioning]
+[![Current build status image][build-image]][Current build status]
+[![Current coverage status image][coverage-image]][Current coverage status]
 
 ## Installation and documentation
 
@@ -14,9 +14,9 @@
 ## What is *Pops*?
 
 *Pops* is a system for wrapping PHP objects in other objects to modify their
-behaviour. A Pops proxy will, as much as possible, imitate the object it wraps.
-It passes along method calls and returns the underlying result, and allows
-transparent access to properties (for both setting and getting).
+behaviour. A *Pops* proxy will, as much as possible, imitate the object it
+wraps. It passes along method calls and returns the underlying result, and
+allows transparent access to properties (for both setting and getting).
 
 Pops is the underlying system behind [Liberator].
 
@@ -76,7 +76,7 @@ echo $proxy->derp;      // outputs 'HAS ANYONE REALLY BEEN FAR EVEN AS DECIDED T
 
 ## Recursive proxies
 
-Pops proxies can be applied to any value recursively. This comes in handy when
+*Pops* proxies can be applied to any value recursively. This comes in handy when
 designing, for example, an output escaper (similar to Symfony). Here's an
 example of how such a system could be created for escaping HTML output:
 
@@ -264,7 +264,7 @@ escaping is a complex issue that should not be taken lightly.
 ### Excluding values from recursion
 
 Note that in the above example, the last list item was wrapped in a *Safe*
-proxy. When Pops applies its proxies, it will skip anything marked as safe in
+proxy. When *Pops* applies its proxies, it will skip anything marked as safe in
 this manner.
 
 ## Calling methods with by-reference parameters
@@ -287,7 +287,7 @@ class Confusion
 
 This method cannot be proxied normally because the `$wasPhone` argument is
 passed by reference. The correct way to call the above butWho() method through a
-Pops proxy looks like this:
+*Pops* proxy looks like this:
 
 ```php
 use Eloquent\Pops\Proxy;
@@ -313,11 +313,11 @@ directly as a value. The arguments must also contain a **reference** to
 [Liberator]: https://github.com/eloquent/liberator
 
 [API documentation]: http://lqnt.co/pops/artifacts/documentation/api/
-[Build Status]: https://api.travis-ci.org/eloquent/pops.png?branch=master
 [Composer]: http://getcomposer.org/
+[build-image]: http://img.shields.io/travis/eloquent/pops/develop.svg "Current build status for the develop branch"
+[Current build status]: https://travis-ci.org/eloquent/pops
+[coverage-image]: http://img.shields.io/coveralls/eloquent/pops/develop.svg "Current test coverage for the develop branch"
+[Current coverage status]: https://coveralls.io/r/eloquent/pops
 [eloquent/pops]: https://packagist.org/packages/eloquent/pops
-[Latest build]: https://travis-ci.org/eloquent/pops
-[SemVer]: http://semver.org/
-[Test coverage report]: https://coveralls.io/r/eloquent/pops
-[Test Coverage]: https://coveralls.io/repos/eloquent/pops/badge.png?branch=master
-[Uses Semantic Versioning]: http://b.repl.ca/v1/semver-yes-brightgreen.png
+[Semantic versioning]: http://semver.org/
+[version-image]: http://img.shields.io/:semver-4.0.1-brightgreen.svg "This project uses semantic versioning"

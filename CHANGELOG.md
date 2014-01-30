@@ -1,6 +1,10 @@
 # Pops changelog
 
-### 4.0.0 (2013-09-04)
+## 4.0.1 (2014-01-30)
+
+- **[MAINTENANCE]** General repository maintanance
+
+## 4.0.0 (2013-09-04)
 
 - **[BC BREAK]** Interface name changes:
     - `Proxy` -> `ProxyInterface`
@@ -9,7 +13,7 @@
 - **[NEW]** API documentation
 - **[MAINTENANCE]** Major repository maintanance
 
-### 3.1.1 (2013-03-04)
+## 3.1.1 (2013-03-04)
 
 - **[NEW]** [Archer](https://github.com/IcecaveStudios/archer) integration
 - **[NEW]** Implemented changelog
