@@ -5,8 +5,8 @@
  *
  * Copyright © 2014 Erin Millard
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 namespace Eloquent\Pops;
@@ -48,7 +48,8 @@ class Proxy
      * @param array        $array     The array to wrap.
      * @param boolean|null $recursive True if the array should be recursively proxied.
      *
-     * @return ProxyArray The proxied array.
+     * @return ProxyArrayInterface            The proxied array.
+     * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
     public static function proxyArray($array, $recursive = null)
     {
@@ -63,7 +64,8 @@ class Proxy
      * @param string       $class     The name of the class to wrap.
      * @param boolean|null $recursive True if the class should be recursively proxied.
      *
-     * @return ProxyClass The non-static class proxy.
+     * @return ProxyClassInterface            The non-static class proxy.
+     * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
     public static function proxyClass($class, $recursive = null)
     {
@@ -97,7 +99,8 @@ class Proxy
      * @param object       $object    The object to wrap.
      * @param boolean|null $recursive True if the object should be recursively proxied.
      *
-     * @return ProxyObject The proxied object.
+     * @return ProxyObjectInterface           The proxied object.
+     * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
     public static function proxyObject($object, $recursive = null)
     {
@@ -111,7 +114,8 @@ class Proxy
      *
      * @param mixed $primitive The primitive value to wrap.
      *
-     * @return ProxyPrimitive The proxied value.
+     * @return ProxyPrimitiveInterface        The proxied value.
+     * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
     public static function proxyPrimitive($primitive)
     {

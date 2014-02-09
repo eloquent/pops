@@ -18,20 +18,22 @@ use Eloquent\Pops\ProxyClass;
 class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
-     * @param ProxyInterface $proxy
-     * @param string         $method
-     * @param array          $arguments
-     * @param boolean        $magic
+     * Assert that a Pops call was made as expected.
+     *
+     * @param ProxyInterface $proxy     The proxy to call.
+     * @param string         $method    The method to call.
+     * @param array|null     $arguments The arguments to pass.
+     * @param boolean|null   $isMagic   True if the call should be handled via a magic method.
      */
     protected function assertPopsProxyCall(
         ProxyInterface $proxy,
         $method,
         array $arguments = null,
-        $magic = null
+        $isMagic = null
     ) {
         $actual = call_user_func_array(array($proxy, $method), $arguments);
 
-        if ($magic) {
+        if ($isMagic) {
             $arguments = array($method, $arguments);
 
             if ($proxy instanceof ProxyClass) {
@@ -43,6 +45,6 @@ class TestCase extends PHPUnit_Framework_TestCase
 
         $expected = array($method, $arguments);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

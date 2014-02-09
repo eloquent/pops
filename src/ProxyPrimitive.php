@@ -5,8 +5,8 @@
  *
  * Copyright © 2014 Erin Millard
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 namespace Eloquent\Pops;
@@ -14,26 +14,19 @@ namespace Eloquent\Pops;
 /**
  * A transparent primitive value proxy.
  */
-class ProxyPrimitive
+class ProxyPrimitive extends AbstractProxy implements ProxyPrimitiveInterface
 {
     /**
-     * Construct a new primitive value proxy.
-     *
-     * @param scalar|null $primitive The primitive value to wrap.
-     */
-    public function __construct($primitive)
-    {
-        $this->popsPrimitive = $primitive;
-    }
-
-    /**
      * Get the wrapped value.
+     *
+     * @deprecated Use popsValue() instead.
+     * @see ProxyInterface::popsValue()
      *
      * @return scalar|null The wrapped value.
      */
     public function popsPrimitive()
     {
-        return $this->popsPrimitive;
+        return $this->popsValue();
     }
 
     /**
@@ -43,8 +36,21 @@ class ProxyPrimitive
      */
     public function __toString()
     {
-        return strval($this->popsPrimitive);
+        return strval($this->popsValue());
     }
 
-    private $popsPrimitive;
+    /**
+     * Throw an exception if the supplied value is an incorrect type for this
+     * proxy.
+     *
+     * @param mixed $value The value to wrap.
+     *
+     * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
+     */
+    protected function assertPopsValue($value)
+    {
+        if (!is_scalar($value)) {
+            throw new Exception\InvalidTypeException($value, 'scalar|null');
+        }
+    }
 }

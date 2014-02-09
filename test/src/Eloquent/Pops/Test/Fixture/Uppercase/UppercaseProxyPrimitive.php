@@ -17,6 +17,6 @@ class UppercaseProxyPrimitive extends ProxyPrimitive
 {
     public function __toString()
     {
-        return mb_strtoupper(strval($this->popsPrimitive()));
+        return mb_strtoupper(strval($this->popsValue()));
     }
 }

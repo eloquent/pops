@@ -5,13 +5,12 @@
  *
  * Copyright © 2014 Erin Millard
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 namespace Eloquent\Pops;
 
-use InvalidArgumentException;
 use Eloquent\Pops\Test\Fixture\ArrayAccess;
 use Eloquent\Pops\Test\Fixture\CallableObject;
 use Eloquent\Pops\Test\Fixture\Countable;
@@ -20,9 +19,15 @@ use Eloquent\Pops\Test\Fixture\IteratorAggregate;
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\Fixture\Overload;
 use Eloquent\Pops\Test\Fixture\Stringable;
+use Eloquent\Pops\Test\Fixture\UncallableObject;
 use Eloquent\Pops\Test\Fixture\Uppercase\UppercaseProxy;
 use Eloquent\Pops\Test\TestCase;
 
+/**
+ * @covers \Eloquent\Pops\ProxyObject
+ * @covers \Eloquent\Pops\AbstractTraversableProxy
+ * @covers \Eloquent\Pops\AbstractProxy
+ */
 class ProxyObjectTest extends TestCase
 {
     protected function setUp()
@@ -36,20 +41,14 @@ class ProxyObjectTest extends TestCase
 
     public function testConstruct()
     {
-        $this->assertInstanceOf(__NAMESPACE__.'\ProxyObject', $this->proxy);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $this->proxy);
         $this->assertSame($this->object, $this->proxy->popsObject());
     }
 
-    public function testConstructFailureObjectType()
+    public function testConstructFailureType()
     {
-        $this->setExpectedException('InvalidArgumentException', 'Provided value is not an object');
+        $this->setExpectedException('Eloquent\Pops\Exception\InvalidTypeException');
         new ProxyObject('foo');
-    }
-
-    public function testConstructFailureRecursiveType()
-    {
-        $this->setExpectedException('InvalidArgumentException', 'Provided value is not a boolean');
-        new ProxyObject($this->object, 'foo');
     }
 
     public function testCall()
@@ -58,12 +57,12 @@ class ProxyObjectTest extends TestCase
         $this->assertPopsProxyCall($this->proxy, 'foo', array('bar', 'baz'), true);
 
         // recursive tests
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->object()->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->object()->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $this->recursiveProxy->object()->string());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $this->recursiveProxy->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $this->recursiveProxy->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $this->recursiveProxy->object()->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $this->recursiveProxy->object()->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $this->recursiveProxy->object()->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $this->recursiveProxy->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $this->recursiveProxy->string());
     }
 
     public function testPopsCallByReference()
@@ -139,10 +138,10 @@ class ProxyObjectTest extends TestCase
         // recursive tests
         $this->object->publicProperty = new Object;
 
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->publicProperty);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->publicProperty->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->publicProperty->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $this->recursiveProxy->publicProperty->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $this->recursiveProxy->publicProperty);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $this->recursiveProxy->publicProperty->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $this->recursiveProxy->publicProperty->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $this->recursiveProxy->publicProperty->string());
 
         $this->object->publicProperty = array(
             'object' => new Object,
@@ -154,21 +153,21 @@ class ProxyObjectTest extends TestCase
             'string' => 'string',
         );
 
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->publicProperty);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->publicProperty['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->publicProperty['array']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $this->recursiveProxy->publicProperty['array']['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $this->recursiveProxy->publicProperty['array']['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $this->recursiveProxy->publicProperty);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $this->recursiveProxy->publicProperty['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $this->recursiveProxy->publicProperty['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $this->recursiveProxy->publicProperty['array']['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $this->recursiveProxy->publicProperty['array']['array']);
         $this->assertInstanceOf(
-            __NAMESPACE__ . '\ProxyPrimitive',
+            'Eloquent\Pops\ProxyPrimitive',
             $this->recursiveProxy->publicProperty['array']['string']
         );
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $this->recursiveProxy->publicProperty['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $this->recursiveProxy->publicProperty['string']);
 
         $this->object->publicProperty = 'string';
 
         $this->assertInstanceOf(
-            __NAMESPACE__.'\ProxyPrimitive',
+            'Eloquent\Pops\ProxyPrimitive',
             $this->recursiveProxy->publicProperty
         );
 
@@ -184,15 +183,15 @@ class ProxyObjectTest extends TestCase
         );
         $recursiveProxy = new ProxyObject($object, true);
 
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject',$recursiveProxy->object);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject',$recursiveProxy->object->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray',$recursiveProxy->object->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive',$recursiveProxy->object->string());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray',$recursiveProxy->array);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject',$recursiveProxy->array['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray',$recursiveProxy->array['array']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive',$recursiveProxy->array['string']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive',$recursiveProxy->string);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject',$recursiveProxy->object);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject',$recursiveProxy->object->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray',$recursiveProxy->object->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive',$recursiveProxy->object->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray',$recursiveProxy->array);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject',$recursiveProxy->array['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray',$recursiveProxy->array['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive',$recursiveProxy->array['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive',$recursiveProxy->string);
     }
 
     public function testOffsetSetGet()
@@ -252,15 +251,15 @@ class ProxyObjectTest extends TestCase
         $arrayaccess['string'] = 'string';
         $proxy = new ProxyObject($arrayaccess, true);
 
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['object']->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['object']->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['object']->string());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['array']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['array']['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['array']['array']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['array']['string']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy['object']->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $proxy['object']->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $proxy['object']->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $proxy['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy['array']['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $proxy['array']['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $proxy['array']['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $proxy['string']);
     }
 
     /**
@@ -324,13 +323,13 @@ class ProxyObjectTest extends TestCase
 
         $actual['iterator'] = iterator_to_array($actual['iterator']);
 
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $actual['object']->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $actual['object']->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $actual['object']->string());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $actual['iterator']['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $actual['iterator']['array']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $actual['iterator']['string']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $actual['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $actual['object']->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $actual['object']->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $actual['object']->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $actual['iterator']['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $actual['iterator']['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $actual['iterator']['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $actual['string']);
     }
 
     public function testIteratorFailure()
@@ -369,10 +368,10 @@ class ProxyObjectTest extends TestCase
         $callable = new CallableObject(new Object);
         $proxy = new ProxyObject($callable, true);
 
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy()->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy()->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy()->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy()->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $proxy()->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $proxy()->string());
 
         $callable = new CallableObject(
             array(
@@ -384,26 +383,23 @@ class ProxyObjectTest extends TestCase
         $proxy = new ProxyObject($callable, true);
         $actual = $proxy();
 
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $actual);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $actual['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $actual['array']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $actual['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $actual);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $actual['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $actual['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $actual['string']);
 
         $callable = new CallableObject('string');
         $proxy = new ProxyObject($callable, true);
 
-        $this->assertInstanceOf(__NAMESPACE__.'\ProxyPrimitive', $proxy());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $proxy());
     }
 
     public function testInvokeFailure()
     {
-        $proxy = $this->proxy;
+        $object = new UncallableObject;
+        $proxy = new ProxyObject($object);
 
-        $this->setExpectedException(
-            'BadMethodCallException',
-            'Call to undefined method '.
-                'Eloquent\Pops\Test\Fixture\Object::__invoke()'
-        );
+        $this->setExpectedException('PHPUnit_Framework_Error', "class 'Eloquent\Pops\Test\Fixture\UncallableObject' does not have a method '__invoke'");
         $proxy('foo', 'bar');
     }
 }

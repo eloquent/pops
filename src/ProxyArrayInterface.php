@@ -9,13 +9,19 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Pops\Safe;
+namespace Eloquent\Pops;
 
-use Eloquent\Pops\ProxyInterface;
+use ArrayAccess;
+use Countable;
+use Iterator;
 
 /**
- * The interface used to identify values that should not be recursively proxied.
+ * The interface implemented by array proxies.
  */
-interface SafeInterface extends ProxyInterface
+interface ProxyArrayInterface extends
+    ProxyInterface,
+    ArrayAccess,
+    Countable,
+    Iterator
 {
 }
