@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="39" assertions="241" failures="0" errors="0" time="0.416931">
+    <testsuite name="Eloquent\Pops\Exception\InvalidTypeExceptionTest" file="/home/travis/build/eloquent/pops/test/suite/Exception/InvalidTypeExceptionTest.php" namespace="Eloquent\Pops\Exception" fullPackage="Eloquent.Pops.Exception" tests="1" assertions="5" failures="0" errors="0" time="0.009172">
+      <testcase name="testException" class="Eloquent\Pops\Exception\InvalidTypeExceptionTest" file="/home/travis/build/eloquent/pops/test/suite/Exception/InvalidTypeExceptionTest.php" line="19" assertions="5" time="0.009172"/>
+    </testsuite>
+    <testsuite name="FunctionalTest" file="/home/travis/build/eloquent/pops/test/suite/FunctionalTest.php" tests="3" assertions="6" failures="0" errors="0" time="0.021115">
+      <testcase name="testDocumentationUppercaseProxyObject" class="FunctionalTest" file="/home/travis/build/eloquent/pops/test/suite/FunctionalTest.php" line="18" assertions="4" time="0.008133"/>
+      <testcase name="testDocumentationOutputEscaper" class="FunctionalTest" file="/home/travis/build/eloquent/pops/test/suite/FunctionalTest.php" line="30" assertions="1" time="0.009346"/>
+      <testcase name="testDocumentationCallWithReference" class="FunctionalTest" file="/home/travis/build/eloquent/pops/test/suite/FunctionalTest.php" line="61" assertions="1" time="0.003636"/>
+    </testsuite>
+    <testsuite name="Eloquent\Pops\ProxyArrayTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyArrayTest.php" namespace="Eloquent\Pops" fullPackage="Eloquent.Pops" tests="6" assertions="34" failures="0" errors="0" time="0.079149">
+      <testcase name="testConstruct" class="Eloquent\Pops\ProxyArrayTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyArrayTest.php" line="25" assertions="1" time="0.004573"/>
+      <testcase name="testConstructFailureType" class="Eloquent\Pops\ProxyArrayTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyArrayTest.php" line="32" assertions="1" time="0.005475"/>
+      <testcase name="testOffsetSetGet" class="Eloquent\Pops\ProxyArrayTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyArrayTest.php" line="38" assertions="20" time="0.032633"/>
+      <testcase name="testCount" class="Eloquent\Pops\ProxyArrayTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyArrayTest.php" line="95" assertions="1" time="0.003982"/>
+      <testcase name="testIterator" class="Eloquent\Pops\ProxyArrayTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyArrayTest.php" line="102" assertions="8" time="0.025162"/>
+      <testcase name="testToString" class="Eloquent\Pops\ProxyArrayTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyArrayTest.php" line="140" assertions="3" time="0.007324"/>
+    </testsuite>
+    <testsuite name="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" namespace="Eloquent\Pops" fullPackage="Eloquent.Pops" tests="8" assertions="50" failures="0" errors="0" time="0.075864">
+      <testcase name="testCallStaticFailure" class="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" line="32" assertions="1" time="0.006066"/>
+      <testcase name="testConstruct" class="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" line="38" assertions="2" time="0.004482"/>
+      <testcase name="testConstructFailureType" class="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" line="44" assertions="1" time="0.004611"/>
+      <testcase name="testCall" class="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" line="50" assertions="8" time="0.009503"/>
+      <testcase name="testPopsCallByReference" class="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" line="64" assertions="1" time="0.003812"/>
+      <testcase name="testSetGet" class="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" line="73" assertions="16" time="0.014564"/>
+      <testcase name="testPopsGenerateStaticClassProxy" class="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" line="128" assertions="20" time="0.029120"/>
+      <testcase name="testToString" class="Eloquent\Pops\ProxyClassTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyClassTest.php" line="178" assertions="1" time="0.003706"/>
+    </testsuite>
+    <testsuite name="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" namespace="Eloquent\Pops" fullPackage="Eloquent.Pops" tests="12" assertions="117" failures="0" errors="0" time="0.143943">
+      <testcase name="testConstruct" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="42" assertions="2" time="0.003978"/>
+      <testcase name="testConstructFailureType" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="48" assertions="1" time="0.004267"/>
+      <testcase name="testCall" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="54" assertions="8" time="0.009454"/>
+      <testcase name="testPopsCallByReference" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="68" assertions="1" time="0.003800"/>
+      <testcase name="testSetGet" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="77" assertions="48" time="0.034376"/>
+      <testcase name="testOffsetSetGet" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="197" assertions="31" time="0.023711"/>
+      <testcase name="testCount" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="268" assertions="1" time="0.005046"/>
+      <testcase name="testIterator" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="277" assertions="10" time="0.026597"/>
+      <testcase name="testIteratorFailure" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="335" assertions="1" time="0.004050"/>
+      <testcase name="testToString" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="343" assertions="2" time="0.006978"/>
+      <testcase name="testInvoke" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="359" assertions="10" time="0.015704"/>
+      <testcase name="testInvokeFailure" class="Eloquent\Pops\ProxyObjectTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyObjectTest.php" line="397" assertions="2" time="0.005981"/>
+    </testsuite>
+    <testsuite name="Eloquent\Pops\ProxyPrimitiveTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyPrimitiveTest.php" namespace="Eloquent\Pops" fullPackage="Eloquent.Pops" tests="2" assertions="5" failures="0" errors="0" time="0.008246">
+      <testcase name="testPrimitive" class="Eloquent\Pops\ProxyPrimitiveTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyPrimitiveTest.php" line="22" assertions="4" time="0.004252"/>
+      <testcase name="testConstructFailureType" class="Eloquent\Pops\ProxyPrimitiveTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyPrimitiveTest.php" line="35" assertions="1" time="0.003994"/>
+    </testsuite>
+    <testsuite name="Eloquent\Pops\ProxyTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyTest.php" namespace="Eloquent\Pops" fullPackage="Eloquent.Pops" tests="3" assertions="12" failures="0" errors="0" time="0.038668">
+      <testcase name="testProxy" class="Eloquent\Pops\ProxyTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyTest.php" line="20" assertions="9" time="0.029450"/>
+      <testcase name="testProxyClass" class="Eloquent\Pops\ProxyTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyTest.php" line="44" assertions="1" time="0.005463"/>
+      <testcase name="testProxyClassStatic" class="Eloquent\Pops\ProxyTest" file="/home/travis/build/eloquent/pops/test/suite/ProxyTest.php" line="51" assertions="2" time="0.003755"/>
+    </testsuite>
+    <testsuite name="Eloquent\Pops\Safe\SafeProxyTest" file="/home/travis/build/eloquent/pops/test/suite/Safe/SafeProxyTest.php" namespace="Eloquent\Pops\Safe" fullPackage="Eloquent.Pops.Safe" tests="4" assertions="12" failures="0" errors="0" time="0.040775">
+      <testcase name="testProxy" class="Eloquent\Pops\Safe\SafeProxyTest" file="/home/travis/build/eloquent/pops/test/suite/Safe/SafeProxyTest.php" line="26" assertions="9" time="0.024121"/>
+      <testcase name="testArrayRecursion" class="Eloquent\Pops\Safe\SafeProxyTest" file="/home/travis/build/eloquent/pops/test/suite/Safe/SafeProxyTest.php" line="53" assertions="1" time="0.005319"/>
+      <testcase name="testObjectRecursion" class="Eloquent\Pops\Safe\SafeProxyTest" file="/home/travis/build/eloquent/pops/test/suite/Safe/SafeProxyTest.php" line="61" assertions="1" time="0.005430"/>
+      <testcase name="testClassRecursion" class="Eloquent\Pops\Safe\SafeProxyTest" file="/home/travis/build/eloquent/pops/test/suite/Safe/SafeProxyTest.php" line="70" assertions="1" time="0.005905"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
