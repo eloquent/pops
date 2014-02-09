@@ -5,16 +5,12 @@
  *
  * Copyright © 2014 Erin Millard
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 namespace Eloquent\Pops;
 
-use ArrayAccess;
-use BadMethodCallException;
-use Countable;
-use InvalidArgumentException;
 use Iterator;
 use IteratorAggregate;
 use LogicException;
@@ -22,43 +18,20 @@ use LogicException;
 /**
  * A transparent object proxy.
  */
-class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
+class ProxyObject extends AbstractTraversableProxy implements
+    ProxyObjectInterface
 {
     /**
-     * Construct a new object proxy.
-     *
-     * @param object       $object    The object to wrap.
-     * @param boolean|null $recursive True if the object should be recursively proxied.
-     */
-    public function __construct($object, $recursive = null)
-    {
-        if (!is_object($object)) {
-            throw new InvalidArgumentException(
-                'Provided value is not an object'
-            );
-        }
-
-        if (null === $recursive) {
-            $recursive = false;
-        }
-        if (!is_bool($recursive)) {
-            throw new InvalidArgumentException(
-                'Provided value is not a boolean'
-            );
-        }
-
-        $this->popsObject = $object;
-        $this->popsRecursive = $recursive;
-    }
-
-    /**
      * Get the wrapped object.
+     *
+     * @deprecated Use popsValue() instead.
+     * @see ProxyInterface::popsValue()
      *
      * @return object The wrapped object.
      */
     public function popsObject()
     {
-        return $this->popsObject;
+        return $this->popsValue();
     }
 
     /**
@@ -73,7 +46,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
     public function popsCall($method, array &$arguments)
     {
         return $this->popsProxySubValue(
-            call_user_func_array(array($this->popsObject, $method), $arguments)
+            call_user_func_array(array($this->popsValue(), $method), $arguments)
         );
     }
 
@@ -91,6 +64,16 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
     }
 
     /**
+     * Invoke this object.
+     *
+     * @return mixed The result of invocation.
+     */
+    public function __invoke()
+    {
+        return $this->__call('__invoke', func_get_args());
+    }
+
+    /**
      * Set the value of a property on the wrapped object.
      *
      * @param string $property The property name.
@@ -98,7 +81,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function __set($property, $value)
     {
-        $this->popsObject->$property = $value;
+        $this->popsValue()->$property = $value;
     }
 
     /**
@@ -110,9 +93,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function __get($property)
     {
-        return $this->popsProxySubValue(
-            $this->popsObject->$property
-        );
+        return $this->popsProxySubValue($this->popsValue()->$property);
     }
 
     /**
@@ -124,7 +105,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function __isset($property)
     {
-        return isset($this->popsObject->$property);
+        return isset($this->popsValue()->$property);
     }
 
     /**
@@ -134,11 +115,11 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function __unset($property)
     {
-        unset($this->popsObject->$property);
+        unset($this->popsValue()->$property);
     }
 
     /**
-     * Set a value on the wrapped object using the ArrayAccess interface.
+     * Set a value on the wrapped object using the array access interface.
      *
      * @param string $key   The key to set.
      * @param mixed  $value The new value.
@@ -149,7 +130,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * Get a value from the wrapped object using the ArrayAccess interface.
+     * Get a value from the wrapped object using the array access interface.
      *
      * @param string $key The key to get.
      *
@@ -162,7 +143,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
 
     /**
      * Returns true if the supplied key exists on the wrapped object according
-     * to the ArrayAccess interface.
+     * to the array access interface.
      *
      * @param string $key The key to search for.
      *
@@ -174,7 +155,7 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * Remove a key from the wrapped object using the ArrayAccess interface.
+     * Remove a key from the wrapped object using the array access interface.
      *
      * @param string $key The key to remove.
      */
@@ -194,78 +175,13 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * Get the current iterator value.
+     * Get the string representation of this value.
      *
-     * @return mixed The current value.
-     */
-    public function current()
-    {
-        return $this->popsProxySubValue($this->popsInnerIterator()->current());
-    }
-
-    /**
-     * Get the current iterator key.
-     *
-     * @return mixed The current key.
-     */
-    public function key()
-    {
-        return $this->popsInnerIterator()->key();
-    }
-
-    /**
-     * Move to the next iterator value.
-     */
-    public function next()
-    {
-        $this->popsInnerIterator()->next();
-    }
-
-    /**
-     * Rewind to the beginning of the iterator.
-     */
-    public function rewind()
-    {
-        $this->popsInnerIterator()->rewind();
-    }
-
-    /**
-     * Returns true if the current iterator position is valid.
-     *
-     * @return boolean True if the current position is valid.
-     */
-    public function valid()
-    {
-        return $this->popsInnerIterator()->valid();
-    }
-
-    /**
-     * @return string
+     * @return string The string representation.
      */
     public function __toString()
     {
         return strval($this->__call('__toString', array()));
-    }
-
-    /**
-     * Get the string representation of this object.
-     *
-     * @return string The string representation.
-     */
-    public function __invoke()
-    {
-        if (!method_exists($this->popsObject, '__invoke')) {
-            throw new BadMethodCallException(
-                sprintf(
-                    'Call to undefined method %s::__invoke()',
-                    get_class($this->popsObject)
-                )
-            );
-        }
-
-        return $this->popsProxySubValue(
-            call_user_func_array($this->popsObject, func_get_args())
-        );
     }
 
     /**
@@ -279,48 +195,37 @@ class ProxyObject implements ProxyInterface, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * Get an iterator for the wrapped object.
+     * Throw an exception if the supplied value is an incorrect type for this
+     * proxy.
+     *
+     * @param mixed $value The value to wrap.
+     *
+     * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
+     */
+    protected function assertPopsValue($value)
+    {
+        if (!is_object($value)) {
+            throw new Exception\InvalidTypeException($value, 'object');
+        }
+    }
+
+    /**
+     * Create an iterator for the wrapped object.
      *
      * @return Iterator An iterator for the wrapped object.
      */
-    protected function popsInnerIterator()
+    protected function popsCreateInnerIterator()
     {
-        if (null !== $this->popsInnerIterator) {
-            return $this->popsInnerIterator;
-        }
-
-        if ($this->popsObject instanceof Iterator) {
-            $this->popsInnerIterator = $this->popsObject;
-        } elseif ($this->popsObject instanceof IteratorAggregate) {
-            $this->popsInnerIterator = $this->popsObject->getIterator();
+        if ($this->popsValue() instanceof Iterator) {
+            $iterator = $this->popsValue();
+        } elseif ($this->popsValue() instanceof IteratorAggregate) {
+            $iterator = $this->popsValue()->getIterator();
         } else {
             throw new LogicException(
                 'Proxied object is not an instance of Traversable'
             );
         }
 
-        return $this->popsInnerIterator;
+        return $iterator;
     }
-
-    /**
-     * Wrap a sub-value in a proxy if recursive proxying is enabled.
-     *
-     * @param mixed $value The value to wrap.
-     *
-     * @return mixed The proxied value, or the untouched value.
-     */
-    protected function popsProxySubValue($value)
-    {
-        if ($this->popsRecursive) {
-            $popsClass = static::popsProxyClass();
-
-            return $popsClass::proxy($value, true);
-        }
-
-        return $value;
-    }
-
-    private $popsObject;
-    private $popsRecursive;
-    private $popsInnerIterator;
 }

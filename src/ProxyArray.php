@@ -5,47 +5,31 @@
  *
  * Copyright © 2014 Erin Millard
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 namespace Eloquent\Pops;
 
-use ArrayAccess;
 use ArrayIterator;
-use Countable;
 use Iterator;
 
 /**
  * A transparent array proxy.
  */
-class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
+class ProxyArray extends AbstractTraversableProxy implements ProxyArrayInterface
 {
     /**
-     * Construct a new array proxy.
-     *
-     * @param array        $array     The array to wrap.
-     * @param boolean|null $recursive True if the array should be recursively proxied.
-     */
-    public function __construct(array $array, $recursive = null)
-    {
-        if (null === $recursive) {
-            $recursive = false;
-        }
-
-        $this->popsArray = $array;
-        $this->popsRecursive = $recursive;
-        $this->popsInnerIterator = new ArrayIterator($this->popsArray);
-    }
-
-    /**
      * Get the wrapped array.
+     *
+     * @deprecated Use popsValue() instead.
+     * @see ProxyInterface::popsValue()
      *
      * @return array The wrapped array.
      */
     public function popsArray()
     {
-        return $this->popsArray;
+        return $this->popsValue();
     }
 
     /**
@@ -56,7 +40,10 @@ class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function offsetSet($index, $value)
     {
-        $this->popsArray[$index] = $value;
+        $array = $this->popsValue();
+        $array[$index] = $value;
+
+        $this->setPopsValue($array);
     }
 
     /**
@@ -68,7 +55,9 @@ class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function offsetGet($index)
     {
-        return $this->popsProxySubValue($this->popsArray[$index]);
+        $array = $this->popsValue();
+
+        return $this->popsProxySubValue($array[$index]);
     }
 
     /**
@@ -80,7 +69,9 @@ class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function offsetExists($index)
     {
-        return isset($this->popsArray[$index]);
+        $array = $this->popsValue();
+
+        return isset($array[$index]);
     }
 
     /**
@@ -90,7 +81,10 @@ class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function offsetUnset($index)
     {
-        unset($this->popsArray[$index]);
+        $array = $this->popsValue();
+        unset($array[$index]);
+
+        $this->setPopsValue($array);
     }
 
     /**
@@ -100,65 +94,17 @@ class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
      */
     public function count()
     {
-        return count($this->popsArray);
+        return count($this->popsValue());
     }
 
     /**
-     * Get the current iterator value.
-     *
-     * @return mixed The current value.
-     */
-    public function current()
-    {
-        return $this->popsProxySubValue(
-            $this->popsInnerIterator->current()
-        );
-    }
-
-    /**
-     * Get the current iterator key.
-     *
-     * @return mixed The current key.
-     */
-    public function key()
-    {
-        return $this->popsInnerIterator->key();
-    }
-
-    /**
-     * Move to the next iterator value.
-     */
-    public function next()
-    {
-        $this->popsInnerIterator->next();
-    }
-
-    /**
-     * Rewind to the beginning of the iterator.
-     */
-    public function rewind()
-    {
-        $this->popsInnerIterator->rewind();
-    }
-
-    /**
-     * Returns true if the current iterator position is valid.
-     *
-     * @return boolean True if the current position is valid.
-     */
-    public function valid()
-    {
-        return $this->popsInnerIterator->valid();
-    }
-
-    /**
-     * Get the string representation of this array.
+     * Get the string representation of this value.
      *
      * @return string The string representation.
      */
     public function __toString()
     {
-        return strval($this->popsProxySubValue(strval($this->popsArray)));
+        return strval($this->popsProxySubValue(strval($this->popsValue())));
     }
 
     /**
@@ -172,24 +118,27 @@ class ProxyArray implements ProxyInterface, ArrayAccess, Countable, Iterator
     }
 
     /**
-     * Wrap a sub-value in a proxy if recursive proxying is enabled.
+     * Throw an exception if the supplied value is an incorrect type for this
+     * proxy.
      *
      * @param mixed $value The value to wrap.
      *
-     * @return mixed The proxied value, or the untouched value.
+     * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
-    protected function popsProxySubValue($value)
+    protected function assertPopsValue($value)
     {
-        if ($this->popsRecursive) {
-            $popsClass = static::popsProxyClass();
-
-            return $popsClass::proxy($value, true);
+        if (!is_array($value)) {
+            throw new Exception\InvalidTypeException($value, 'array');
         }
-
-        return $value;
     }
 
-    private $popsArray;
-    private $popsRecursive;
-    private $popsInnerIterator;
+    /**
+     * Create an iterator for the wrapped object.
+     *
+     * @return Iterator An iterator for the wrapped object.
+     */
+    protected function popsCreateInnerIterator()
+    {
+        return new ArrayIterator($this->popsValue());
+    }
 }

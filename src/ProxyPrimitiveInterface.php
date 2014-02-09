@@ -9,13 +9,11 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Pops\Safe;
-
-use Eloquent\Pops\ProxyInterface;
+namespace Eloquent\Pops;
 
 /**
- * The interface used to identify values that should not be recursively proxied.
+ * The interface used to identify primitive value proxies.
  */
-interface SafeInterface extends ProxyInterface
+interface ProxyPrimitiveInterface extends ProxyInterface
 {
 }

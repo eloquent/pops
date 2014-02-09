@@ -9,13 +9,8 @@
  * that was distributed with this source code.
  */
 
-namespace Eloquent\Pops\Safe;
+namespace Eloquent\Pops\Test\Fixture;
 
-use Eloquent\Pops\ProxyInterface;
-
-/**
- * The interface used to identify values that should not be recursively proxied.
- */
-interface SafeInterface extends ProxyInterface
+class UncallableObject
 {
 }

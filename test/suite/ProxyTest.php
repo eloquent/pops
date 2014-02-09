@@ -5,17 +5,17 @@
  *
  * Copyright © 2014 Erin Millard
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 namespace Eloquent\Pops;
 
 use Eloquent\Pops\Safe\SafeProxy;
 use Eloquent\Pops\Test\Fixture\Object;
-use Eloquent\Pops\Test\TestCase;
+use PHPUnit_Framework_TestCase;
 
-class ProxyTest extends TestCase
+class ProxyTest extends PHPUnit_Framework_TestCase
 {
     public function testProxy()
     {
@@ -43,16 +43,16 @@ class ProxyTest extends TestCase
 
     public function testProxyClass()
     {
-        $expected = new ProxyClass(__NAMESPACE__ . '\Test\Fixture\Object');
+        $expected = new ProxyClass('Eloquent\Pops\Test\Fixture\Object');
 
-        $this->assertEquals($expected, Proxy::proxyClass(__NAMESPACE__ . '\Test\Fixture\Object'));
+        $this->assertEquals($expected, Proxy::proxyClass('Eloquent\Pops\Test\Fixture\Object'));
     }
 
     public function testProxyClassStatic()
     {
-        $class = Proxy::proxyClassStatic(__NAMESPACE__ . '\Test\Fixture\Object');
+        $class = Proxy::proxyClassStatic('Eloquent\Pops\Test\Fixture\Object');
 
         $this->assertTrue(class_exists($class));
-        $this->assertTrue(is_subclass_of($class, __NAMESPACE__ . '\ProxyClass'));
+        $this->assertTrue(is_subclass_of($class, 'Eloquent\Pops\ProxyClass'));
     }
 }

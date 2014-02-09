@@ -26,7 +26,7 @@ class OutputEscaperProxyPrimitive extends ProxyPrimitive
     public function __toString()
     {
         return htmlspecialchars(
-            strval($this->popsPrimitive()),
+            strval($this->popsValue()),
             ENT_QUOTES,
             'UTF-8'
         );

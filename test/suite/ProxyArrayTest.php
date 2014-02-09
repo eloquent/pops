@@ -5,23 +5,34 @@
  *
  * Copyright © 2014 Erin Millard
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 namespace Eloquent\Pops;
 
 use Eloquent\Pops\Test\Fixture\Object;
 use Eloquent\Pops\Test\Fixture\Uppercase\UppercaseProxy;
-use Eloquent\Pops\Test\TestCase;
+use PHPUnit_Framework_TestCase;
 
-class ProxyArrayTest extends TestCase
+/**
+ * @covers \Eloquent\Pops\ProxyArray
+ * @covers \Eloquent\Pops\AbstractTraversableProxy
+ * @covers \Eloquent\Pops\AbstractProxy
+ */
+class ProxyArrayTest extends PHPUnit_Framework_TestCase
 {
     public function testConstruct()
     {
         $proxy = new ProxyArray(array('foo', 'bar'));
 
         $this->assertSame(array('foo', 'bar'), $proxy->popsArray());
+    }
+
+    public function testConstructFailureType()
+    {
+        $this->setExpectedException('Eloquent\Pops\Exception\InvalidTypeException');
+        new ProxyArray('foo');
     }
 
     public function testOffsetSetGet()
@@ -69,16 +80,16 @@ class ProxyArrayTest extends TestCase
         );
         $proxy = new ProxyArray($array, true);
 
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['object']->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['object']->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['object']->string());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['array']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['array']['object']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $proxy['array']['object']->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $proxy['array']['array']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['array']['string']);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $proxy['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy['object']->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $proxy['object']->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $proxy['object']->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $proxy['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy['array']['object']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy['array']['object']->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $proxy['array']['array']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $proxy['array']['string']);
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $proxy['string']);
     }
 
     public function testCount()
@@ -118,12 +129,12 @@ class ProxyArrayTest extends TestCase
         $actual = iterator_to_array($proxy);
 
         $this->assertEquals($expected, $actual);
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $actual['object']->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $actual['object']->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $actual['object']->string());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyObject', $actual['array']['object']->object());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyArray', $actual['array']['object']->arrayValue());
-        $this->assertInstanceOf(__NAMESPACE__ . '\ProxyPrimitive', $actual['array']['object']->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $actual['object']->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $actual['object']->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $actual['object']->string());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $actual['array']['object']->object());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyArray', $actual['array']['object']->arrayValue());
+        $this->assertInstanceOf('Eloquent\Pops\ProxyPrimitive', $actual['array']['object']->string());
     }
 
     public function testToString()
