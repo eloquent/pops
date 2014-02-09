@@ -70,7 +70,7 @@
                     static&nbsp;string
                 </td>
                 <td class="last">
-                    <a href="#method_proxyClassStatic">proxyClassStatic</a>(string $class, boolean|null $isRecursive = null, string $proxyClass = null)
+                    <a href="#method_proxyClassStatic">proxyClassStatic</a>(string $class, boolean|null $isRecursive = null, string|null $proxyClass = null)
                     <p>Wrap the supplied class in a static proxy.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/Proxy.html#method_proxyClassStatic"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a></small></td>
@@ -241,7 +241,7 @@
                 <h3 id="method_proxyClassStatic">
         <div class="location">in <a href="../../../Eloquent/Pops/Proxy.html#method_proxyClassStatic"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a> at line 86</div>
         <code>        static    public            string
-    <strong>proxyClassStatic</strong>(string $class, boolean|null $isRecursive = null, string $proxyClass = null)</code>
+    <strong>proxyClassStatic</strong>(string $class, boolean|null $isRecursive = null, string|null $proxyClass = null)</code>
     </h3>
     <div class="details">
         <p>Wrap the supplied class in a static proxy.</p>
@@ -262,10 +262,9 @@
                 <td>True if the class should be recursively proxied.</td>
             </tr>
                     <tr>
-                <td>string</td>
+                <td>string|null</td>
                 <td>$proxyClass</td>
-                <td>
-</td>
+                <td>The class name to use for the proxy class.</td>
             </tr>
             </table>
 
