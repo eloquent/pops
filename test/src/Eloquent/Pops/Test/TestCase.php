@@ -5,15 +5,15 @@
  *
  * Copyright © 2014 Erin Millard
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
 
 namespace Eloquent\Pops\Test;
 
-use PHPUnit_Framework_TestCase;
+use Eloquent\Pops\ProxyClassInterface;
 use Eloquent\Pops\ProxyInterface;
-use Eloquent\Pops\ProxyClass;
+use PHPUnit_Framework_TestCase;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -36,7 +36,7 @@ class TestCase extends PHPUnit_Framework_TestCase
         if ($isMagic) {
             $arguments = array($method, $arguments);
 
-            if ($proxy instanceof ProxyClass) {
+            if ($proxy instanceof ProxyClassInterface) {
                 $method = '__callStatic';
             } else {
                 $method = '__call';
