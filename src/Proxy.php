@@ -79,7 +79,7 @@ class Proxy
      *
      * @param string       $class       The name of the class to wrap.
      * @param boolean|null $isRecursive True if the class should be recursively proxied.
-     * @param string       $proxyClass
+     * @param string|null  $proxyClass  The class name to use for the proxy class.
      *
      * @return string The static class proxy.
      */
