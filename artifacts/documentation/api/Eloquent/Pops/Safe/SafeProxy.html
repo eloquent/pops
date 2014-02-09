@@ -40,7 +40,7 @@
                     static&nbsp;<a href="../../../Eloquent/Pops/ProxyInterface.html"><abbr title="Eloquent\Pops\ProxyInterface">ProxyInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_proxy">proxy</a>(mixed $value, boolean|null $recursive = null)
+                    <a href="#method_proxy">proxy</a>(mixed $value, boolean|null $isRecursive = null)
                     <p>Wrap the supplied value in a proxy.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/Proxy.html#method_proxy"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a></small></td>
@@ -50,7 +50,7 @@
                     static&nbsp;<a href="../../../Eloquent/Pops/ProxyArrayInterface.html"><abbr title="Eloquent\Pops\ProxyArrayInterface">ProxyArrayInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_proxyArray">proxyArray</a>(array $array, boolean|null $recursive = null)
+                    <a href="#method_proxyArray">proxyArray</a>(array $array, boolean|null $isRecursive = null)
                     <p>Wrap the supplied array in a proxy.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/Proxy.html#method_proxyArray"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a></small></td>
@@ -60,7 +60,7 @@
                     static&nbsp;<a href="../../../Eloquent/Pops/ProxyClassInterface.html"><abbr title="Eloquent\Pops\ProxyClassInterface">ProxyClassInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_proxyClass">proxyClass</a>(string $class, boolean|null $recursive = null)
+                    <a href="#method_proxyClass">proxyClass</a>(string $class, boolean|null $isRecursive = null)
                     <p>Wrap the supplied class in a non-static proxy.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/Proxy.html#method_proxyClass"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a></small></td>
@@ -70,7 +70,7 @@
                     static&nbsp;string
                 </td>
                 <td class="last">
-                    <a href="#method_proxyClassStatic">proxyClassStatic</a>(string $class, boolean|null $recursive = null, string $proxyClass = null)
+                    <a href="#method_proxyClassStatic">proxyClassStatic</a>(string $class, boolean|null $isRecursive = null, string $proxyClass = null)
                     <p>Wrap the supplied class in a static proxy.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/Proxy.html#method_proxyClassStatic"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a></small></td>
@@ -80,7 +80,7 @@
                     static&nbsp;<a href="../../../Eloquent/Pops/ProxyObjectInterface.html"><abbr title="Eloquent\Pops\ProxyObjectInterface">ProxyObjectInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_proxyObject">proxyObject</a>(object $object, boolean|null $recursive = null)
+                    <a href="#method_proxyObject">proxyObject</a>(object $object, boolean|null $isRecursive = null)
                     <p>Wrap the supplied object in a proxy.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/Proxy.html#method_proxyObject"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a></small></td>
@@ -103,7 +103,7 @@
                         <h3 id="method_proxy">
         <div class="location">in <a href="../../../Eloquent/Pops/Proxy.html#method_proxy"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a> at line 30</div>
         <code>        static    public            <a href="../../../Eloquent/Pops/ProxyInterface.html"><abbr title="Eloquent\Pops\ProxyInterface">ProxyInterface</abbr></a>
-    <strong>proxy</strong>(mixed $value, boolean|null $recursive = null)</code>
+    <strong>proxy</strong>(mixed $value, boolean|null $isRecursive = null)</code>
     </h3>
     <div class="details">
         <p>Wrap the supplied value in a proxy.</p>
@@ -120,7 +120,7 @@
             </tr>
                     <tr>
                 <td>boolean|null</td>
-                <td>$recursive</td>
+                <td>$isRecursive</td>
                 <td>True if the value should be recursively proxied.</td>
             </tr>
             </table>
@@ -143,7 +143,7 @@
                 <h3 id="method_proxyArray">
         <div class="location">in <a href="../../../Eloquent/Pops/Proxy.html#method_proxyArray"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a> at line 54</div>
         <code>        static    public            <a href="../../../Eloquent/Pops/ProxyArrayInterface.html"><abbr title="Eloquent\Pops\ProxyArrayInterface">ProxyArrayInterface</abbr></a>
-    <strong>proxyArray</strong>(array $array, boolean|null $recursive = null)</code>
+    <strong>proxyArray</strong>(array $array, boolean|null $isRecursive = null)</code>
     </h3>
     <div class="details">
         <p>Wrap the supplied array in a proxy.</p>
@@ -160,7 +160,7 @@
             </tr>
                     <tr>
                 <td>boolean|null</td>
-                <td>$recursive</td>
+                <td>$isRecursive</td>
                 <td>True if the array should be recursively proxied.</td>
             </tr>
             </table>
@@ -192,7 +192,7 @@
                 <h3 id="method_proxyClass">
         <div class="location">in <a href="../../../Eloquent/Pops/Proxy.html#method_proxyClass"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a> at line 70</div>
         <code>        static    public            <a href="../../../Eloquent/Pops/ProxyClassInterface.html"><abbr title="Eloquent\Pops\ProxyClassInterface">ProxyClassInterface</abbr></a>
-    <strong>proxyClass</strong>(string $class, boolean|null $recursive = null)</code>
+    <strong>proxyClass</strong>(string $class, boolean|null $isRecursive = null)</code>
     </h3>
     <div class="details">
         <p>Wrap the supplied class in a non-static proxy.</p>
@@ -209,7 +209,7 @@
             </tr>
                     <tr>
                 <td>boolean|null</td>
-                <td>$recursive</td>
+                <td>$isRecursive</td>
                 <td>True if the class should be recursively proxied.</td>
             </tr>
             </table>
@@ -241,7 +241,7 @@
                 <h3 id="method_proxyClassStatic">
         <div class="location">in <a href="../../../Eloquent/Pops/Proxy.html#method_proxyClassStatic"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a> at line 86</div>
         <code>        static    public            string
-    <strong>proxyClassStatic</strong>(string $class, boolean|null $recursive = null, string $proxyClass = null)</code>
+    <strong>proxyClassStatic</strong>(string $class, boolean|null $isRecursive = null, string $proxyClass = null)</code>
     </h3>
     <div class="details">
         <p>Wrap the supplied class in a static proxy.</p>
@@ -258,7 +258,7 @@
             </tr>
                     <tr>
                 <td>boolean|null</td>
-                <td>$recursive</td>
+                <td>$isRecursive</td>
                 <td>True if the class should be recursively proxied.</td>
             </tr>
                     <tr>
@@ -287,7 +287,7 @@
                 <h3 id="method_proxyObject">
         <div class="location">in <a href="../../../Eloquent/Pops/Proxy.html#method_proxyObject"><abbr title="Eloquent\Pops\Proxy">Proxy</abbr></a> at line 105</div>
         <code>        static    public            <a href="../../../Eloquent/Pops/ProxyObjectInterface.html"><abbr title="Eloquent\Pops\ProxyObjectInterface">ProxyObjectInterface</abbr></a>
-    <strong>proxyObject</strong>(object $object, boolean|null $recursive = null)</code>
+    <strong>proxyObject</strong>(object $object, boolean|null $isRecursive = null)</code>
     </h3>
     <div class="details">
         <p>Wrap the supplied object in a proxy.</p>
@@ -304,7 +304,7 @@
             </tr>
                     <tr>
                 <td>boolean|null</td>
-                <td>$recursive</td>
+                <td>$isRecursive</td>
                 <td>True if the object should be recursively proxied.</td>
             </tr>
             </table>
