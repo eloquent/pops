@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>Eloquent\Pops\ProxyInterface | eloquent/pops API</title>
+        <title>Eloquent\Pops\AbstractProxy | eloquent/pops API</title>
                     <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
                             </head>
         <body id="class">
@@ -18,14 +18,15 @@
 
         <div id="title">eloquent/pops API</div>
 
-            <div class="type">Interface</div>
-    <h1><a href="../../Eloquent/Pops.html">Eloquent\Pops</a>\ProxyInterface</h1>
+            <div class="type">Class</div>
+    <h1><a href="../../Eloquent/Pops.html">Eloquent\Pops</a>\AbstractProxy</h1>
     </div>
         <div class="content">
-                <p>interface    <strong>ProxyInterface</strong></p>
+                <p>abstract class    <strong>AbstractProxy</strong>        implements
+        <a href="../../Eloquent/Pops/ProxyInterface.html"><abbr title="Eloquent\Pops\ProxyInterface">ProxyInterface</abbr></a></p>
 
             <div class="description">
-            <p>The interface implemented by proxied values.</p>
+            <p>An abstract base class for implementing proxies.</p>
             <p>
 </p>
         </div>
@@ -35,6 +36,16 @@
             <h2>Methods</h2>
 
             <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(mixed $value)
+                    <p>Construct a new proxy.</p>
+                </td>
+                <td></td>
+            </tr>
                     <tr>
                 <td class="type">
                     
@@ -55,23 +66,48 @@
                 </td>
                 <td></td>
             </tr>
-                    <tr>
-                <td class="type">
-                    string
-                </td>
-                <td class="last">
-                    <a href="#method___toString">__toString</a>()
-                    <p>Get the string representation of this value.</p>
-                </td>
-                <td></td>
-            </tr>
             </table>
 
 
         <h2>Details</h2>
 
-                        <h3 id="method_setPopsValue">
+                        <h3 id="method___construct">
         <div class="location">at line 26</div>
+        <code>            public            
+    <strong>__construct</strong>(mixed $value)</code>
+    </h3>
+    <div class="details">
+        <p>Construct a new proxy.</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>mixed</td>
+                <td>$value</td>
+                <td>The value to wrap.</td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Exception\InvalidTypeException">InvalidTypeException</abbr></td>
+                <td>If the supplied value is not the correct type.</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPopsValue">
+        <div class="location">at line 38</div>
         <code>            public            
     <strong>setPopsValue</strong>(mixed $value)</code>
     </h3>
@@ -106,7 +142,7 @@
     </div>
 
                 <h3 id="method_popsValue">
-        <div class="location">at line 33</div>
+        <div class="location">at line 50</div>
         <code>            public            mixed
     <strong>popsValue</strong>()</code>
     </h3>
@@ -122,31 +158,6 @@
         <tr>
             <td>mixed</td>
             <td>The wrapped value.</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method___toString">
-        <div class="location">at line 40</div>
-        <code>            public            string
-    <strong>__toString</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get the string representation of this value.</p>
-        <p>
-</p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>string</td>
-            <td>The string representation.</td>
         </tr>
     </table>
 

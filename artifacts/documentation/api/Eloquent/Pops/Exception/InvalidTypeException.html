@@ -3,29 +3,29 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>Eloquent\Pops\ProxyInterface | eloquent/pops API</title>
-                    <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+        <title>Eloquent\Pops\Exception\InvalidTypeException | eloquent/pops API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
                             </head>
         <body id="class">
             <div class="header">
         <ul>
-            <li><a href="../../classes.html">Classes</a></li>
-                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                        <li><a href="../../interfaces.html">Interfaces</a></li>
-            <li><a href="../../doc-index.html">Index</a></li>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
             
         </ul>
 
         <div id="title">eloquent/pops API</div>
 
-            <div class="type">Interface</div>
-    <h1><a href="../../Eloquent/Pops.html">Eloquent\Pops</a>\ProxyInterface</h1>
+            <div class="type">Class</div>
+    <h1><a href="../../../Eloquent/Pops/Exception.html">Eloquent\Pops\Exception</a>\InvalidTypeException</h1>
     </div>
         <div class="content">
-                <p>interface    <strong>ProxyInterface</strong></p>
+                <p>class    <strong>InvalidTypeException</strong>        extends <a href="http://php.net/Exception"><abbr title="Exception">Exception</abbr></a></p>
 
             <div class="description">
-            <p>The interface implemented by proxied values.</p>
+            <p>A value of an invalid type was supplied.</p>
             <p>
 </p>
         </div>
@@ -40,8 +40,8 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method_setPopsValue">setPopsValue</a>(mixed $value)
-                    <p>Set the wrapped value.</p>
+                    <a href="#method___construct">__construct</a>(mixed $value, string $expectedType, <a href="http://php.net/Exception"><abbr title="Exception">Exception</abbr></a> $cause = null)
+                    <p>Construct a new invalid type exception.</p>
                 </td>
                 <td></td>
             </tr>
@@ -50,8 +50,8 @@
                     mixed
                 </td>
                 <td class="last">
-                    <a href="#method_popsValue">popsValue</a>()
-                    <p>Get the wrapped value.</p>
+                    <a href="#method_value">value</a>()
+                    <p>Get the upplied value.</p>
                 </td>
                 <td></td>
             </tr>
@@ -60,8 +60,8 @@
                     string
                 </td>
                 <td class="last">
-                    <a href="#method___toString">__toString</a>()
-                    <p>Get the string representation of this value.</p>
+                    <a href="#method_expectedType">expectedType</a>()
+                    <p>Get the expected type.</p>
                 </td>
                 <td></td>
             </tr>
@@ -70,13 +70,13 @@
 
         <h2>Details</h2>
 
-                        <h3 id="method_setPopsValue">
-        <div class="location">at line 26</div>
+                        <h3 id="method___construct">
+        <div class="location">at line 28</div>
         <code>            public            
-    <strong>setPopsValue</strong>(mixed $value)</code>
+    <strong>__construct</strong>(mixed $value, string $expectedType, <a href="http://php.net/Exception"><abbr title="Exception">Exception</abbr></a> $cause = null)</code>
     </h3>
     <div class="details">
-        <p>Set the wrapped value.</p>
+        <p>Construct a new invalid type exception.</p>
         <p>
 </p>
         <div class="tags">
@@ -86,32 +86,33 @@
                     <tr>
                 <td>mixed</td>
                 <td>$value</td>
-                <td>The value to wrap.</td>
+                <td>The supplied value.</td>
             </tr>
-            </table>
-
-            
-            
-                            <h4>Exceptions</h4>
-
-                    <table>
                     <tr>
-                <td><abbr title="Exception\InvalidTypeException">InvalidTypeException</abbr></td>
-                <td>If the supplied value is not the correct type.</td>
+                <td>string</td>
+                <td>$expectedType</td>
+                <td>The expected type.</td>
+            </tr>
+                    <tr>
+                <td><a href="http://php.net/Exception"><abbr title="Exception">Exception</abbr></a></td>
+                <td>$cause</td>
+                <td>The cause, if available.</td>
             </tr>
             </table>
 
+            
+            
             
                     </div>
     </div>
 
-                <h3 id="method_popsValue">
-        <div class="location">at line 33</div>
+                <h3 id="method_value">
+        <div class="location">at line 49</div>
         <code>            public            mixed
-    <strong>popsValue</strong>()</code>
+    <strong>value</strong>()</code>
     </h3>
     <div class="details">
-        <p>Get the wrapped value.</p>
+        <p>Get the upplied value.</p>
         <p>
 </p>
         <div class="tags">
@@ -121,7 +122,7 @@
                     <table>
         <tr>
             <td>mixed</td>
-            <td>The wrapped value.</td>
+            <td>THe supplied value.</td>
         </tr>
     </table>
 
@@ -130,13 +131,13 @@
                     </div>
     </div>
 
-                <h3 id="method___toString">
-        <div class="location">at line 40</div>
+                <h3 id="method_expectedType">
+        <div class="location">at line 59</div>
         <code>            public            string
-    <strong>__toString</strong>()</code>
+    <strong>expectedType</strong>()</code>
     </h3>
     <div class="details">
-        <p>Get the string representation of this value.</p>
+        <p>Get the expected type.</p>
         <p>
 </p>
         <div class="tags">
@@ -146,7 +147,7 @@
                     <table>
         <tr>
             <td>string</td>
-            <td>The string representation.</td>
+            <td>The expected type.</td>
         </tr>
     </table>
 

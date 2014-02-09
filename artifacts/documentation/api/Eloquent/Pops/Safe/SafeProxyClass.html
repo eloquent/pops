@@ -61,7 +61,7 @@
                     static&nbsp;string
                 </td>
                 <td class="last">
-                    <a href="#method_popsGenerateStaticClassProxy">popsGenerateStaticClassProxy</a>(string $class, boolean|null $recursive = null, string|null $proxyClass = null)
+                    <a href="#method_popsGenerateStaticClassProxy">popsGenerateStaticClassProxy</a>(string $class, boolean|null $isRecursive = null, string|null $proxyClass = null)
                     <p>Generate and load a static class proxy.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/ProxyClass.html#method_popsGenerateStaticClassProxy"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a></small></td>
@@ -71,7 +71,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(string $class, boolean|null $recursive = null)
+                    <a href="#method___construct">__construct</a>(string $class, boolean|null $isRecursive = null)
                     <p>Construct a new non-static class proxy.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/ProxyClass.html#method___construct"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a></small></td>
@@ -85,6 +85,16 @@
                     <p>Get the name of the proxied class.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/ProxyClass.html#method_popsClass"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isPopsRecursive">isPopsRecursive</a>()
+                    <p>Returns true if the wrapped class is recursively proxied.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Pops/ProxyClass.html#method_isPopsRecursive"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a></small></td>
             </tr>
                     <tr>
                 <td class="type">
@@ -145,6 +155,16 @@
                     <p>Set the value of a static property on the proxied class to null.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../Eloquent/Pops/ProxyClass.html#method___unset"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method___toString">__toString</a>()
+                    <p>Get the string representation of this value.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../Eloquent/Pops/ProxyClass.html#method___toString"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a></small></td>
             </tr>
             </table>
 
@@ -219,7 +239,7 @@
                 <h3 id="method_popsGenerateStaticClassProxy">
         <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method_popsGenerateStaticClassProxy"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 75</div>
         <code>        static    public            string
-    <strong>popsGenerateStaticClassProxy</strong>(string $class, boolean|null $recursive = null, string|null $proxyClass = null)</code>
+    <strong>popsGenerateStaticClassProxy</strong>(string $class, boolean|null $isRecursive = null, string|null $proxyClass = null)</code>
     </h3>
     <div class="details">
         <p>Generate and load a static class proxy.</p>
@@ -236,7 +256,7 @@
             </tr>
                     <tr>
                 <td>boolean|null</td>
-                <td>$recursive</td>
+                <td>$isRecursive</td>
                 <td>True if the proxy should be recursive.</td>
             </tr>
                     <tr>
@@ -252,7 +272,7 @@
                     <table>
         <tr>
             <td>string</td>
-            <td>The class name used for the procy class.</td>
+            <td>The class name used for the proxy class.</td>
         </tr>
     </table>
 
@@ -262,9 +282,9 @@
     </div>
 
                 <h3 id="method___construct">
-        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___construct"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 100</div>
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___construct"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 102</div>
         <code>            public            
-    <strong>__construct</strong>(string $class, boolean|null $recursive = null)</code>
+    <strong>__construct</strong>(string $class, boolean|null $isRecursive = null)</code>
     </h3>
     <div class="details">
         <p>Construct a new non-static class proxy.</p>
@@ -281,19 +301,28 @@
             </tr>
                     <tr>
                 <td>boolean|null</td>
-                <td>$recursive</td>
+                <td>$isRecursive</td>
                 <td>True if the proxy should be recursive.</td>
             </tr>
             </table>
 
             
             
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Exception\InvalidTypeException">InvalidTypeException</abbr></td>
+                <td>If the supplied value is not the correct type.</td>
+            </tr>
+            </table>
+
             
                     </div>
     </div>
 
                 <h3 id="method_popsClass">
-        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method_popsClass"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 115</div>
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method_popsClass"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 121</div>
         <code>            public            string
     <strong>popsClass</strong>()</code>
     </h3>
@@ -314,11 +343,45 @@
 
             
             
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>ProxyInterface::popsValue()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+                <h3 id="method_isPopsRecursive">
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method_isPopsRecursive"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 131</div>
+        <code>            public            boolean
+    <strong>isPopsRecursive</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Returns true if the wrapped class is recursively proxied.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td>True if the wrapped class is recursively proxied.</td>
+        </tr>
+    </table>
+
+            
+            
                     </div>
     </div>
 
                 <h3 id="method_popsCall">
-        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method_popsCall"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 129</div>
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method_popsCall"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 145</div>
         <code>            public            mixed
     <strong>popsCall</strong>(string $method, array $arguments)</code>
     </h3>
@@ -358,7 +421,7 @@
     </div>
 
                 <h3 id="method___call">
-        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___call"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 145</div>
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___call"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 164</div>
         <code>            public            mixed
     <strong>__call</strong>(string $method, array $arguments)</code>
     </h3>
@@ -398,7 +461,7 @@
     </div>
 
                 <h3 id="method___set">
-        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___set"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 156</div>
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___set"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 175</div>
         <code>            public            
     <strong>__set</strong>(string $property, mixed $value)</code>
     </h3>
@@ -429,7 +492,7 @@
     </div>
 
                 <h3 id="method___get">
-        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___get"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 169</div>
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___get"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 188</div>
         <code>            public            mixed
     <strong>__get</strong>(string $property)</code>
     </h3>
@@ -464,7 +527,7 @@
     </div>
 
                 <h3 id="method___isset">
-        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___isset"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 186</div>
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___isset"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 205</div>
         <code>            public            boolean
     <strong>__isset</strong>(string $property)</code>
     </h3>
@@ -499,7 +562,7 @@
     </div>
 
                 <h3 id="method___unset">
-        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___unset"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 198</div>
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___unset"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 217</div>
         <code>            public            
     <strong>__unset</strong>(string $property)</code>
     </h3>
@@ -519,6 +582,31 @@
             </table>
 
             
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method___toString">
+        <div class="location">in <a href="../../../Eloquent/Pops/ProxyClass.html#method___toString"><abbr title="Eloquent\Pops\ProxyClass">ProxyClass</abbr></a> at line 229</div>
+        <code>            public            string
+    <strong>__toString</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the string representation of this value.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>The string representation.</td>
+        </tr>
+    </table>
+
             
             
                     </div>

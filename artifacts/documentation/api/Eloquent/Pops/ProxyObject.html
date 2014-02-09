@@ -22,8 +22,8 @@
     <h1><a href="../../Eloquent/Pops.html">Eloquent\Pops</a>\ProxyObject</h1>
     </div>
         <div class="content">
-                <p>class    <strong>ProxyObject</strong>        implements
-        <a href="../../Eloquent/Pops/ProxyInterface.html"><abbr title="Eloquent\Pops\ProxyInterface">ProxyInterface</abbr></a>, <a href="http://php.net/ArrayAccess"><abbr title="ArrayAccess">ArrayAccess</abbr></a>, <a href="http://php.net/Countable"><abbr title="Countable">Countable</abbr></a>, <a href="http://php.net/Iterator"><abbr title="Iterator">Iterator</abbr></a></p>
+                <p>class    <strong>ProxyObject</strong>        extends <a href="../../Eloquent/Pops/AbstractTraversableProxy.html"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a>        implements
+        <a href="../../Eloquent/Pops/ProxyObjectInterface.html"><abbr title="Eloquent\Pops\ProxyObjectInterface">ProxyObjectInterface</abbr></a></p>
 
             <div class="description">
             <p>A transparent object proxy.</p>
@@ -41,10 +41,70 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(object $object, boolean|null $recursive = null)
-                    <p>Construct a new object proxy.</p>
+                    <a href="#method___construct">__construct</a>(mixed $value, boolean|null $isRecursive = null)
+                    <p>Construct a new traversable proxy.</p>
                 </td>
-                <td></td>
+                <td><small>from&nbsp;<a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method___construct"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_isPopsRecursive">isPopsRecursive</a>()
+                    <p>Returns true if the wrapped value is recursively proxied.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_isPopsRecursive"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_current">current</a>()
+                    <p>Get the current iterator value.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_current"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_key">key</a>()
+                    <p>Get the current iterator key.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_key"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_next">next</a>()
+                    <p>Move to the next iterator value.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_next"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_rewind">rewind</a>()
+                    <p>Rewind to the beginning of the iterator.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_rewind"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    boolean
+                </td>
+                <td class="last">
+                    <a href="#method_valid">valid</a>()
+                    <p>Returns true if the current iterator position is valid.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_valid"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a></small></td>
             </tr>
                     <tr>
                 <td class="type">
@@ -73,6 +133,16 @@
                 <td class="last">
                     <a href="#method___call">__call</a>(string $method, array $arguments)
                     <p>Call a method on the wrapped object.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method___invoke">__invoke</a>()
+                    <p>Invoke this object.</p>
                 </td>
                 <td></td>
             </tr>
@@ -122,7 +192,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_offsetSet">offsetSet</a>(string $key, mixed $value)
-                    <p>Set a value on the wrapped object using the ArrayAccess interface.</p>
+                    <p>Set a value on the wrapped object using the array access interface.</p>
                 </td>
                 <td></td>
             </tr>
@@ -132,7 +202,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_offsetGet">offsetGet</a>(string $key)
-                    <p>Get a value from the wrapped object using the ArrayAccess interface.</p>
+                    <p>Get a value from the wrapped object using the array access interface.</p>
                 </td>
                 <td></td>
             </tr>
@@ -142,7 +212,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_offsetExists">offsetExists</a>(string $key)
-                    <p>Returns true if the supplied key exists on the wrapped object according to the ArrayAccess interface.</p>
+                    <p>Returns true if the supplied key exists on the wrapped object according to the array access interface.</p>
                 </td>
                 <td></td>
             </tr>
@@ -152,7 +222,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_offsetUnset">offsetUnset</a>(string $key)
-                    <p>Remove a key from the wrapped object using the ArrayAccess interface.</p>
+                    <p>Remove a key from the wrapped object using the array access interface.</p>
                 </td>
                 <td></td>
             </tr>
@@ -168,72 +238,11 @@
             </tr>
                     <tr>
                 <td class="type">
-                    mixed
-                </td>
-                <td class="last">
-                    <a href="#method_current">current</a>()
-                    <p>Get the current iterator value.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    mixed
-                </td>
-                <td class="last">
-                    <a href="#method_key">key</a>()
-                    <p>Get the current iterator key.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_next">next</a>()
-                    <p>Move to the next iterator value.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_rewind">rewind</a>()
-                    <p>Rewind to the beginning of the iterator.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    boolean
-                </td>
-                <td class="last">
-                    <a href="#method_valid">valid</a>()
-                    <p>Returns true if the current iterator position is valid.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     string
                 </td>
                 <td class="last">
                     <a href="#method___toString">__toString</a>()
-                    <p>
-</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
-                    string
-                </td>
-                <td class="last">
-                    <a href="#method___invoke">__invoke</a>()
-                    <p>Get the string representation of this object.</p>
+                    <p>Get the string representation of this value.</p>
                 </td>
                 <td></td>
             </tr>
@@ -243,12 +252,12 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 33</div>
+        <div class="location">in <a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method___construct"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a> at line 30</div>
         <code>            public            
-    <strong>__construct</strong>(object $object, boolean|null $recursive = null)</code>
+    <strong>__construct</strong>(mixed $value, boolean|null $isRecursive = null)</code>
     </h3>
     <div class="details">
-        <p>Construct a new object proxy.</p>
+        <p>Construct a new traversable proxy.</p>
         <p>
 </p>
         <div class="tags">
@@ -256,25 +265,166 @@
 
                     <table>
                     <tr>
-                <td>object</td>
-                <td>$object</td>
-                <td>The object to wrap.</td>
+                <td>mixed</td>
+                <td>$value</td>
+                <td>The value to wrap.</td>
             </tr>
                     <tr>
                 <td>boolean|null</td>
-                <td>$recursive</td>
-                <td>True if the object should be recursively proxied.</td>
+                <td>$isRecursive</td>
+                <td>True if the wrapped value should be recursively proxied.</td>
             </tr>
             </table>
 
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Exception\InvalidTypeException">InvalidTypeException</abbr></td>
+                <td>If the supplied value is not the correct type.</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isPopsRecursive">
+        <div class="location">in <a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_isPopsRecursive"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a> at line 46</div>
+        <code>            public            boolean
+    <strong>isPopsRecursive</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Returns true if the wrapped value is recursively proxied.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td>True if the wrapped value is recursively proxied.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_current">
+        <div class="location">in <a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_current"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a> at line 56</div>
+        <code>            public            mixed
+    <strong>current</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the current iterator value.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>The current value.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_key">
+        <div class="location">in <a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_key"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a> at line 66</div>
+        <code>            public            mixed
+    <strong>key</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Get the current iterator key.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>The current key.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_next">
+        <div class="location">in <a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_next"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a> at line 74</div>
+        <code>            public            
+    <strong>next</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Move to the next iterator value.</p>
+        <p>
+</p>
+        <div class="tags">
             
             
             
                     </div>
     </div>
 
+                <h3 id="method_rewind">
+        <div class="location">in <a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_rewind"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a> at line 82</div>
+        <code>            public            
+    <strong>rewind</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Rewind to the beginning of the iterator.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_valid">
+        <div class="location">in <a href="../../Eloquent/Pops/AbstractTraversableProxy.html#method_valid"><abbr title="Eloquent\Pops\AbstractTraversableProxy">AbstractTraversableProxy</abbr></a> at line 92</div>
+        <code>            public            boolean
+    <strong>valid</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Returns true if the current iterator position is valid.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>boolean</td>
+            <td>True if the current position is valid.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_popsObject">
-        <div class="location">at line 59</div>
+        <div class="location">at line 32</div>
         <code>            public            object
     <strong>popsObject</strong>()</code>
     </h3>
@@ -295,11 +445,20 @@
 
             
             
+                            <h4>See also</h4>
+
+                    <table>
+                    <tr>
+                <td>ProxyInterface::popsValue()</td>
+                <td></td>
+            </tr>
+            </table>
+
                     </div>
     </div>
 
                 <h3 id="method_popsCall">
-        <div class="location">at line 73</div>
+        <div class="location">at line 46</div>
         <code>            public            mixed
     <strong>popsCall</strong>(string $method, array $arguments)</code>
     </h3>
@@ -339,7 +498,7 @@
     </div>
 
                 <h3 id="method___call">
-        <div class="location">at line 88</div>
+        <div class="location">at line 61</div>
         <code>            public            mixed
     <strong>__call</strong>(string $method, array $arguments)</code>
     </h3>
@@ -378,8 +537,33 @@
                     </div>
     </div>
 
+                <h3 id="method___invoke">
+        <div class="location">at line 71</div>
+        <code>            public            mixed
+    <strong>__invoke</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Invoke this object.</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>The result of invocation.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method___set">
-        <div class="location">at line 99</div>
+        <div class="location">at line 82</div>
         <code>            public            
     <strong>__set</strong>(string $property, mixed $value)</code>
     </h3>
@@ -410,7 +594,7 @@
     </div>
 
                 <h3 id="method___get">
-        <div class="location">at line 111</div>
+        <div class="location">at line 94</div>
         <code>            public            mixed
     <strong>__get</strong>(string $property)</code>
     </h3>
@@ -445,7 +629,7 @@
     </div>
 
                 <h3 id="method___isset">
-        <div class="location">at line 125</div>
+        <div class="location">at line 106</div>
         <code>            public            boolean
     <strong>__isset</strong>(string $property)</code>
     </h3>
@@ -480,7 +664,7 @@
     </div>
 
                 <h3 id="method___unset">
-        <div class="location">at line 135</div>
+        <div class="location">at line 116</div>
         <code>            public            
     <strong>__unset</strong>(string $property)</code>
     </h3>
@@ -506,12 +690,12 @@
     </div>
 
                 <h3 id="method_offsetSet">
-        <div class="location">at line 146</div>
+        <div class="location">at line 127</div>
         <code>            public            
     <strong>offsetSet</strong>(string $key, mixed $value)</code>
     </h3>
     <div class="details">
-        <p>Set a value on the wrapped object using the ArrayAccess interface.</p>
+        <p>Set a value on the wrapped object using the array access interface.</p>
         <p>
 </p>
         <div class="tags">
@@ -537,12 +721,12 @@
     </div>
 
                 <h3 id="method_offsetGet">
-        <div class="location">at line 158</div>
+        <div class="location">at line 139</div>
         <code>            public            mixed
     <strong>offsetGet</strong>(string $key)</code>
     </h3>
     <div class="details">
-        <p>Get a value from the wrapped object using the ArrayAccess interface.</p>
+        <p>Get a value from the wrapped object using the array access interface.</p>
         <p>
 </p>
         <div class="tags">
@@ -572,12 +756,12 @@
     </div>
 
                 <h3 id="method_offsetExists">
-        <div class="location">at line 171</div>
+        <div class="location">at line 152</div>
         <code>            public            boolean
     <strong>offsetExists</strong>(string $key)</code>
     </h3>
     <div class="details">
-        <p>Returns true if the supplied key exists on the wrapped object according to the ArrayAccess interface.</p>
+        <p>Returns true if the supplied key exists on the wrapped object according to the array access interface.</p>
         <p>
 </p>
         <div class="tags">
@@ -607,12 +791,12 @@
     </div>
 
                 <h3 id="method_offsetUnset">
-        <div class="location">at line 181</div>
+        <div class="location">at line 162</div>
         <code>            public            
     <strong>offsetUnset</strong>(string $key)</code>
     </h3>
     <div class="details">
-        <p>Remove a key from the wrapped object using the ArrayAccess interface.</p>
+        <p>Remove a key from the wrapped object using the array access interface.</p>
         <p>
 </p>
         <div class="tags">
@@ -633,7 +817,7 @@
     </div>
 
                 <h3 id="method_count">
-        <div class="location">at line 191</div>
+        <div class="location">at line 172</div>
         <code>            public            integer
     <strong>count</strong>()</code>
     </h3>
@@ -657,147 +841,13 @@
                     </div>
     </div>
 
-                <h3 id="method_current">
-        <div class="location">at line 201</div>
-        <code>            public            mixed
-    <strong>current</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get the current iterator value.</p>
-        <p>
-</p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>mixed</td>
-            <td>The current value.</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_key">
-        <div class="location">at line 211</div>
-        <code>            public            mixed
-    <strong>key</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get the current iterator key.</p>
-        <p>
-</p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>mixed</td>
-            <td>The current key.</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_next">
-        <div class="location">at line 219</div>
-        <code>            public            
-    <strong>next</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Move to the next iterator value.</p>
-        <p>
-</p>
-        <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_rewind">
-        <div class="location">at line 227</div>
-        <code>            public            
-    <strong>rewind</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Rewind to the beginning of the iterator.</p>
-        <p>
-</p>
-        <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method_valid">
-        <div class="location">at line 237</div>
-        <code>            public            boolean
-    <strong>valid</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Returns true if the current iterator position is valid.</p>
-        <p>
-</p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>boolean</td>
-            <td>True if the current position is valid.</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
                 <h3 id="method___toString">
-        <div class="location">at line 245</div>
+        <div class="location">at line 182</div>
         <code>            public            string
     <strong>__toString</strong>()</code>
     </h3>
     <div class="details">
-        <p>
-</p>
-        <p>
-</p>
-        <div class="tags">
-            
-                            <h4>Return Value</h4>
-
-                    <table>
-        <tr>
-            <td>string</td>
-            <td>
-</td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-                <h3 id="method___invoke">
-        <div class="location">at line 255</div>
-        <code>            public            string
-    <strong>__invoke</strong>()</code>
-    </h3>
-    <div class="details">
-        <p>Get the string representation of this object.</p>
+        <p>Get the string representation of this value.</p>
         <p>
 </p>
         <div class="tags">
