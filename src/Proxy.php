@@ -22,21 +22,21 @@ class Proxy
     /**
      * Wrap the supplied value in a proxy.
      *
-     * @param mixed        $value     The value to wrap.
-     * @param boolean|null $recursive True if the value should be recursively proxied.
+     * @param mixed        $value       The value to wrap.
+     * @param boolean|null $isRecursive True if the value should be recursively proxied.
      *
      * @return ProxyInterface The proxied value.
      */
-    public static function proxy($value, $recursive = null)
+    public static function proxy($value, $isRecursive = null)
     {
         if ($value instanceof SafeInterface) {
             return $value;
         }
         if (is_object($value)) {
-            return static::proxyObject($value, $recursive);
+            return static::proxyObject($value, $isRecursive);
         }
         if (is_array($value)) {
-            return static::proxyArray($value, $recursive);
+            return static::proxyArray($value, $isRecursive);
         }
 
         return static::proxyPrimitive($value);
@@ -45,13 +45,13 @@ class Proxy
     /**
      * Wrap the supplied array in a proxy.
      *
-     * @param array        $array     The array to wrap.
-     * @param boolean|null $recursive True if the array should be recursively proxied.
+     * @param array        $array       The array to wrap.
+     * @param boolean|null $isRecursive True if the array should be recursively proxied.
      *
      * @return ProxyArrayInterface            The proxied array.
      * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
-    public static function proxyArray($array, $recursive = null)
+    public static function proxyArray($array, $isRecursive = null)
     {
         $class = new ReflectionClass(static::proxyArrayClass());
 
@@ -61,13 +61,13 @@ class Proxy
     /**
      * Wrap the supplied class in a non-static proxy.
      *
-     * @param string       $class     The name of the class to wrap.
-     * @param boolean|null $recursive True if the class should be recursively proxied.
+     * @param string       $class       The name of the class to wrap.
+     * @param boolean|null $isRecursive True if the class should be recursively proxied.
      *
      * @return ProxyClassInterface            The non-static class proxy.
      * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
-    public static function proxyClass($class, $recursive = null)
+    public static function proxyClass($class, $isRecursive = null)
     {
         $proxyClassClass = new ReflectionClass(static::proxyClassClass());
 
@@ -77,15 +77,15 @@ class Proxy
     /**
      * Wrap the supplied class in a static proxy.
      *
-     * @param string       $class      The name of the class to wrap.
-     * @param boolean|null $recursive  True if the class should be recursively proxied.
+     * @param string       $class       The name of the class to wrap.
+     * @param boolean|null $isRecursive True if the class should be recursively proxied.
      * @param string       $proxyClass
      *
      * @return string The static class proxy.
      */
     public static function proxyClassStatic(
         $class,
-        $recursive = null,
+        $isRecursive = null,
         $proxyClass = null
     ) {
         $method = static::proxyClassClass() . '::popsGenerateStaticClassProxy';
@@ -96,13 +96,13 @@ class Proxy
     /**
      * Wrap the supplied object in a proxy.
      *
-     * @param object       $object    The object to wrap.
-     * @param boolean|null $recursive True if the object should be recursively proxied.
+     * @param object       $object      The object to wrap.
+     * @param boolean|null $isRecursive True if the object should be recursively proxied.
      *
      * @return ProxyObjectInterface           The proxied object.
      * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
-    public static function proxyObject($object, $recursive = null)
+    public static function proxyObject($object, $isRecursive = null)
     {
         $class = new ReflectionClass(static::proxyObjectClass());
 
