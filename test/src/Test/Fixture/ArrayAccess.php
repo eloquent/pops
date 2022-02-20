@@ -13,27 +13,28 @@ namespace Eloquent\Pops\Test\Fixture;
 
 use ArrayAccess as ArrayAccessInterface;
 
-class ArrayAccess extends Object implements ArrayAccessInterface
+class ArrayAccess extends Obj implements ArrayAccessInterface
 {
-    public function offsetSet($property, $value)
+    public function offsetSet($property, $value): void
     {
         $this->values[$property] = $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($property)
     {
         return $this->values[$property];
     }
 
-    public function offsetExists($property)
+    public function offsetExists($property): bool
     {
         return array_key_exists($property, $this->values);
     }
 
-    public function offsetUnset($property)
+    public function offsetUnset($property): void
     {
         unset($this->values[$property]);
     }
 
-    public $values = array();
+    public $values = [];
 }

@@ -2,14 +2,9 @@
 
 *PHP Object Proxy System.*
 
-[![The most recent stable version is 4.1.0][version-image]][Semantic versioning]
-[![Current build status image][build-image]][Current build status]
-[![Current coverage status image][coverage-image]][Current coverage status]
-
 ## Installation and documentation
 
 * Available as [Composer] package [eloquent/pops].
-* [API documentation] available.
 
 ## What is *Pops*?
 
@@ -310,14 +305,7 @@ directly as a value. The arguments must also contain a **reference** to
 <!-- References -->
 
 [calling methods with by-reference parameters]: #calling-methods-with-by-reference-parameters
-[Liberator]: https://github.com/eloquent/liberator
+[liberator]: https://github.com/eloquent/liberator
 
-[API documentation]: http://lqnt.co/pops/artifacts/documentation/api/
-[Composer]: http://getcomposer.org/
-[build-image]: http://img.shields.io/travis/eloquent/pops/develop.svg "Current build status for the develop branch"
-[Current build status]: https://travis-ci.org/eloquent/pops
-[coverage-image]: http://img.shields.io/coveralls/eloquent/pops/develop.svg "Current test coverage for the develop branch"
-[Current coverage status]: https://coveralls.io/r/eloquent/pops
+[composer]: http://getcomposer.org/
 [eloquent/pops]: https://packagist.org/packages/eloquent/pops
-[Semantic versioning]: http://semver.org/
-[version-image]: http://img.shields.io/:semver-4.1.0-brightgreen.svg "This project uses semantic versioning"

@@ -14,14 +14,14 @@ namespace Eloquent\Pops\Test\Fixture;
 use ArrayIterator;
 use IteratorAggregate as IteratorAggregateInterface;
 
-class IteratorAggregate extends Object implements IteratorAggregateInterface
+class IteratorAggregate extends Obj implements IteratorAggregateInterface
 {
     public function __construct(array $values)
     {
         $this->values = $values;
     }
 
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->values);
     }

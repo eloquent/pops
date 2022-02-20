@@ -22,8 +22,8 @@ class Proxy
     /**
      * Wrap the supplied value in a proxy.
      *
-     * @param mixed        $value       The value to wrap.
-     * @param boolean|null $isRecursive True if the value should be recursively proxied.
+     * @param mixed     $value       The value to wrap.
+     * @param bool|null $isRecursive True if the value should be recursively proxied.
      *
      * @return ProxyInterface The proxied value.
      */
@@ -45,8 +45,8 @@ class Proxy
     /**
      * Wrap the supplied array in a proxy.
      *
-     * @param array        $array       The array to wrap.
-     * @param boolean|null $isRecursive True if the array should be recursively proxied.
+     * @param array     $array       The array to wrap.
+     * @param bool|null $isRecursive True if the array should be recursively proxied.
      *
      * @return ProxyArrayInterface            The proxied array.
      * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
@@ -61,8 +61,8 @@ class Proxy
     /**
      * Wrap the supplied class in a non-static proxy.
      *
-     * @param string       $class       The name of the class to wrap.
-     * @param boolean|null $isRecursive True if the class should be recursively proxied.
+     * @param string    $class       The name of the class to wrap.
+     * @param bool|null $isRecursive True if the class should be recursively proxied.
      *
      * @return ProxyClassInterface            The non-static class proxy.
      * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
@@ -77,9 +77,9 @@ class Proxy
     /**
      * Wrap the supplied class in a static proxy.
      *
-     * @param string       $class       The name of the class to wrap.
-     * @param boolean|null $isRecursive True if the class should be recursively proxied.
-     * @param string|null  $proxyClass  The class name to use for the proxy class.
+     * @param string      $class       The name of the class to wrap.
+     * @param bool|null   $isRecursive True if the class should be recursively proxied.
+     * @param string|null $proxyClass  The class name to use for the proxy class.
      *
      * @return string The static class proxy.
      */
@@ -96,8 +96,8 @@ class Proxy
     /**
      * Wrap the supplied object in a proxy.
      *
-     * @param object       $object      The object to wrap.
-     * @param boolean|null $isRecursive True if the object should be recursively proxied.
+     * @param object    $object      The object to wrap.
+     * @param bool|null $isRecursive True if the object should be recursively proxied.
      *
      * @return ProxyObjectInterface           The proxied object.
      * @throws Exception\InvalidTypeException If the supplied value is not the correct type.

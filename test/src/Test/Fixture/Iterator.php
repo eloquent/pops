@@ -14,7 +14,7 @@ namespace Eloquent\Pops\Test\Fixture;
 use ArrayIterator;
 use Iterator as IteratorInterface;
 
-class Iterator extends Object implements IteratorInterface
+class Iterator extends Obj implements IteratorInterface
 {
     public function __construct(array $values)
     {
@@ -22,27 +22,29 @@ class Iterator extends Object implements IteratorInterface
         $this->iterator = new ArrayIterator($this->values);
     }
 
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->iterator->current();
     }
 
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->iterator->key();
     }
 
-    public function next()
+    public function next(): void
     {
         $this->iterator->next();
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->iterator->rewind();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->iterator->valid();
     }

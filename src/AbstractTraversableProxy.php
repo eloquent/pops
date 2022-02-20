@@ -22,8 +22,8 @@ abstract class AbstractTraversableProxy extends AbstractProxy implements
     /**
      * Construct a new traversable proxy.
      *
-     * @param mixed        $value       The value to wrap.
-     * @param boolean|null $isRecursive True if the wrapped value should be recursively proxied.
+     * @param mixed     $value       The value to wrap.
+     * @param bool|null $isRecursive True if the wrapped value should be recursively proxied.
      *
      * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
@@ -41,7 +41,7 @@ abstract class AbstractTraversableProxy extends AbstractProxy implements
     /**
      * Returns true if the wrapped value is recursively proxied.
      *
-     * @return boolean True if the wrapped value is recursively proxied.
+     * @return bool True if the wrapped value is recursively proxied.
      */
     public function isPopsRecursive()
     {
@@ -53,6 +53,7 @@ abstract class AbstractTraversableProxy extends AbstractProxy implements
      *
      * @return mixed The current value.
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->popsProxySubValue($this->popsInnerIterator()->current());
@@ -63,6 +64,7 @@ abstract class AbstractTraversableProxy extends AbstractProxy implements
      *
      * @return mixed The current key.
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->popsInnerIterator()->key();
@@ -71,7 +73,7 @@ abstract class AbstractTraversableProxy extends AbstractProxy implements
     /**
      * Move to the next iterator value.
      */
-    public function next()
+    public function next(): void
     {
         $this->popsInnerIterator()->next();
     }
@@ -79,7 +81,7 @@ abstract class AbstractTraversableProxy extends AbstractProxy implements
     /**
      * Rewind to the beginning of the iterator.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->popsInnerIterator()->rewind();
     }
@@ -87,9 +89,9 @@ abstract class AbstractTraversableProxy extends AbstractProxy implements
     /**
      * Returns true if the current iterator position is valid.
      *
-     * @return boolean True if the current position is valid.
+     * @return bool True if the current position is valid.
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->popsInnerIterator()->valid();
     }

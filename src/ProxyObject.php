@@ -46,7 +46,7 @@ class ProxyObject extends AbstractTraversableProxy implements
     public function popsCall($method, array &$arguments)
     {
         return $this->popsProxySubValue(
-            call_user_func_array(array($this->popsValue(), $method), $arguments)
+            call_user_func_array([$this->popsValue(), $method], $arguments)
         );
     }
 
@@ -101,7 +101,7 @@ class ProxyObject extends AbstractTraversableProxy implements
      *
      * @param string $property The name of the property to search for.
      *
-     * @return boolean True if the property exists.
+     * @return bool True if the property exists.
      */
     public function __isset($property)
     {
@@ -124,7 +124,7 @@ class ProxyObject extends AbstractTraversableProxy implements
      * @param string $key   The key to set.
      * @param mixed  $value The new value.
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $this->__call('offsetSet', func_get_args());
     }
@@ -136,6 +136,7 @@ class ProxyObject extends AbstractTraversableProxy implements
      *
      * @return mixed The value.
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($key)
     {
         return $this->__call('offsetGet', func_get_args());
@@ -147,9 +148,9 @@ class ProxyObject extends AbstractTraversableProxy implements
      *
      * @param string $key The key to search for.
      *
-     * @return boolean True if the key exists.
+     * @return bool True if the key exists.
      */
-    public function offsetExists($key)
+    public function offsetExists($key): bool
     {
         return $this->__call('offsetExists', func_get_args());
     }
@@ -159,7 +160,7 @@ class ProxyObject extends AbstractTraversableProxy implements
      *
      * @param string $key The key to remove.
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         $this->__call('offsetUnset', func_get_args());
     }
@@ -167,11 +168,11 @@ class ProxyObject extends AbstractTraversableProxy implements
     /**
      * Return the result of the wrapped object's count method.
      *
-     * @return integer The wrapped object's count.
+     * @return int The wrapped object's count.
      */
-    public function count()
+    public function count(): int
     {
-        return $this->__call('count', array());
+        return $this->__call('count', []);
     }
 
     /**
@@ -181,7 +182,7 @@ class ProxyObject extends AbstractTraversableProxy implements
      */
     public function __toString()
     {
-        return strval($this->__call('__toString', array()));
+        return strval($this->__call('__toString', []));
     }
 
     /**

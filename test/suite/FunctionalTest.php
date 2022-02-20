@@ -12,12 +12,13 @@
 use Eloquent\Pops\Proxy;
 use Eloquent\Pops\Safe\SafeProxy;
 use OutputEscaper\OutputEscaperProxy;
+use PHPUnit\Framework\TestCase;
 
-class FunctionalTest extends PHPUnit_Framework_TestCase
+class FunctionalTest extends TestCase
 {
     public function testDocumentationUppercaseProxyObject()
     {
-        $confusion = new Confusion;
+        $confusion = new Confusion();
         $proxy = new UppercaseProxyObject($confusion);
 
         $this->assertSame("What is this? I don't even...", $confusion->wat());
@@ -29,12 +30,12 @@ class FunctionalTest extends PHPUnit_Framework_TestCase
 
     public function testDocumentationOutputEscaper()
     {
-        $list = new ArrayIterator(array(
+        $list = new ArrayIterator([
             'foo',
             'bar',
             '<script>alert(document.cookie);</script>',
             SafeProxy::proxy('<em>ooh...</em>'),
-        ));
+        ]);
         $proxy = OutputEscaperProxy::proxy($list, true);
 
         $expected = <<<'EOD'
@@ -60,9 +61,9 @@ EOD;
 
     public function testDocumentationCallWithReference()
     {
-        $proxy = Proxy::proxy(new Confusion);
+        $proxy = Proxy::proxy(new Confusion());
         $wasPhone = null;
-        $arguments = array(&$wasPhone);
+        $arguments = [&$wasPhone];
         $proxy->popsCall('butWho', $arguments);
 
         $this->assertSame('Hello? Yes this is dog.', $wasPhone);

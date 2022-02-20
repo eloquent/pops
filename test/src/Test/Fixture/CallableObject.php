@@ -11,7 +11,7 @@
 
 namespace Eloquent\Pops\Test\Fixture;
 
-class CallableObject extends Object
+class CallableObject extends Obj
 {
     public function __construct($returnValue = null)
     {
@@ -24,7 +24,7 @@ class CallableObject extends Object
             return $this->returnValue;
         }
 
-        return array(__FUNCTION__, func_get_args());
+        return [__FUNCTION__, func_get_args()];
     }
 
     protected $returnValue;

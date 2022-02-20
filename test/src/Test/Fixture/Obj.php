@@ -11,26 +11,26 @@
 
 namespace Eloquent\Pops\Test\Fixture;
 
-class Object
+class Obj
 {
     public static function staticPublicMethod()
     {
-        return array(__FUNCTION__, func_get_args());
+        return [__FUNCTION__, func_get_args()];
     }
 
     public static function __callStatic($name, array $arguments)
     {
-        return array(__FUNCTION__, func_get_args());
+        return [__FUNCTION__, func_get_args()];
     }
 
     public static function staticObject()
     {
-        return new static;
+        return new static();
     }
 
     public static function staticArray()
     {
-        return array();
+        return [];
     }
 
     public static function staticString()
@@ -45,22 +45,22 @@ class Object
 
     public function publicMethod()
     {
-        return array(__FUNCTION__, func_get_args());
+        return [__FUNCTION__, func_get_args()];
     }
 
     public function __call($method, array $arguments)
     {
-        return array(__FUNCTION__, func_get_args());
+        return [__FUNCTION__, func_get_args()];
     }
 
     public function object()
     {
-        return new static;
+        return new static();
     }
 
     public function arrayValue()
     {
-        return array();
+        return [];
     }
 
     public function string()

@@ -35,10 +35,10 @@ class ProxyArray extends AbstractTraversableProxy implements ProxyArrayInterface
     /**
      * Set the value of an array index.
      *
-     * @param integer|string $index The index to set.
-     * @param mixed          $value The new value.
+     * @param int|string $index The index to set.
+     * @param mixed      $value The new value.
      */
-    public function offsetSet($index, $value)
+    public function offsetSet($index, $value): void
     {
         $array = $this->popsValue();
         $array[$index] = $value;
@@ -49,10 +49,11 @@ class ProxyArray extends AbstractTraversableProxy implements ProxyArrayInterface
     /**
      * Get the value of an array index.
      *
-     * @param integer|string $index The index to get.
+     * @param int|string $index The index to get.
      *
      * @return mixed The value.
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($index)
     {
         $array = $this->popsValue();
@@ -63,11 +64,11 @@ class ProxyArray extends AbstractTraversableProxy implements ProxyArrayInterface
     /**
      * Returns true if the specified array index exists.
      *
-     * @param integer|string $index The index to search for.
+     * @param int|string $index The index to search for.
      *
-     * @return boolean True if the index exists.
+     * @return bool True if the index exists.
      */
-    public function offsetExists($index)
+    public function offsetExists($index): bool
     {
         $array = $this->popsValue();
 
@@ -77,9 +78,9 @@ class ProxyArray extends AbstractTraversableProxy implements ProxyArrayInterface
     /**
      * Remove an array index.
      *
-     * @param integer|string $index The index to remove.
+     * @param int|string $index The index to remove.
      */
-    public function offsetUnset($index)
+    public function offsetUnset($index): void
     {
         $array = $this->popsValue();
         unset($array[$index]);
@@ -90,9 +91,9 @@ class ProxyArray extends AbstractTraversableProxy implements ProxyArrayInterface
     /**
      * Get the number of elements in the array.
      *
-     * @return integer The number of elements.
+     * @return int The number of elements.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->popsValue());
     }

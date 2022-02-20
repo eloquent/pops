@@ -74,7 +74,7 @@ interface ProxyObjectInterface extends
      *
      * @param string $property The name of the property to search for.
      *
-     * @return boolean True if the property exists.
+     * @return bool True if the property exists.
      */
     public function __isset($property);
 

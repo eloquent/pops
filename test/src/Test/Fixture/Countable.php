@@ -13,9 +13,9 @@ namespace Eloquent\Pops\Test\Fixture;
 
 use Countable as CountableInterface;
 
-class Countable extends Object implements CountableInterface
+class Countable extends Obj implements CountableInterface
 {
-    public function count()
+    public function count(): int
     {
         return $this->count;
     }

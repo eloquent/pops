@@ -19,7 +19,7 @@ interface ProxyClassInterface extends ProxyInterface
     /**
      * Returns true if the wrapped class is recursively proxied.
      *
-     * @return boolean True if the wrapped class is recursively proxied.
+     * @return bool True if the wrapped class is recursively proxied.
      */
     public function isPopsRecursive();
 
@@ -66,7 +66,7 @@ interface ProxyClassInterface extends ProxyInterface
      *
      * @param string $property The name of the property to search for.
      *
-     * @return boolean True if the property exists.
+     * @return bool True if the property exists.
      */
     public function __isset($property);
 

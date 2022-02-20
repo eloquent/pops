@@ -11,33 +11,33 @@
 
 namespace Eloquent\Pops;
 
-use Eloquent\Pops\Test\Fixture\Object;
+use Eloquent\Pops\Test\Fixture\Obj;
 use Eloquent\Pops\Test\Fixture\Uppercase\UppercaseProxy;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Eloquent\Pops\ProxyArray
  * @covers \Eloquent\Pops\AbstractTraversableProxy
  * @covers \Eloquent\Pops\AbstractProxy
  */
-class ProxyArrayTest extends PHPUnit_Framework_TestCase
+class ProxyArrayTest extends TestCase
 {
     public function testConstruct()
     {
-        $proxy = new ProxyArray(array('foo', 'bar'));
+        $proxy = new ProxyArray(['foo', 'bar']);
 
-        $this->assertSame(array('foo', 'bar'), $proxy->popsArray());
+        $this->assertSame(['foo', 'bar'], $proxy->popsArray());
     }
 
     public function testConstructFailureType()
     {
-        $this->setExpectedException('Eloquent\Pops\Exception\InvalidTypeException');
+        $this->expectException('Eloquent\Pops\Exception\InvalidTypeException');
         new ProxyArray('foo');
     }
 
     public function testOffsetSetGet()
     {
-        $proxy = new ProxyArray(array());
+        $proxy = new ProxyArray([]);
 
         $this->assertFalse(isset($proxy['foo']));
 
@@ -69,15 +69,15 @@ class ProxyArrayTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(isset($proxy['foo']));
 
         // recursive tests
-        $array = array(
-            'object' => new Object,
-            'array' => array(
-                'object' => new Object,
-                'array' => array(),
+        $array = [
+            'object' => new Obj(),
+            'array' => [
+                'object' => new Obj(),
+                'array' => [],
                 'string' => 'string',
-             ),
+             ],
             'string' => 'string',
-        );
+        ];
         $proxy = new ProxyArray($array, true);
 
         $this->assertInstanceOf('Eloquent\Pops\ProxyObject', $proxy['object']);
@@ -101,31 +101,31 @@ class ProxyArrayTest extends PHPUnit_Framework_TestCase
 
     public function testIterator()
     {
-        $array = array(
+        $array = [
             'foo' => 'bar',
             'baz' => 'qux',
-        );
+        ];
         $proxy = new ProxyArray($array);
 
         $this->assertEquals($array, iterator_to_array($proxy));
 
         // recursive tests
-        $sub_array = array(
-            'object' => new Object,
-            'array' => array(),
+        $sub_array = [
+            'object' => new Obj(),
+            'array' => [],
             'string' => 'string',
-         );
-        $array = array(
-            'object' => new Object,
+         ];
+        $array = [
+            'object' => new Obj(),
             'array' => $sub_array,
             'string' => 'string',
-        );
+        ];
         $proxy = new ProxyArray($array, true);
-        $expected = array(
-            'object' => new ProxyObject(new Object, true),
+        $expected = [
+            'object' => new ProxyObject(new Obj(), true),
             'array' => new ProxyArray($sub_array, true),
             'string' => new ProxyPrimitive('string', true),
-        );
+        ];
         $actual = iterator_to_array($proxy);
 
         $this->assertEquals($expected, $actual);
@@ -142,16 +142,16 @@ class ProxyArrayTest extends PHPUnit_Framework_TestCase
         if (version_compare(PHP_VERSION, '5.4.0RC0') >= 0) {
             $error_count = 0;
             set_error_handler(function () use (&$error_count) {
-                $error_count ++;
+                ++$error_count;
             });
         }
 
-        $proxy = new ProxyArray(array());
+        $proxy = new ProxyArray([]);
 
         $this->assertEquals('Array', strval($proxy));
 
         // recursive tests
-        $proxy = UppercaseProxy::proxyArray(array(), true);
+        $proxy = UppercaseProxy::proxyArray([], true);
 
         $this->assertEquals('ARRAY', strval($proxy));
 

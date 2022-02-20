@@ -12,28 +12,28 @@
 namespace Eloquent\Pops;
 
 use Eloquent\Pops\Safe\SafeProxy;
-use Eloquent\Pops\Test\Fixture\Object;
-use PHPUnit_Framework_TestCase;
+use Eloquent\Pops\Test\Fixture\Obj;
+use PHPUnit\Framework\TestCase;
 
-class ProxyTest extends PHPUnit_Framework_TestCase
+class ProxyTest extends TestCase
 {
     public function testProxy()
     {
-        $safe = SafeProxy::proxy(new Object, true);
+        $safe = SafeProxy::proxy(new Obj(), true);
 
         $this->assertSame($safe, Proxy::proxy($safe));
         $this->assertEquals($safe->object(), Proxy::proxy($safe->object()));
         $this->assertEquals($safe->object(), Proxy::proxy($safe)->object());
 
-        $expected = new ProxyObject(new Object);
+        $expected = new ProxyObject(new Obj());
 
-        $this->assertEquals($expected, Proxy::proxy(new Object));
-        $this->assertEquals($expected, Proxy::proxyObject(new Object));
+        $this->assertEquals($expected, Proxy::proxy(new Obj()));
+        $this->assertEquals($expected, Proxy::proxyObject(new Obj()));
 
-        $expected = new ProxyArray(array());
+        $expected = new ProxyArray([]);
 
-        $this->assertEquals($expected, Proxy::proxy(array()));
-        $this->assertEquals($expected, Proxy::proxyArray(array()));
+        $this->assertEquals($expected, Proxy::proxy([]));
+        $this->assertEquals($expected, Proxy::proxyArray([]));
 
         $expected = new ProxyPrimitive('string');
 
@@ -43,14 +43,14 @@ class ProxyTest extends PHPUnit_Framework_TestCase
 
     public function testProxyClass()
     {
-        $expected = new ProxyClass('Eloquent\Pops\Test\Fixture\Object');
+        $expected = new ProxyClass('Eloquent\Pops\Test\Fixture\Obj');
 
-        $this->assertEquals($expected, Proxy::proxyClass('Eloquent\Pops\Test\Fixture\Object'));
+        $this->assertEquals($expected, Proxy::proxyClass('Eloquent\Pops\Test\Fixture\Obj'));
     }
 
     public function testProxyClassStatic()
     {
-        $class = Proxy::proxyClassStatic('Eloquent\Pops\Test\Fixture\Object');
+        $class = Proxy::proxyClassStatic('Eloquent\Pops\Test\Fixture\Obj');
 
         $this->assertTrue(class_exists($class));
         $this->assertTrue(is_subclass_of($class, 'Eloquent\Pops\ProxyClass'));

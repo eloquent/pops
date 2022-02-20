@@ -30,7 +30,7 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
     {
         return static::popsProxySubValue(
             call_user_func_array(
-                array(static::popsProxy(), $method),
+                [static::popsProxy(), $method],
                 $arguments
             ),
             static::$isPopsStaticRecursive
@@ -66,9 +66,9 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
     /**
      * Generate and load a static class proxy.
      *
-     * @param string       $class       The name of the class to proxy.
-     * @param boolean|null $isRecursive True if the proxy should be recursive.
-     * @param string|null  $proxyClass  The class name to use for the proxy class.
+     * @param string      $class       The name of the class to proxy.
+     * @param bool|null   $isRecursive True if the proxy should be recursive.
+     * @param string|null $proxyClass  The class name to use for the proxy class.
      *
      * @return string The class name used for the proxy class.
      */
@@ -94,8 +94,8 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
     /**
      * Construct a new non-static class proxy.
      *
-     * @param string       $class       The name of the class to proxy.
-     * @param boolean|null $isRecursive True if the proxy should be recursive.
+     * @param string    $class       The name of the class to proxy.
+     * @param bool|null $isRecursive True if the proxy should be recursive.
      *
      * @throws Exception\InvalidTypeException If the supplied value is not the correct type.
      */
@@ -126,7 +126,7 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
     /**
      * Returns true if the wrapped class is recursively proxied.
      *
-     * @return boolean True if the wrapped class is recursively proxied.
+     * @return bool True if the wrapped class is recursively proxied.
      */
     public function isPopsRecursive()
     {
@@ -200,7 +200,7 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
      *
      * @param string $property The name of the property to search for.
      *
-     * @return boolean True if the property exists.
+     * @return bool True if the property exists.
      */
     public function __isset($property)
     {
@@ -244,8 +244,8 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
     /**
      * Wrap a sub-value in a proxy if recursive proxying is enabled.
      *
-     * @param mixed   $value       The value to wrap.
-     * @param boolean $isRecursive True if recursive proxying is enabled.
+     * @param mixed $value       The value to wrap.
+     * @param bool  $isRecursive True if recursive proxying is enabled.
      *
      * @return mixed The proxied value, or the untouched value.
      */
@@ -264,7 +264,7 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
      * Generate a static class proxy definition.
      *
      * @param string      $class       The name of the class to proxy.
-     * @param boolean     $isRecursive True if the proxy should be recursive.
+     * @param bool        $isRecursive True if the proxy should be recursive.
      * @param string|null &$proxyClass The class name to use for the proxy class.
      *
      * @return string The proxy class definition.
@@ -350,8 +350,8 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
     /**
      * Generate the class body for a static class proxy class.
      *
-     * @param string  $originalClass The name of the class being proxied.
-     * @param boolean $isRecursive   True if the proxy should be recursive.
+     * @param string $originalClass The name of the class being proxied.
+     * @param bool   $isRecursive   True if the proxy should be recursive.
      *
      * @return string The static class proxy class body.
      */
@@ -384,6 +384,6 @@ class ProxyClass extends AbstractProxy implements ProxyClassInterface
 
     protected static $popsStaticOriginalClass;
     protected static $isPopsStaticRecursive;
-    private static $popsStaticProxies = array();
+    private static $popsStaticProxies = [];
     private $isPopsRecursive;
 }

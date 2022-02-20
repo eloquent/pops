@@ -19,7 +19,7 @@ interface TraversableProxyInterface extends ProxyInterface
     /**
      * Returns true if the wrapped value is recursively proxied.
      *
-     * @return boolean True if the wrapped value is recursively proxied.
+     * @return bool True if the wrapped value is recursively proxied.
      */
     public function isPopsRecursive();
 }

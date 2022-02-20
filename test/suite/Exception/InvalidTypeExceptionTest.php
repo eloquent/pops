@@ -12,13 +12,13 @@
 namespace Eloquent\Pops\Exception;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class InvalidTypeExceptionTest extends PHPUnit_Framework_TestCase
+class InvalidTypeExceptionTest extends TestCase
 {
     public function testException()
     {
-        $cause = new Exception;
+        $cause = new Exception();
         $exception = new InvalidTypeException('value', 'type', $cause);
 
         $this->assertSame('value', $exception->value());

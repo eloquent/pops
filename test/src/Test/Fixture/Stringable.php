@@ -11,7 +11,7 @@
 
 namespace Eloquent\Pops\Test\Fixture;
 
-class Stringable extends Object
+class Stringable extends Obj
 {
     public function __toString()
     {

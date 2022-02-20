@@ -11,13 +11,13 @@
 
 namespace Eloquent\Pops;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Eloquent\Pops\ProxyPrimitive
  * @covers \Eloquent\Pops\AbstractProxy
  */
-class ProxyPrimitiveTest extends PHPUnit_Framework_TestCase
+class ProxyPrimitiveTest extends TestCase
 {
     public function testPrimitive()
     {
@@ -34,7 +34,7 @@ class ProxyPrimitiveTest extends PHPUnit_Framework_TestCase
 
     public function testConstructFailureType()
     {
-        $this->setExpectedException('Eloquent\Pops\Exception\InvalidTypeException');
-        new ProxyPrimitive(array());
+        $this->expectException('Eloquent\Pops\Exception\InvalidTypeException');
+        new ProxyPrimitive([]);
     }
 }
