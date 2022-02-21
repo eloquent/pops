@@ -1,5 +1,18 @@
 # Pops changelog
 
+## 5.0.0 (2022-02-21)
+
+- **[BC BREAK]** Dropped support for EOL PHP versions including:
+    - `5.3`
+    - `5.4`
+    - `5.5`
+    - `5.6`
+    - `7.0`
+    - `7.1`
+    - `7.2`
+    - `7.3`
+- **[FIXED]** Fixed deprecation warnings under PHP `8.1`.
+
 ## 4.1.0 (2014-02-09)
 
 - **[FIXED]** Added accessor methods for important private class members
